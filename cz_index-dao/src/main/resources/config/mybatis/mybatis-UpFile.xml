@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2016/10/9 14:14:18 Jack Liu created. -->
+
+<mapper namespace="com.jc.cz_index.dao.IUpFileDao">
+
+    <resultMap type="com.jc.cz_index.model.UpFile" id="resultMap">
+        <id property="id" column="id" />
+        <result property="oldFileName" column="old_file_name" />
+        <result property="newFileName" column="new_file_name" />
+        <result property="fileSize" column="file_size" />
+        <result property="fileType" column="file_type" />
+        <result property="createor" column="createor" />
+        <result property="state" column="state" />
+        <result property="filePath" column="file_path" />
+        <result property="createDate" column="create_date" />
+    </resultMap>
+    <resultMap type="com.jc.cz_index.model.UpFile" id="resultDetailMap">
+        <id property="id" column="id" />
+        <result property="oldFileName" column="old_file_name" />
+        <result property="newFileName" column="new_file_name" />
+        <result property="fileSize" column="file_size" />
+        <result property="fileType" column="file_type" />
+        <result property="createor" column="createor" />
+        <result property="state" column="state" />
+        <result property="filePath" column="file_path" />
+        <result property="createDate" column="create_date" />
+    
+	<!-- 
+	  <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	  <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	 -->
+    </resultMap>
+
+
+    <sql id="baseCol">
+        id, old_file_name, new_file_name, file_size, file_type, createor, state, file_path, create_date
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="oldFileName != null"><![CDATA[ and old_file_name = #{oldFileName} ]]></if>
+            <if test="oldFileName_enum != null">
+                <![CDATA[ and old_file_name in ]]>
+                <foreach collection="oldFileName_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="newFileName != null"><![CDATA[ and new_file_name = #{newFileName} ]]></if>
+            <if test="newFileName_enum != null">
+                <![CDATA[ and new_file_name in ]]>
+                <foreach collection="newFileName_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="fileSize != null"><![CDATA[ and file_size = #{fileSize} ]]></if>
+            <if test="fileSize_r_min != null"><![CDATA[ and file_size >= #{fileSize_r_min} and file_size <= #{fileSize_r_max} ]]></if>
+            <if test="fileSize_enum != null">
+                <![CDATA[ and file_size in ]]>
+                <foreach collection="fileSize_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="fileType != null"><![CDATA[ and file_type = #{fileType} ]]></if>
+            <if test="fileType_r_min != null"><![CDATA[ and file_type >= #{fileType_r_min} and file_type <= #{fileType_r_max} ]]></if>
+            <if test="fileType_enum != null">
+                <![CDATA[ and file_type in ]]>
+                <foreach collection="fileType_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="createor != null"><![CDATA[ and createor = #{createor} ]]></if>
+            <if test="createor_r_min != null"><![CDATA[ and createor >= #{createor_r_min} and createor <= #{createor_r_max} ]]></if>
+            <if test="createor_enum != null">
+                <![CDATA[ and createor in ]]>
+                <foreach collection="createor_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="state != null"><![CDATA[ and state = #{state} ]]></if>
+            <if test="state_r_min != null"><![CDATA[ and state >= #{state_r_min} and state <= #{state_r_max} ]]></if>
+            <if test="state_enum != null">
+                <![CDATA[ and state in ]]>
+                <foreach collection="state_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="filePath != null"><![CDATA[ and file_path = #{filePath} ]]></if>
+            <if test="filePath_enum != null">
+                <![CDATA[ and file_path in ]]>
+                <foreach collection="filePath_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="createDate != null"><![CDATA[ and create_date = #{createDate} ]]></if>
+            <if test="createDate_r_min != null"><![CDATA[ and create_date >= #{createDate_r_min} and create_date < #{createDate_r_max} ]]></if>
+            <if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+                <foreach collection="_default_mulattr" item="item" open="(" separator=" or " close=")">
+                    <if test="item.name == 'oldFileName'"><![CDATA[ old_file_name = #{item.value} ]]></if>
+                    <if test="item.name == 'newFileName'"><![CDATA[ new_file_name = #{item.value} ]]></if>
+                    <if test="item.name == 'filePath'"><![CDATA[ file_path = #{item.value} ]]></if>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'oldFileName_desc'"><![CDATA[ old_file_name desc, ]]></if>
+            <if test="_orderBy == 'oldFileName_asc'"><![CDATA[ old_file_name, ]]></if>
+            <if test="_orderBy == 'newFileName_desc'"><![CDATA[ new_file_name desc, ]]></if>
+            <if test="_orderBy == 'newFileName_asc'"><![CDATA[ new_file_name, ]]></if>
+            <if test="_orderBy == 'fileSize_desc'"><![CDATA[ file_size desc, ]]></if>
+            <if test="_orderBy == 'fileSize_asc'"><![CDATA[ file_size, ]]></if>
+            <if test="_orderBy == 'fileType_desc'"><![CDATA[ file_type desc, ]]></if>
+            <if test="_orderBy == 'fileType_asc'"><![CDATA[ file_type, ]]></if>
+            <if test="_orderBy == 'createor_desc'"><![CDATA[ createor desc, ]]></if>
+            <if test="_orderBy == 'createor_asc'"><![CDATA[ createor, ]]></if>
+            <if test="_orderBy == 'state_desc'"><![CDATA[ state desc, ]]></if>
+            <if test="_orderBy == 'state_asc'"><![CDATA[ state, ]]></if>
+            <if test="_orderBy == 'filePath_desc'"><![CDATA[ file_path desc, ]]></if>
+            <if test="_orderBy == 'filePath_asc'"><![CDATA[ file_path, ]]></if>
+            <if test="_orderBy == 'createDate_desc'"><![CDATA[ create_date desc, ]]></if>
+            <if test="_orderBy == 'createDate_asc'"><![CDATA[ create_date, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'oldFileName_desc'"><![CDATA[ old_file_name desc ]]></if>
+					<if test="orderItem == 'oldFileName_asc'"><![CDATA[ old_file_name ]]></if>
+					<if test="orderItem == 'newFileName_desc'"><![CDATA[ new_file_name desc ]]></if>
+					<if test="orderItem == 'newFileName_asc'"><![CDATA[ new_file_name ]]></if>
+					<if test="orderItem == 'fileSize_desc'"><![CDATA[ file_size desc ]]></if>
+					<if test="orderItem == 'fileSize_asc'"><![CDATA[ file_size ]]></if>
+					<if test="orderItem == 'fileType_desc'"><![CDATA[ file_type desc ]]></if>
+					<if test="orderItem == 'fileType_asc'"><![CDATA[ file_type ]]></if>
+					<if test="orderItem == 'createor_desc'"><![CDATA[ createor desc ]]></if>
+					<if test="orderItem == 'createor_asc'"><![CDATA[ createor ]]></if>
+					<if test="orderItem == 'state_desc'"><![CDATA[ state desc ]]></if>
+					<if test="orderItem == 'state_asc'"><![CDATA[ state ]]></if>
+					<if test="orderItem == 'filePath_desc'"><![CDATA[ file_path desc ]]></if>
+					<if test="orderItem == 'filePath_asc'"><![CDATA[ file_path ]]></if>
+					<if test="orderItem == 'createDate_desc'"><![CDATA[ create_date desc ]]></if>
+					<if test="orderItem == 'createDate_asc'"><![CDATA[ create_date ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="oldFileName != null"><![CDATA[ and old_file_name = #{oldFileName} ]]></if>
+            <if test="newFileName != null"><![CDATA[ and new_file_name = #{newFileName} ]]></if>
+            <if test="fileSize != null"><![CDATA[ and file_size = #{fileSize} ]]></if>
+            <if test="fileType != null"><![CDATA[ and file_type = #{fileType} ]]></if>
+            <if test="createor != null"><![CDATA[ and createor = #{createor} ]]></if>
+            <if test="state != null"><![CDATA[ and state = #{state} ]]></if>
+            <if test="filePath != null"><![CDATA[ and file_path = #{filePath} ]]></if>
+            <if test="createDate != null"><![CDATA[ and create_date = #{createDate} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="com.jc.cz_index.model.UpFile">
+	<selectKey resultType="Long" keyProperty="id" order="AFTER">
+	   SELECT
+	   LAST_INSERT_ID()
+	</selectKey>
+        insert into
+        up_file(old_file_name,new_file_name,file_size,file_type,createor,state,file_path,create_date)
+        values(#{oldFileName},#{newFileName},#{fileSize},#{fileType},#{createor},#{state},#{filePath},#{createDate});
+    </insert>
+
+    <update id="updateObject" parameterType="com.jc.cz_index.model.UpFile">
+        update up_file
+        set old_file_name=#{oldFileName},new_file_name=#{newFileName},file_size=#{fileSize},file_type=#{fileType},createor=#{createor},state=#{state},file_path=#{filePath},create_date=#{createDate}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="com.jc.cz_index.dao.QueryParams">
+        update up_file
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="long">
+        delete from up_file where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+        delete from up_file
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="long" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from up_file where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="long" resultMap="resultDetailMap">
+        select * from up_file where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams" resultType="int">
+        select count(*) from up_file
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from up_file
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultDetailMap">
+        select * from up_file
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+    
+    <select id="queryByIds" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultDetailMap">
+        select * from up_file as uf
+        <if test="ids.size() > 0">  
+           where uf.id in
+            <foreach  
+                collection="ids"  
+                item="thisId"  
+                open="("  
+                separator=","  
+                close=")">  
+                #{thisId}  
+            </foreach>  
+        </if>  
+    </select>
+</mapper> 
+
+

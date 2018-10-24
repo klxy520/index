@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jc.cz_index.dao.IUpdateResidentLogDao">
+	
+	<resultMap id="resultMap" type="com.jc.cz_index.model.UpdateResidentLog">
+            <result property="id" column="id" />
+            <result property="residentId" column="resident_id" />
+            <result property="userId" column="user_id" />
+            <result property="creator" column="creator" />
+            <result property="createDate" column="create_date" />
+
+	</resultMap>
+	
+	<resultMap id="resultDetailMap" type="com.jc.cz_index.model.UpdateResidentLog">
+            <result property="id" column="id" />
+            <result property="residentId" column="resident_id" />
+            <result property="userId" column="user_id" />
+            <result property="creator" column="creator" />
+            <result property="createDate" column="create_date" />
+
+	<!-- 
+	  <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	  <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	 -->
+	</resultMap>
+	
+	<sql id="baseCol">
+        id,resident_id,user_id,creator,create_date
+
+	</sql>
+
+	<sql id="pageSql">
+		<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+	</sql>
+
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="residentId != null"><![CDATA[ and  resident_id = #{residentId:NUMERIC}]]></if>
+            <if test="residentId_r_min != null"><![CDATA[ and resident_id >= #{residentId_r_min} and resident_id <= #{residentId_r_max} ]]></if>
+            <if test="residentId_enum != null">
+                <![CDATA[ and resident_id in ]]>
+                <foreach collection="residentId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="userId != null"><![CDATA[ and  user_id = #{userId:NUMERIC}]]></if>
+            <if test="userId_r_min != null"><![CDATA[ and user_id >= #{userId_r_min} and user_id <= #{userId_r_max} ]]></if>
+            <if test="userId_enum != null">
+                <![CDATA[ and user_id in ]]>
+                <foreach collection="userId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="creator != null"><![CDATA[ and  creator = #{creator:NUMERIC}]]></if>
+            <if test="creator_r_min != null"><![CDATA[ and creator >= #{creator_r_min} and creator <= #{creator_r_max} ]]></if>
+            <if test="creator_enum != null">
+                <![CDATA[ and creator in ]]>
+                <foreach collection="creator_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="createDate != null"><![CDATA[ and  create_date = #{createDate:DATETIME}]]></if>
+            <if test="createDate_r_min != null"><![CDATA[ and create_date >= #{createDate_r_min} and create_date <= #{createDate_r_max} ]]></if>
+            <if test="createDate_enum != null">
+                <![CDATA[ and create_date in ]]>
+                <foreach collection="createDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+
+		</trim>
+	</sql>
+
+	<sql id="orderSql">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'residentId_desc'" ><![CDATA[ resident_id desc, ]]></if>
+            <if test="_orderBy == 'residentId_asc'" ><![CDATA[ resident_id, ]]></if>
+            <if test="_orderBy == 'userId_desc'" ><![CDATA[ user_id desc, ]]></if>
+            <if test="_orderBy == 'userId_asc'" ><![CDATA[ user_id, ]]></if>
+            <if test="_orderBy == 'creator_desc'" ><![CDATA[ creator desc, ]]></if>
+            <if test="_orderBy == 'creator_asc'" ><![CDATA[ creator, ]]></if>
+            <if test="_orderBy == 'createDate_desc'" ><![CDATA[ create_date desc, ]]></if>
+            <if test="_orderBy == 'createDate_asc'" ><![CDATA[ create_date, ]]></if>
+            <if test="_orderBy_enum != null">
+                <foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+                    <if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+                    <if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+                    <if test="orderItem == 'residentId_desc'" ><![CDATA[ resident_id desc ]]></if>
+                    <if test="orderItem == 'residentId_asc'" ><![CDATA[ resident_id ]]></if>
+                    <if test="orderItem == 'userId_desc'" ><![CDATA[ user_id desc ]]></if>
+                    <if test="orderItem == 'userId_asc'" ><![CDATA[ user_id ]]></if>
+                    <if test="orderItem == 'creator_desc'" ><![CDATA[ creator desc ]]></if>
+                    <if test="orderItem == 'creator_asc'" ><![CDATA[ creator ]]></if>
+                    <if test="orderItem == 'createDate_desc'" ><![CDATA[ create_date desc ]]></if>
+                    <if test="orderItem == 'createDate_asc'" ><![CDATA[ create_date ]]></if>
+                </foreach>
+            </if>
+
+		</trim>
+	</sql>
+
+	<sql id="updateSetSql">
+		<trim prefix="set" prefixOverrides=",">
+            <if test="residentId != null" ><![CDATA[ ,  resident_id = #{residentId}]]></if>
+            <if test="userId != null" ><![CDATA[ ,  user_id = #{userId}]]></if>
+            <if test="creator != null" ><![CDATA[ ,  creator = #{creator}]]></if>
+            <if test="createDate != null" ><![CDATA[ ,  create_date = #{createDate}]]></if>
+
+		</trim>
+	</sql>	
+
+	<insert id="insertObject" parameterType="com.jc.cz_index.model.UpdateResidentLog">
+		<selectKey resultType="Long" keyProperty="id" order="AFTER">
+		 SELECT	LAST_INSERT_ID()
+	 	</selectKey>
+	 	insert into UPDATE_RESIDENT_LOG( id,resident_id,user_id,creator,create_date ) values (#{id},#{residentId},#{userId},#{creator},#{createDate} )
+	</insert>
+
+	<update id="updateObject" parameterType="com.jc.cz_index.model.UpdateResidentLog">
+		update UPDATE_RESIDENT_LOG set resident_id=#{residentId},user_id=#{userId},creator=#{creator},create_date=#{createDate} where id=#{id}
+	</update>
+	
+	<update id="updateObjectByFields" parameterType="com.jc.cz_index.dao.QueryParams">
+		UPDATE UPDATE_RESIDENT_LOG 
+		<include refid="updateSetSql" />
+		where id=#{id};
+  	</update> 
+	
+	<delete id="deleteObject" parameterType="long">
+		DELETE FROM UPDATE_RESIDENT_LOG WHERE id = #{id}
+  	</delete>
+
+	<delete id="deleteObjectByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+		DELETE FROM UPDATE_RESIDENT_LOG
+		<include refid="whereSql" />
+	</delete>
+
+	<select id="getBaseObject" parameterType="long" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from UPDATE_RESIDENT_LOG where id=#{id};
+	</select>
+
+	<select id="getDetailObject" parameterType="long" resultMap="resultDetailMap">
+		select * from UPDATE_RESIDENT_LOG where id=#{id};
+	</select>
+	
+	<select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams" resultType="int">
+		select count(*) from UPDATE_RESIDENT_LOG
+		  <include refid="whereSql" />
+	</select>
+	
+	<select id="queryBaseList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from UPDATE_RESIDENT_LOG
+			<include refid="whereSql" />
+		  <include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+
+	<select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultDetailMap">
+		select * from UPDATE_RESIDENT_LOG
+			<include refid="whereSql" />
+		  <include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+		<!--根据添加查询更新记录-->
+	<select id="queryBaseListByWheres" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+		<if test="Falg!=1">
+			SELECT ull.* FROM update_resident_log ull WHERE ull.user_id IN (
+		SELECT su.id FROM system_user su WHERE su.area_id IN ( SELECT ad.id FROM administrative_division ad 
+		where ad.id = #{area} OR ad.parentid = #{area}) OR su.organization_id = #{office}) and ull.resident_id=#{residentId}
+		</if>
+		<if test="Falg==1">
+			SELECT ull.* FROM update_resident_log ull WHERE  ull.resident_id=#{residentId}
+		</if>
+	</select>
+</mapper>
+

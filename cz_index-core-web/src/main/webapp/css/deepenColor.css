@@ -1,0 +1,17 @@
+.table-bordered th, .table-bordered td{
+	border-left:1px solid #000 !important;
+}
+.table-border th, .table-border td{
+	border-bottom:1px solid #000 !important;
+}
+.table-bordered{
+	border-top:1px solid #000 !important;
+	border-right:1px solid #000 !important;
+}
+.table th, .table td {
+    padding: 2.5px;
+    line-height: 18px;
+}
+body, th, td, button, input, select, textarea {
+    font-size: 14px;
+}

@@ -1,0 +1,14 @@
+package ${pkgPath};
+
+import org.springframework.stereotype.Repository;
+import ${modelPath};
+
+/**
+ * ${pkgName} Ibatis Dao 接口 Created by 
+ */
+@Repository
+public interface I${clzName}Dao extends IDataProvider<${clzName}, Long> {
+
+}
+
+

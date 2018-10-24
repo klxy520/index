@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jc.cz_index.dao.IAdministrativeDivisionDao">
+	
+	<resultMap id="resultMap" type="com.jc.cz_index.model.AdministrativeDivision">
+            <result property="id" column="id" />
+            <result property="parentid" column="parentid" />
+            <result property="name" column="name" />
+            <result property="address" column="address" />
+            <result property="phone" column="phone" />
+            <result property="zipCode" column="zip_code" />
+            <result property="personCharge" column="person_charge" />
+            <result property="creator" column="creator" />
+            <result property="createDate" column="create_date" />
+            <result property="updateDate" column="update_date" />
+            <result property="remark" column="remark" />
+            <result property="isDelete" column="is_delete" />
+
+	</resultMap>
+	
+	<resultMap id="resultDetailMap" type="com.jc.cz_index.model.AdministrativeDivision">
+            <result property="id" column="id" />
+            <result property="parentid" column="parentid" />
+            <result property="name" column="name" />
+            <result property="address" column="address" />
+            <result property="phone" column="phone" />
+            <result property="zipCode" column="zip_code" />
+            <result property="personCharge" column="person_charge" />
+            <result property="creator" column="creator" />
+            <result property="createDate" column="create_date" />
+            <result property="updateDate" column="update_date" />
+            <result property="remark" column="remark" />
+            <result property="isDelete" column="is_delete" />
+            <collection property="subAdministrativeDivisionList" column="id"  select="com.jc.cz_index.dao.IAdministrativeDivisionDao.getAdministrativeDivisionByParentId">
+			</collection>
+
+	<!-- 
+	  <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	  <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	 -->
+	</resultMap>
+	
+	<sql id="baseCol">
+        id,parentid,name,address,phone,zip_code,person_charge,creator,create_date,update_date,remark,is_delete
+
+	</sql>
+
+	<sql id="pageSql">
+		<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+	</sql>
+
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="parentid != null"><![CDATA[ and  parentid = #{parentid:NUMERIC}]]></if>
+            <if test="parentid_r_min != null"><![CDATA[ and parentid >= #{parentid_r_min} and parentid <= #{parentid_r_max} ]]></if>
+            <if test="parentid_enum != null">
+                <![CDATA[ and parentid in ]]>
+                <foreach collection="parentid_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="name != null"><![CDATA[ and  name = #{name:VARCHAR}]]></if>
+            <if test="name_r_min != null"><![CDATA[ and name >= #{name_r_min} and name <= #{name_r_max} ]]></if>
+            <if test="name_enum != null">
+                <![CDATA[ and name in ]]>
+                <foreach collection="name_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="address != null"><![CDATA[ and  address = #{address:VARCHAR}]]></if>
+            <if test="address_r_min != null"><![CDATA[ and address >= #{address_r_min} and address <= #{address_r_max} ]]></if>
+            <if test="address_enum != null">
+                <![CDATA[ and address in ]]>
+                <foreach collection="address_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="phone != null"><![CDATA[ and  phone = #{phone:VARCHAR}]]></if>
+            <if test="phone_r_min != null"><![CDATA[ and phone >= #{phone_r_min} and phone <= #{phone_r_max} ]]></if>
+            <if test="phone_enum != null">
+                <![CDATA[ and phone in ]]>
+                <foreach collection="phone_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="zipCode != null"><![CDATA[ and  zip_code = #{zipCode:VARCHAR}]]></if>
+            <if test="zipCode_r_min != null"><![CDATA[ and zip_code >= #{zipCode_r_min} and zip_code <= #{zipCode_r_max} ]]></if>
+            <if test="zipCode_enum != null">
+                <![CDATA[ and zip_code in ]]>
+                <foreach collection="zipCode_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="personCharge != null"><![CDATA[ and  person_charge = #{personCharge:VARCHAR}]]></if>
+            <if test="personCharge_r_min != null"><![CDATA[ and person_charge >= #{personCharge_r_min} and person_charge <= #{personCharge_r_max} ]]></if>
+            <if test="personCharge_enum != null">
+                <![CDATA[ and person_charge in ]]>
+                <foreach collection="personCharge_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="creator != null"><![CDATA[ and  creator = #{creator:NUMERIC}]]></if>
+            <if test="creator_r_min != null"><![CDATA[ and creator >= #{creator_r_min} and creator <= #{creator_r_max} ]]></if>
+            <if test="creator_enum != null">
+                <![CDATA[ and creator in ]]>
+                <foreach collection="creator_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="createDate != null"><![CDATA[ and  create_date = #{createDate:DATETIME}]]></if>
+            <if test="createDate_r_min != null"><![CDATA[ and create_date >= #{createDate_r_min} and create_date <= #{createDate_r_max} ]]></if>
+            <if test="createDate_enum != null">
+                <![CDATA[ and create_date in ]]>
+                <foreach collection="createDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="updateDate != null"><![CDATA[ and  update_date = #{updateDate:DATETIME}]]></if>
+            <if test="updateDate_r_min != null"><![CDATA[ and update_date >= #{updateDate_r_min} and update_date <= #{updateDate_r_max} ]]></if>
+            <if test="updateDate_enum != null">
+                <![CDATA[ and update_date in ]]>
+                <foreach collection="updateDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="remark != null"><![CDATA[ and  remark = #{remark:VARCHAR}]]></if>
+            <if test="remark_r_min != null"><![CDATA[ and remark >= #{remark_r_min} and remark <= #{remark_r_max} ]]></if>
+            <if test="remark_enum != null">
+                <![CDATA[ and remark in ]]>
+                <foreach collection="remark_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="isDelete != null"><![CDATA[ and  is_delete = #{isDelete:NUMERIC}]]></if>
+            <if test="isDelete_r_min != null"><![CDATA[ and is_delete >= #{isDelete_r_min} and is_delete <= #{isDelete_r_max} ]]></if>
+            <if test="isDelete_enum != null">
+                <![CDATA[ and is_delete in ]]>
+                <foreach collection="isDelete_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+
+		</trim>
+	</sql>
+
+	<sql id="orderSql">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'parentid_desc'" ><![CDATA[ parentid desc, ]]></if>
+            <if test="_orderBy == 'parentid_asc'" ><![CDATA[ parentid, ]]></if>
+            <if test="_orderBy == 'name_desc'" ><![CDATA[ name desc, ]]></if>
+            <if test="_orderBy == 'name_asc'" ><![CDATA[ name, ]]></if>
+            <if test="_orderBy == 'address_desc'" ><![CDATA[ address desc, ]]></if>
+            <if test="_orderBy == 'address_asc'" ><![CDATA[ address, ]]></if>
+            <if test="_orderBy == 'phone_desc'" ><![CDATA[ phone desc, ]]></if>
+            <if test="_orderBy == 'phone_asc'" ><![CDATA[ phone, ]]></if>
+            <if test="_orderBy == 'zipCode_desc'" ><![CDATA[ zip_code desc, ]]></if>
+            <if test="_orderBy == 'zipCode_asc'" ><![CDATA[ zip_code, ]]></if>
+            <if test="_orderBy == 'personCharge_desc'" ><![CDATA[ person_charge desc, ]]></if>
+            <if test="_orderBy == 'personCharge_asc'" ><![CDATA[ person_charge, ]]></if>
+            <if test="_orderBy == 'creator_desc'" ><![CDATA[ creator desc, ]]></if>
+            <if test="_orderBy == 'creator_asc'" ><![CDATA[ creator, ]]></if>
+            <if test="_orderBy == 'createDate_desc'" ><![CDATA[ create_date desc, ]]></if>
+            <if test="_orderBy == 'createDate_asc'" ><![CDATA[ create_date, ]]></if>
+            <if test="_orderBy == 'updateDate_desc'" ><![CDATA[ update_date desc, ]]></if>
+            <if test="_orderBy == 'updateDate_asc'" ><![CDATA[ update_date, ]]></if>
+            <if test="_orderBy == 'remark_desc'" ><![CDATA[ remark desc, ]]></if>
+            <if test="_orderBy == 'remark_asc'" ><![CDATA[ remark, ]]></if>
+            <if test="_orderBy == 'isDelete_desc'" ><![CDATA[ is_delete desc, ]]></if>
+            <if test="_orderBy == 'isDelete_asc'" ><![CDATA[ is_delete, ]]></if>
+            <if test="_orderBy_enum != null">
+                <foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+                    <if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+                    <if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+                    <if test="orderItem == 'parentid_desc'" ><![CDATA[ parentid desc ]]></if>
+                    <if test="orderItem == 'parentid_asc'" ><![CDATA[ parentid ]]></if>
+                    <if test="orderItem == 'name_desc'" ><![CDATA[ name desc ]]></if>
+                    <if test="orderItem == 'name_asc'" ><![CDATA[ name ]]></if>
+                    <if test="orderItem == 'address_desc'" ><![CDATA[ address desc ]]></if>
+                    <if test="orderItem == 'address_asc'" ><![CDATA[ address ]]></if>
+                    <if test="orderItem == 'phone_desc'" ><![CDATA[ phone desc ]]></if>
+                    <if test="orderItem == 'phone_asc'" ><![CDATA[ phone ]]></if>
+                    <if test="orderItem == 'zipCode_desc'" ><![CDATA[ zip_code desc ]]></if>
+                    <if test="orderItem == 'zipCode_asc'" ><![CDATA[ zip_code ]]></if>
+                    <if test="orderItem == 'personCharge_desc'" ><![CDATA[ person_charge desc ]]></if>
+                    <if test="orderItem == 'personCharge_asc'" ><![CDATA[ person_charge ]]></if>
+                    <if test="orderItem == 'creator_desc'" ><![CDATA[ creator desc ]]></if>
+                    <if test="orderItem == 'creator_asc'" ><![CDATA[ creator ]]></if>
+                    <if test="orderItem == 'createDate_desc'" ><![CDATA[ create_date desc ]]></if>
+                    <if test="orderItem == 'createDate_asc'" ><![CDATA[ create_date ]]></if>
+                    <if test="orderItem == 'updateDate_desc'" ><![CDATA[ update_date desc ]]></if>
+                    <if test="orderItem == 'updateDate_asc'" ><![CDATA[ update_date ]]></if>
+                    <if test="orderItem == 'remark_desc'" ><![CDATA[ remark desc ]]></if>
+                    <if test="orderItem == 'remark_asc'" ><![CDATA[ remark ]]></if>
+                    <if test="orderItem == 'isDelete_desc'" ><![CDATA[ is_delete desc ]]></if>
+                    <if test="orderItem == 'isDelete_asc'" ><![CDATA[ is_delete ]]></if>
+                </foreach>
+            </if>
+
+		</trim>
+	</sql>
+
+	<sql id="updateSetSql">
+		<trim prefix="set" prefixOverrides=",">
+            <if test="parentid != null" ><![CDATA[ ,  parentid = #{parentid}]]></if>
+            <if test="name != null" ><![CDATA[ ,  name = #{name}]]></if>
+            <if test="address != null" ><![CDATA[ ,  address = #{address}]]></if>
+            <if test="phone != null" ><![CDATA[ ,  phone = #{phone}]]></if>
+            <if test="zipCode != null" ><![CDATA[ ,  zip_code = #{zipCode}]]></if>
+            <if test="personCharge != null" ><![CDATA[ ,  person_charge = #{personCharge}]]></if>
+            <if test="creator != null" ><![CDATA[ ,  creator = #{creator}]]></if>
+            <if test="createDate != null" ><![CDATA[ ,  create_date = #{createDate}]]></if>
+            <if test="updateDate != null" ><![CDATA[ ,  update_date = #{updateDate}]]></if>
+            <if test="remark != null" ><![CDATA[ ,  remark = #{remark}]]></if>
+            <if test="isDelete != null" ><![CDATA[ ,  is_delete = #{isDelete}]]></if>
+
+		</trim>
+	</sql>	
+
+	<insert id="insertObject" parameterType="com.jc.cz_index.model.AdministrativeDivision">
+		<selectKey resultType="Long" keyProperty="id" order="AFTER">
+		 SELECT	LAST_INSERT_ID()
+	 	</selectKey>
+	 	insert into ADMINISTRATIVE_DIVISION( id,parentid,name,address,phone,zip_code,person_charge,creator,create_date,update_date,remark,is_delete ) values (#{id},#{parentid},#{name},#{address},#{phone},#{zipCode},#{personCharge},#{creator},#{createDate},#{updateDate},#{remark},#{isDelete} )
+	</insert>
+
+	<update id="updateObject" parameterType="com.jc.cz_index.model.AdministrativeDivision">
+		update ADMINISTRATIVE_DIVISION set parentid=#{parentid},name=#{name},address=#{address},phone=#{phone},zip_code=#{zipCode},person_charge=#{personCharge},creator=#{creator},create_date=#{createDate},update_date=#{updateDate},remark=#{remark},is_delete=#{isDelete} where id=#{id}
+	</update>
+	
+	<update id="updateObjectByFields" parameterType="com.jc.cz_index.dao.QueryParams">
+		UPDATE ADMINISTRATIVE_DIVISION 
+		<include refid="updateSetSql" />
+		where id=#{id};
+  	</update> 
+	
+	<delete id="deleteObject" parameterType="long">
+		DELETE FROM ADMINISTRATIVE_DIVISION WHERE id = #{id}
+  	</delete>
+
+	<delete id="deleteObjectByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+		DELETE FROM ADMINISTRATIVE_DIVISION
+		<include refid="whereSql" />
+	</delete>
+
+	<select id="getBaseObject" parameterType="long" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from ADMINISTRATIVE_DIVISION where id=#{id};
+	</select>
+
+	<select id="getDetailObject" parameterType="long" resultMap="resultDetailMap">
+		select * from ADMINISTRATIVE_DIVISION where id=#{id};
+	</select>
+	
+	<select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams" resultType="int">
+		select count(*) from ADMINISTRATIVE_DIVISION
+		  <include refid="whereSql" />
+	</select>
+	
+	<select id="queryBaseList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from ADMINISTRATIVE_DIVISION
+			<include refid="whereSql" />
+		  <include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+
+	<select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultDetailMap">
+		select * from ADMINISTRATIVE_DIVISION
+			<include refid="whereSql" />
+		  <include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+	<select id="getAdministrativeDivisionByParentId" parameterType="long" resultMap="resultDetailMap">
+        SELECT * FROM ADMINISTRATIVE_DIVISION D where D.parentid = #{parenId} and is_delete = 0
+    </select>
+</mapper>
+

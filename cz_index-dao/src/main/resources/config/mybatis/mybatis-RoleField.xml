@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jc.cz_index.dao.IRoleFieldDao">
+
+
+
+
+	<resultMap id="fieldMap" type="com.jc.cz_index.model.TableField">
+		<result property="id" column="id" />
+		<result property="fieldName" column="field_name" />
+		<result property="alias" column="alias" />
+		<result property="tableName" column="table_name" />
+		<result property="describe" column="describe" />
+	</resultMap>
+
+	<resultMap id="roleFieldMap" type="com.jc.cz_index.model.RoleField">
+		<result property="id" column="id" />
+		<result property="roleId" column="role_id" />
+		<result property="fieldId" column="field_id" />
+		<result property="updator" column="updator" />
+		<result property="updateDate" column="update_date" />
+	</resultMap>
+	
+
+
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="and |or ">
+			<if test="roleId != null"><![CDATA[ and role_id = #{roleId} ]]></if>
+
+		</trim>
+	</sql>
+
+
+
+	<select id="getRoleFieldIds" parameterType="Long" resultMap="roleFieldMap">
+		select * from role_field where role_id=#{roleId};
+	</select>
+	<select id="getAllFieldInfo" parameterType="com.jc.cz_index.dao.QueryParams"
+		resultMap="fieldMap">
+		select * from field
+	</select>
+
+	<delete id="deleteRoleLinkFieldByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+		delete from role_field
+		<include refid="whereSql" />
+	</delete>
+
+	<insert id="insertRoleMenu" parameterType="com.jc.cz_index.model.RoleField">
+		<selectKey resultType="Long" keyProperty="id" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into
+		role_field(role_id,field_id,updator,update_date)
+		values(#{roleId},#{fieldId},#{updator},#{updateDate});
+	</insert>
+	<select id="getloginUserField" parameterType="Long" resultMap="fieldMap">
+		SELECT
+			f.field_name as field_name ,r.role_id as id ,f.alias
+		FROM
+			field f
+		LEFT JOIN
+			(select * FROM role_field WHERE role_id=#{id}) r
+		ON
+			f.id = r.field_id order by f.id
+	</select>
+
+
+
+</mapper>
+

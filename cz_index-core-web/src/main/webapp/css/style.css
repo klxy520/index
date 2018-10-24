@@ -1,0 +1,60 @@
+@charset "utf-8";
+/* 你自己的样式 */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Microsoft YaHei", helvetica, arial, verdana, tahoma, sans-serif;
+    letter-spacing: 1px;
+}
+/*身份认证*/
+.identity_add_text_c_img{
+	width:80px;height:80px;
+}
+.identity_add_footer{
+	height:60px;line-height:60px;text-align:center;
+}
+.identity_add_btn{
+	text-decoration:none;
+	border-radius:15px;
+	border:1px solid #ccc;
+	padding:3px 15px 3px 15px;
+	position:relative;
+	top:40%;
+}
+/*互动*/
+.interactive_all{
+	margin: 10px 0;
+	border-radius: 5px;
+	background-color: white;
+}
+.interactive_con{
+	text-align: left;
+	margin-left: 10px;
+}
+.interactive_reply{
+	/*float: left;*/
+	margin-left: 10px;
+}
+.interactive_reply a{
+	float: right;
+}
+.interactive_reply span{
+	float: right;
+}
+.interactive_pro{
+	color:#1E90FF;
+}
+.interactive_rp{
+	color:#ccc;
+}
+.interactive_bg{
+	border:1px solid #ccc;
+	color:#aaa;
+	padding: 5px;
+	border-radius: 5px;
+}
+.interactive_p{
+	/*float: left;*/
+	width:98%;
+	display: inline-block;
+}

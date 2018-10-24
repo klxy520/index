@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2016/9/29 11:28:41 Jack Liu created. -->
+
+<mapper namespace="com.jc.cz_index.dao.ISystemUserRoleDao">
+
+    <resultMap type="com.jc.cz_index.model.SystemUserRole" id="resultMap">
+        <id property="id" column="id" />
+        <result property="authId" column="auth_id" />
+        <result property="roleId" column="role_id" />
+    </resultMap>
+    <resultMap type="com.jc.cz_index.model.SystemUserRole" id="resultDetailMap">
+        <id property="id" column="id" />
+        <result property="authId" column="auth_id" />
+        <result property="roleId" column="role_id" />
+    
+	<!-- 
+	  <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	  <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	 -->
+    </resultMap>
+
+
+    <sql id="baseCol">
+        id, auth_id, role_id
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="authId != null"><![CDATA[ and auth_id = #{authId} ]]></if>
+            <if test="authId_r_min != null"><![CDATA[ and auth_id >= #{authId_r_min} and auth_id <= #{authId_r_max} ]]></if>
+            <if test="authId_enum != null">
+                <![CDATA[ and auth_id in ]]>
+                <foreach collection="authId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="roleId != null"><![CDATA[ and role_id = #{roleId} ]]></if>
+            <if test="roleId_r_min != null"><![CDATA[ and role_id >= #{roleId_r_min} and role_id <= #{roleId_r_max} ]]></if>
+            <if test="roleId_enum != null">
+                <![CDATA[ and role_id in ]]>
+                <foreach collection="roleId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'authId_desc'"><![CDATA[ auth_id desc, ]]></if>
+            <if test="_orderBy == 'authId_asc'"><![CDATA[ auth_id, ]]></if>
+            <if test="_orderBy == 'roleId_desc'"><![CDATA[ role_id desc, ]]></if>
+            <if test="_orderBy == 'roleId_asc'"><![CDATA[ role_id, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'authId_desc'"><![CDATA[ auth_id desc ]]></if>
+					<if test="orderItem == 'authId_asc'"><![CDATA[ auth_id ]]></if>
+					<if test="orderItem == 'roleId_desc'"><![CDATA[ role_id desc ]]></if>
+					<if test="orderItem == 'roleId_asc'"><![CDATA[ role_id ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="authId != null"><![CDATA[ and auth_id = #{authId} ]]></if>
+            <if test="roleId != null"><![CDATA[ and role_id = #{roleId} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="com.jc.cz_index.model.SystemUserRole">
+	<selectKey resultType="Long" keyProperty="id" order="AFTER">
+	   SELECT
+	   LAST_INSERT_ID()
+	</selectKey>
+        insert into
+        system_user_role(auth_id,role_id)
+        values(#{authId},#{roleId});
+    </insert>
+
+    <update id="updateObject" parameterType="com.jc.cz_index.model.SystemUserRole">
+        update system_user_role
+        set auth_id=#{authId},role_id=#{roleId}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="com.jc.cz_index.dao.QueryParams">
+        update system_user_role
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="long">
+        delete from system_user_role where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+        delete from system_user_role
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="long" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from system_user_role where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="long" resultMap="resultDetailMap">
+        select * from system_user_role where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams" resultType="int">
+        select count(*) from system_user_role
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from system_user_role
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultDetailMap">
+        select * from system_user_role
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+</mapper> 
+
+

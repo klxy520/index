@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2016/9/29 11:28:40 Jack Liu created. -->
+
+<mapper namespace="com.jc.cz_index.dao.ISystemUserDao">
+
+    <resultMap type="com.jc.cz_index.model.SystemUser" id="resultMap">
+        <id property="id" column="id" />
+        <result property="authId" column="auth_id" />
+        <result property="name" column="name" />
+        <result property="creator" column="creator" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+        <result property="userType" column="user_type" />
+        <result property="organizationId" column="organization_id" />
+        <result property="areaId" column="area_id" />
+        <result property="sn" column="sn" />
+    </resultMap>
+    <resultMap type="com.jc.cz_index.model.SystemUser" id="resultDetailMap">
+        <id property="id" column="id" />
+        <result property="authId" column="auth_id" />
+        <result property="name" column="name" />
+        <result property="creator" column="creator" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+        <result property="userType" column="user_type" />
+        <result property="organizationId" column="organization_id" />
+        <result property="areaId" column="area_id" />
+        <result property="sn" column="sn" />
+    	<association property="systemUserAuth" column="auth_id" select="com.jc.cz_index.dao.ISystemUserAuthDao.getBaseObject">
+	    </association>
+	    <association property="administrativeDivision" column="area_id" select="com.jc.cz_index.dao.IAdministrativeDivisionDao.getBaseObject">
+	    </association>
+	    <association property="administrativeManagement" column="organization_id" select="com.jc.cz_index.dao.IAdministrativeManagementDao.getBaseObject">
+	    </association>
+	<!-- 
+	  <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	  <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	 -->
+    </resultMap>
+
+
+    <sql id="baseCol">
+        id, auth_id, name, creator, phone, email, user_type, organization_id, area_id,sn
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_not_eq != null"><![CDATA[ and id != #{id_not_eq} ]]></if>
+            <if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="authId != null"><![CDATA[ and auth_id = #{authId} ]]></if>
+            <if test="authId_r_min != null"><![CDATA[ and auth_id >= #{authId_r_min} and auth_id <= #{authId_r_max} ]]></if>
+            <if test="authId_enum != null">
+                <![CDATA[ and auth_id in ]]>
+                <foreach collection="authId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="name != null"><![CDATA[ and name = #{name} ]]></if>
+            <if test="name_like != null"><![CDATA[ and name like #{name_like} ]]></if>
+            <if test="name_enum != null">
+                <![CDATA[ and name in ]]>
+                <foreach collection="name_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="creator != null"><![CDATA[ and creator = #{creator} ]]></if>
+            <if test="creator_r_min != null"><![CDATA[ and creator >= #{creator_r_min} and creator <= #{creator_r_max} ]]></if>
+            <if test="creator_enum != null">
+                <![CDATA[ and creator in ]]>
+                <foreach collection="creator_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="phone != null"><![CDATA[ and phone = #{phone} ]]></if>
+            <if test="phone_enum != null">
+                <![CDATA[ and phone in ]]>
+                <foreach collection="phone_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="email != null"><![CDATA[ and email = #{email} ]]></if>
+            <if test="email_enum != null">
+                <![CDATA[ and email in ]]>
+                <foreach collection="email_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="userType != null"><![CDATA[ and user_type = #{userType} ]]></if>
+            <if test="userType_r_min != null"><![CDATA[ and user_type >= #{userType_r_min} and user_type <= #{userType_r_max} ]]></if>
+            <if test="userType_enum != null">
+                <![CDATA[ and user_type in ]]>
+                <foreach collection="userType_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="organizationId != null"><![CDATA[ and organization_id = #{organizationId} ]]></if>
+            <if test="organizationId_r_min != null"><![CDATA[ and organization_id >= #{organizationId_r_min} and organization_id <= #{organizationId_r_max} ]]></if>
+            <if test="organizationId_enum != null">
+                <![CDATA[ and organization_id in ]]>
+                <foreach collection="organizationId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="areaId != null"><![CDATA[ and area_id = #{areaId} ]]></if>
+            <if test="areaId_r_min != null"><![CDATA[ and area_id >= #{areaId_r_min} and area_id <= #{areaId_r_max} ]]></if>
+            <if test="areaId_enum != null">
+                <![CDATA[ and area_id in ]]>
+                <foreach collection="areaId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="sn != null"><![CDATA[ and sn = #{sn} ]]></if>
+            <if test="sn_like != null"><![CDATA[ and sn like #{sn_like} ]]></if>
+            <if test="sn_enum != null">
+                <![CDATA[ and sn in ]]>
+                <foreach collection="sn_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+                <foreach collection="_default_mulattr" item="item" open="(" separator=" or " close=")">
+                    <if test="item.name == 'name'"><![CDATA[ name = #{item.value} ]]></if>
+                    <if test="item.name == 'phone'"><![CDATA[ phone = #{item.value} ]]></if>
+                    <if test="item.name == 'email'"><![CDATA[ email = #{item.value} ]]></if>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'authId_desc'"><![CDATA[ auth_id desc, ]]></if>
+            <if test="_orderBy == 'authId_asc'"><![CDATA[ auth_id, ]]></if>
+            <if test="_orderBy == 'name_desc'"><![CDATA[ name desc, ]]></if>
+            <if test="_orderBy == 'name_asc'"><![CDATA[ name, ]]></if>
+            <if test="_orderBy == 'creator_desc'"><![CDATA[ creator desc, ]]></if>
+            <if test="_orderBy == 'creator_asc'"><![CDATA[ creator, ]]></if>
+            <if test="_orderBy == 'phone_desc'"><![CDATA[ phone desc, ]]></if>
+            <if test="_orderBy == 'phone_asc'"><![CDATA[ phone, ]]></if>
+            <if test="_orderBy == 'email_desc'"><![CDATA[ email desc, ]]></if>
+            <if test="_orderBy == 'email_asc'"><![CDATA[ email, ]]></if>
+            <if test="_orderBy == 'userType_desc'"><![CDATA[ user_type desc, ]]></if>
+            <if test="_orderBy == 'userType_asc'"><![CDATA[ user_type, ]]></if>
+            <if test="_orderBy == 'organizationId_desc'"><![CDATA[ organization_id desc, ]]></if>
+            <if test="_orderBy == 'organizationId_asc'"><![CDATA[ organization_id, ]]></if>
+            <if test="_orderBy == 'areaId_desc'"><![CDATA[ area_id desc, ]]></if>
+            <if test="_orderBy == 'areaId_asc'"><![CDATA[ area_id, ]]></if>
+ 			<if test="_orderBy == 'sn_desc'"><![CDATA[ sn desc, ]]></if>
+            <if test="_orderBy == 'sn_asc'"><![CDATA[ sn, ]]></if>
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'authId_desc'"><![CDATA[ auth_id desc ]]></if>
+					<if test="orderItem == 'authId_asc'"><![CDATA[ auth_id ]]></if>
+					<if test="orderItem == 'name_desc'"><![CDATA[ name desc ]]></if>
+					<if test="orderItem == 'name_asc'"><![CDATA[ name ]]></if>
+					<if test="orderItem == 'creator_desc'"><![CDATA[ creator desc ]]></if>
+					<if test="orderItem == 'creator_asc'"><![CDATA[ creator ]]></if>
+					<if test="orderItem == 'phone_desc'"><![CDATA[ phone desc ]]></if>
+					<if test="orderItem == 'phone_asc'"><![CDATA[ phone ]]></if>
+					<if test="orderItem == 'email_desc'"><![CDATA[ email desc ]]></if>
+					<if test="orderItem == 'email_asc'"><![CDATA[ email ]]></if>
+					<if test="orderItem == 'userType_desc'"><![CDATA[ user_type desc ]]></if>
+					<if test="orderItem == 'userType_asc'"><![CDATA[ user_type ]]></if>
+					<if test="orderItem == 'organizationId_desc'"><![CDATA[ organization_id desc ]]></if>
+					<if test="orderItem == 'organizationId_asc'"><![CDATA[ organization_id ]]></if>
+					<if test="orderItem == 'areaId_desc'"><![CDATA[ area_id desc ]]></if>
+					<if test="orderItem == 'areaId_asc'"><![CDATA[ area_id ]]></if>
+					<if test="orderItem == 'sn_desc'"><![CDATA[ sn desc ]]></if>
+					<if test="orderItem == 'sn_asc'"><![CDATA[ sn ]]></if>
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="authId != null"><![CDATA[ and auth_id = #{authId} ]]></if>
+            <if test="name != null"><![CDATA[ and name = #{name} ]]></if>
+            <if test="creator != null"><![CDATA[ and creator = #{creator} ]]></if>
+            <if test="phone != null"><![CDATA[ and phone = #{phone} ]]></if>
+            <if test="email != null"><![CDATA[ and email = #{email} ]]></if>
+            <if test="userType != null"><![CDATA[ and user_type = #{userType} ]]></if>
+            <if test="organizationId != null"><![CDATA[ and organization_id = #{organizationId} ]]></if>
+            <if test="areaId != null"><![CDATA[ and area_id = #{areaId} ]]></if>
+            <if test="sn != null"><![CDATA[ and sn = #{sn} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="com.jc.cz_index.model.SystemUser">
+	<selectKey resultType="Long" keyProperty="id" order="AFTER">
+	   SELECT
+	   LAST_INSERT_ID()
+	</selectKey>
+        insert into
+        system_user(auth_id,name,creator,phone,email,user_type,organization_id,area_id,sn)
+        values(#{authId},#{name},#{creator},#{phone},#{email},#{userType},#{organizationId},#{areaId},#{sn});
+    </insert>
+
+    <update id="updateObject" parameterType="com.jc.cz_index.model.SystemUser">
+        update system_user
+        set auth_id=#{authId},name=#{name},creator=#{creator},phone=#{phone},email=#{email},user_type=#{userType},organization_id=#{organizationId},area_id=#{areaId},sn=#{sn}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="com.jc.cz_index.dao.QueryParams">
+        update system_user
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="long">
+        delete from system_user where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+        delete from system_user
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="long" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from system_user where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="long" resultMap="resultDetailMap">
+        select * from system_user where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams" resultType="int">
+        select count(*) from system_user
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from system_user
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultDetailMap">
+        select * from system_user
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+</mapper> 
+
+

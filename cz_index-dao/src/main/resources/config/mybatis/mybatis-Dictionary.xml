@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jc.cz_index.dao.IDictionaryDao">
+	
+	<resultMap id="resultMap" type="com.jc.cz_index.model.Dictionary">
+            <result property="id" column="id" />
+            <result property="parentid" column="parentid" />
+            <result property="name" column="name" />
+            <result property="dictkey" column="dictkey" />
+            <result property="value" column="value" />
+            <result property="description" column="description" />
+            <result property="status" column="status" />
+            <result property="isdefault" column="isdefault" />
+            <result property="showindex" column="showindex" />
+
+	</resultMap>
+	
+	<resultMap id="resultDetailMap" type="com.jc.cz_index.model.Dictionary">
+            <result property="id" column="id" />
+            <result property="parentid" column="parentid" />
+            <result property="name" column="name" />
+            <result property="dictkey" column="dictkey" />
+            <result property="value" column="value" />
+            <result property="description" column="description" />
+            <result property="status" column="status" />
+            <result property="isdefault" column="isdefault" />
+            <result property="showindex" column="showindex" />
+            <collection property="subDicitonaryList" column="id"  select="com.jc.cz_index.dao.IDictionaryDao.getDictionaryByParentId">
+			</collection>
+	<!-- 
+	  <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	  <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	 -->
+	</resultMap>
+	
+	<sql id="baseCol">
+        id,parentid,name,dictkey,value,description,status,isdefault,showindex
+
+	</sql>
+
+	<sql id="pageSql">
+		<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+	</sql>
+
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="parentid != null"><![CDATA[ and  parentid = #{parentid:NUMERIC}]]></if>
+            <if test="parentid_r_min != null"><![CDATA[ and parentid >= #{parentid_r_min} and parentid <= #{parentid_r_max} ]]></if>
+            <if test="parentid_enum != null">
+                <![CDATA[ and parentid in ]]>
+                <foreach collection="parentid_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="name != null"><![CDATA[ and  name = #{name:VARCHAR}]]></if>
+            <if test="name_r_min != null"><![CDATA[ and name >= #{name_r_min} and name <= #{name_r_max} ]]></if>
+            <if test="name_enum != null">
+                <![CDATA[ and name in ]]>
+                <foreach collection="name_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="dictkey != null"><![CDATA[ and  dictkey = #{dictkey:VARCHAR}]]></if>
+            <if test="dictkey_like != null"><![CDATA[ and  dictkey like #{dictkey_like}]]></if>
+            <if test="dictkey_r_min != null"><![CDATA[ and dictkey >= #{dictkey_r_min} and dictkey <= #{dictkey_r_max} ]]></if>
+            <if test="dictkey_enum != null">
+                <![CDATA[ and dictkey in ]]>
+                <foreach collection="dictkey_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="value != null"><![CDATA[ and  value = #{value:VARCHAR}]]></if>
+            <if test="value_r_min != null"><![CDATA[ and value >= #{value_r_min} and value <= #{value_r_max} ]]></if>
+            <if test="value_enum != null">
+                <![CDATA[ and value in ]]>
+                <foreach collection="value_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="description != null"><![CDATA[ and  description = #{description:VARCHAR}]]></if>
+            <if test="description_like != null"><![CDATA[ and  description like #{description_like}]]></if>
+            <if test="description_r_min != null"><![CDATA[ and description >= #{description_r_min} and description <= #{description_r_max} ]]></if>
+            <if test="description_enum != null">
+                <![CDATA[ and description in ]]>
+                <foreach collection="description_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="status != null"><![CDATA[ and  status = #{status:NUMERIC}]]></if>
+            <if test="status_r_min != null"><![CDATA[ and status >= #{status_r_min} and status <= #{status_r_max} ]]></if>
+            <if test="status_enum != null">
+                <![CDATA[ and status in ]]>
+                <foreach collection="status_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="isdefault != null"><![CDATA[ and  isdefault = #{isdefault:NUMERIC}]]></if>
+            <if test="isdefault_r_min != null"><![CDATA[ and isdefault >= #{isdefault_r_min} and isdefault <= #{isdefault_r_max} ]]></if>
+            <if test="isdefault_enum != null">
+                <![CDATA[ and isdefault in ]]>
+                <foreach collection="isdefault_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="showindex != null"><![CDATA[ and  showindex = #{showindex:NUMERIC}]]></if>
+            <if test="showindex_r_min != null"><![CDATA[ and showindex >= #{showindex_r_min} and showindex <= #{showindex_r_max} ]]></if>
+            <if test="showindex_enum != null">
+                <![CDATA[ and showindex in ]]>
+                <foreach collection="showindex_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="dictKey_like != null"><![CDATA[ and  dictkey like  #{dictKey_like}]]></if>
+            <if test="_status != null"><![CDATA[ and  status like  #{_status}]]></if>
+
+		</trim>
+	</sql>
+
+	<sql id="orderSql">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'parentid_desc'" ><![CDATA[ parentid desc, ]]></if>
+            <if test="_orderBy == 'parentid_asc'" ><![CDATA[ parentid, ]]></if>
+            <if test="_orderBy == 'name_desc'" ><![CDATA[ name desc, ]]></if>
+            <if test="_orderBy == 'name_asc'" ><![CDATA[ name, ]]></if>
+            <if test="_orderBy == 'dictkey_desc'" ><![CDATA[ dictkey desc, ]]></if>
+            <if test="_orderBy == 'dictkey_asc'" ><![CDATA[ dictkey, ]]></if>
+            <if test="_orderBy == 'value_desc'" ><![CDATA[ value desc, ]]></if>
+            <if test="_orderBy == 'value_asc'" ><![CDATA[ value, ]]></if>
+            <if test="_orderBy == 'description_desc'" ><![CDATA[ description desc, ]]></if>
+            <if test="_orderBy == 'description_asc'" ><![CDATA[ description, ]]></if>
+            <if test="_orderBy == 'status_desc'" ><![CDATA[ status desc, ]]></if>
+            <if test="_orderBy == 'status_asc'" ><![CDATA[ status, ]]></if>
+            <if test="_orderBy == 'isdefault_desc'" ><![CDATA[ isdefault desc, ]]></if>
+            <if test="_orderBy == 'isdefault_asc'" ><![CDATA[ isdefault, ]]></if>
+            <if test="_orderBy == 'showindex_desc'" ><![CDATA[ showindex desc, ]]></if>
+            <if test="_orderBy == 'showindex_asc'" ><![CDATA[ showindex, ]]></if>
+            <if test="_orderBy_enum != null">
+                <foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+                    <if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+                    <if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+                    <if test="orderItem == 'parentid_desc'" ><![CDATA[ parentid desc ]]></if>
+                    <if test="orderItem == 'parentid_asc'" ><![CDATA[ parentid ]]></if>
+                    <if test="orderItem == 'name_desc'" ><![CDATA[ name desc ]]></if>
+                    <if test="orderItem == 'name_asc'" ><![CDATA[ name ]]></if>
+                    <if test="orderItem == 'dictkey_desc'" ><![CDATA[ dictkey desc ]]></if>
+                    <if test="orderItem == 'dictkey_asc'" ><![CDATA[ dictkey ]]></if>
+                    <if test="orderItem == 'value_desc'" ><![CDATA[ value desc ]]></if>
+                    <if test="orderItem == 'value_asc'" ><![CDATA[ value ]]></if>
+                    <if test="orderItem == 'description_desc'" ><![CDATA[ description desc ]]></if>
+                    <if test="orderItem == 'description_asc'" ><![CDATA[ description ]]></if>
+                    <if test="orderItem == 'status_desc'" ><![CDATA[ status desc ]]></if>
+                    <if test="orderItem == 'status_asc'" ><![CDATA[ status ]]></if>
+                    <if test="orderItem == 'isdefault_desc'" ><![CDATA[ isdefault desc ]]></if>
+                    <if test="orderItem == 'isdefault_asc'" ><![CDATA[ isdefault ]]></if>
+                    <if test="orderItem == 'showindex_desc'" ><![CDATA[ showindex desc ]]></if>
+                    <if test="orderItem == 'showindex_asc'" ><![CDATA[ showindex ]]></if>
+                </foreach>
+            </if>
+
+		</trim>
+	</sql>
+
+	<sql id="updateSetSql">
+		<trim prefix="set" prefixOverrides="and">
+            <if test="parentid != null" ><![CDATA[ and  parentid = #{parentid}]]></if>
+            <if test="name != null" ><![CDATA[ and  name = #{name}]]></if>
+            <if test="dictkey != null" ><![CDATA[ and  dictkey = #{dictkey}]]></if>
+            <if test="value != null" ><![CDATA[ and  value = #{value}]]></if>
+            <if test="description != null" ><![CDATA[ and  description = #{description}]]></if>
+            <if test="status != null" ><![CDATA[ and  status = #{status}]]></if>
+            <if test="isdefault != null" ><![CDATA[ and  isdefault = #{isdefault}]]></if>
+            <if test="showindex != null" ><![CDATA[ and  showindex = #{showindex}]]></if>
+
+		</trim>
+	</sql>	
+
+	<insert id="insertObject" parameterType="com.jc.cz_index.model.Dictionary">
+		<selectKey resultType="Long" keyProperty="id" order="AFTER">
+		 SELECT	LAST_INSERT_ID()
+	 	</selectKey>
+	 	insert into DICTIONARY( id,parentid,name,dictkey,value,description,status,isdefault,showindex ) values (#{id},#{parentid},#{name},#{dictkey},#{value},#{description},#{status},#{isdefault},#{showindex} )
+	</insert>
+
+	<update id="updateObject" parameterType="com.jc.cz_index.model.Dictionary">
+		update DICTIONARY set parentid=#{parentid},name=#{name},dictkey=#{dictkey},value=#{value},description=#{description},status=#{status},isdefault=#{isdefault},showindex=#{showindex} where id=#{id}
+	</update>
+	
+	<update id="updateObjectByFields" parameterType="com.jc.cz_index.dao.QueryParams">
+		UPDATE DICTIONARY 
+		<include refid="updateSetSql" />
+		where id=#{id};
+  	</update> 
+	
+	<delete id="deleteObject" parameterType="long">
+		DELETE FROM DICTIONARY WHERE id = #{id}
+  	</delete>
+
+	<delete id="deleteObjectByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+		DELETE FROM DICTIONARY
+		<include refid="whereSql" />
+	</delete>
+
+	<select id="getBaseObject" parameterType="long" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from DICTIONARY where id=#{id};
+	</select>
+
+	<select id="getDetailObject" parameterType="long" resultMap="resultDetailMap">
+		select * from DICTIONARY where id=#{id};
+	</select>
+	
+	<select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams" resultType="int">
+		select count(*) from DICTIONARY
+		  <include refid="whereSql" />
+	</select>
+	
+	<select id="queryBaseList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from DICTIONARY
+			<include refid="whereSql" />
+		  <include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+
+	<select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultDetailMap">
+		select * from DICTIONARY
+			<include refid="whereSql" />
+		  <include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+	<select id="getDictionaryByParentId" parameterType="long" resultMap="resultDetailMap">
+        SELECT * FROM DICTIONARY D where D.parentid = #{parenId}
+    </select>
+</mapper>
+

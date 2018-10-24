@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2016/9/29 11:38:17 Jack Liu created. -->
+
+<mapper namespace="com.jc.cz_index.dao.ISystemUserAuthDao">
+
+    <resultMap type="com.jc.cz_index.model.SystemUserAuth" id="resultMap">
+        <id property="id" column="id" />
+        <result property="loginName" column="login_name" />
+        <result property="password" column="password" />
+        <result property="status" column="status" />
+        <result property="creator" column="creator" />
+        <result property="createDate" column="create_date" />
+        <result property="loginDate" column="login_date" />
+        <result property="updatePassDate" column="update_pass_date" />
+    </resultMap>
+    <resultMap type="com.jc.cz_index.model.SystemUserAuth" id="resultDetailMap">
+        <id property="id" column="id" />
+        <result property="loginName" column="login_name" />
+        <result property="password" column="password" />
+        <result property="status" column="status" />
+        <result property="creator" column="creator" />
+        <result property="createDate" column="create_date" />
+        <result property="loginDate" column="login_date" />
+        <result property="updatePassDate" column="update_pass_date" />
+    
+	<!-- 
+	  <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	  <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	 -->
+    </resultMap>
+
+
+    <sql id="baseCol">
+        id, login_name, password, status, creator, create_date, login_date, update_pass_date
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="loginName != null"><![CDATA[ and login_name = #{loginName} ]]></if>
+            <if test="loginName_enum != null">
+                <![CDATA[ and login_name in ]]>
+                <foreach collection="loginName_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="password != null"><![CDATA[ and password = #{password} ]]></if>
+            <if test="password_enum != null">
+                <![CDATA[ and password in ]]>
+                <foreach collection="password_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="status != null"><![CDATA[ and status = #{status} ]]></if>
+            <if test="status_r_min != null"><![CDATA[ and status >= #{status_r_min} and status <= #{status_r_max} ]]></if>
+            <if test="status_enum != null">
+                <![CDATA[ and status in ]]>
+                <foreach collection="status_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="creator != null"><![CDATA[ and creator = #{creator} ]]></if>
+            <if test="creator_r_min != null"><![CDATA[ and creator >= #{creator_r_min} and creator <= #{creator_r_max} ]]></if>
+            <if test="creator_enum != null">
+                <![CDATA[ and creator in ]]>
+                <foreach collection="creator_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="createDate != null"><![CDATA[ and create_date = #{createDate} ]]></if>
+            <if test="createDate_r_min != null"><![CDATA[ and create_date >= #{createDate_r_min} and create_date < #{createDate_r_max} ]]></if>
+            <if test="loginDate != null"><![CDATA[ and login_date = #{loginDate} ]]></if>
+            <if test="loginDate_r_min != null"><![CDATA[ and login_date >= #{loginDate_r_min} and login_date < #{loginDate_r_max} ]]></if>
+            <if test="updatePassDate != null"><![CDATA[ and update_pass_date = #{updatePassDate} ]]></if>
+            <if test="updatePassDate_r_min != null"><![CDATA[ and update_pass_date >= #{updatePassDate_r_min} and update_pass_date < #{updatePassDate_r_max} ]]></if>
+            <if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+                <foreach collection="_default_mulattr" item="item" open="(" separator=" or " close=")">
+                    <if test="item.name == 'loginName'"><![CDATA[ login_name = #{item.value} ]]></if>
+                    <if test="item.name == 'password'"><![CDATA[ password = #{item.value} ]]></if>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'loginName_desc'"><![CDATA[ login_name desc, ]]></if>
+            <if test="_orderBy == 'loginName_asc'"><![CDATA[ login_name, ]]></if>
+            <if test="_orderBy == 'password_desc'"><![CDATA[ password desc, ]]></if>
+            <if test="_orderBy == 'password_asc'"><![CDATA[ password, ]]></if>
+            <if test="_orderBy == 'status_desc'"><![CDATA[ status desc, ]]></if>
+            <if test="_orderBy == 'status_asc'"><![CDATA[ status, ]]></if>
+            <if test="_orderBy == 'creator_desc'"><![CDATA[ creator desc, ]]></if>
+            <if test="_orderBy == 'creator_asc'"><![CDATA[ creator, ]]></if>
+            <if test="_orderBy == 'createDate_desc'"><![CDATA[ create_date desc, ]]></if>
+            <if test="_orderBy == 'createDate_asc'"><![CDATA[ create_date, ]]></if>
+            <if test="_orderBy == 'loginDate_desc'"><![CDATA[ login_date desc, ]]></if>
+            <if test="_orderBy == 'loginDate_asc'"><![CDATA[ login_date, ]]></if>
+            <if test="_orderBy == 'updatePassDate_desc'"><![CDATA[ update_pass_date desc, ]]></if>
+            <if test="_orderBy == 'updatePassDate_asc'"><![CDATA[ update_pass_date, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'loginName_desc'"><![CDATA[ login_name desc ]]></if>
+					<if test="orderItem == 'loginName_asc'"><![CDATA[ login_name ]]></if>
+					<if test="orderItem == 'password_desc'"><![CDATA[ password desc ]]></if>
+					<if test="orderItem == 'password_asc'"><![CDATA[ password ]]></if>
+					<if test="orderItem == 'status_desc'"><![CDATA[ status desc ]]></if>
+					<if test="orderItem == 'status_asc'"><![CDATA[ status ]]></if>
+					<if test="orderItem == 'creator_desc'"><![CDATA[ creator desc ]]></if>
+					<if test="orderItem == 'creator_asc'"><![CDATA[ creator ]]></if>
+					<if test="orderItem == 'createDate_desc'"><![CDATA[ create_date desc ]]></if>
+					<if test="orderItem == 'createDate_asc'"><![CDATA[ create_date ]]></if>
+					<if test="orderItem == 'loginDate_desc'"><![CDATA[ login_date desc ]]></if>
+					<if test="orderItem == 'loginDate_asc'"><![CDATA[ login_date ]]></if>
+					<if test="orderItem == 'updatePassDate_desc'"><![CDATA[ update_pass_date desc ]]></if>
+					<if test="orderItem == 'updatePassDate_asc'"><![CDATA[ update_pass_date ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="loginName != null"><![CDATA[ and login_name = #{loginName} ]]></if>
+            <if test="password != null"><![CDATA[ and password = #{password} ]]></if>
+            <if test="status != null"><![CDATA[ and status = #{status} ]]></if>
+            <if test="creator != null"><![CDATA[ and creator = #{creator} ]]></if>
+            <if test="createDate != null"><![CDATA[ and create_date = #{createDate} ]]></if>
+            <if test="loginDate != null"><![CDATA[ and login_date = #{loginDate} ]]></if>
+            <if test="updatePassDate != null"><![CDATA[ and update_pass_date = #{updatePassDate} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="com.jc.cz_index.model.SystemUserAuth">
+	<selectKey resultType="Long" keyProperty="id" order="AFTER">
+	   SELECT
+	   LAST_INSERT_ID()
+	</selectKey>
+        insert into
+        system_user_auth(login_name,password,status,creator,create_date,login_date,update_pass_date)
+        values(#{loginName},#{password},#{status},#{creator},#{createDate},#{loginDate},#{updatePassDate});
+    </insert>
+
+    <update id="updateObject" parameterType="com.jc.cz_index.model.SystemUserAuth">
+        update system_user_auth
+        set login_name=#{loginName},password=#{password},status=#{status},creator=#{creator},create_date=#{createDate},login_date=#{loginDate},update_pass_date=#{updatePassDate}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="com.jc.cz_index.dao.QueryParams">
+        update system_user_auth
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="long">
+        delete from system_user_auth where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+        delete from system_user_auth
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="long" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from system_user_auth where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="long" resultMap="resultDetailMap">
+        select * from system_user_auth where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams" resultType="int">
+        select count(*) from system_user_auth
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from system_user_auth
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultDetailMap">
+        select * from system_user_auth
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+</mapper> 
+
+

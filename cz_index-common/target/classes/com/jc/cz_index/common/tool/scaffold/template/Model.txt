@@ -1,0 +1,21 @@
+package ${pkgPath};
+
+public class ${clzName} extends BaseBean {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	// 主键 [主键]
+	private Long              id;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+${fieldsDeclareInfo}
+
+}
+

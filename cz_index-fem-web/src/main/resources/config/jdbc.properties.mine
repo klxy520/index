@@ -1,0 +1,27 @@
+jdbc.driverClassName=com.mysql.jdbc.Driver
+#  \u672c\u5730\u5f00\u53d1
+jdbc.url=jdbc:mysql://localhost:3306/db_cz_cms?useUnicode=true&connectionCollation=utf8mb4_general_ci&characterSetResults=utf8&characterEncoding=utf8
+jdbc.username=root
+jdbc.password=root
+#  \u6d4b\u8bd5\u670d\u52a1\u5668
+#jdbc.url=jdbc:mysql://172.18.105.13:3306/db_cz_cms_fem1?useUnicode=true&connectionCollation=utf8mb4_general_ci&characterSetResults=utf8&characterEncoding=utf8
+#jdbc.username=user_cz_cms
+#jdbc.password=cz_cms
+
+
+# \u5176\u4ed6\u8fde\u63a5\u6c60\u914d\u7f6e
+cpool.minPoolSize=5
+cpool.initialPoolSize=10
+cpool.maxPoolSize=20
+cpool.maxIdleTime=60
+cpool.acquireIncrement=3
+cpool.acquireRetryAttempts=30
+cpool.acquireRetryDelay=1000
+cpool.maxIdleTime=60
+cpool.idleConnectionTestPeriod=60
+cpool.testConnectionOnCheckin=true
+cpool.testConnectionOnCheckout=true
+cpool.preferredTestQuery=select 1
+cpool.autoCommitOnClose=false
+cpool.checkoutTimeout=10000
+#cpool.automaticTestTable=cpool_test

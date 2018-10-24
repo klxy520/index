@@ -1,0 +1,11 @@
+package ${pkgPath};
+
+import ${modelPath};
+
+/**
+ * ${pkgName} Service 接口 Created by 
+ */
+public interface I${clzName}Service extends IBaseService<${clzName}> {
+
+}
+

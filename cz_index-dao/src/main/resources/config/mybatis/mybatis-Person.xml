@@ -1,0 +1,780 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jc.cz_index.dao.IPersonDao">
+	
+	<resultMap id="resultMap" type="com.jc.cz_index.model.Person">
+            <result property="id" column="id" />
+            <result property="mpiId" column="mpi_id" />
+            <result property="birthday" column="birthday" />
+            <result property="bloodTypeCode" column="blood_type_code" />
+            <result property="educationCode" column="education_code" />
+            <result property="address" column="address" />
+            <result property="insuranceCode" column="insurance_code" />
+            <result property="maritalStatusCode" column="marital_status_code" />
+            <result property="personName" column="person_name" />
+            <result property="idCard" column="id_card" />
+            <result property="cardNo" column="card_no" />
+            <result property="nationalityCode" column="nationality_code" />
+            <result property="nationCode" column="nation_code" />
+            <result property="registeredPermanent" column="registered_permanent" />
+            <result property="deceasedInd" column="deceased_ind" />
+            <result property="deceasedTime" column="deceased_time" />
+            <result property="rhBloodCode" column="rh_blood_code" />
+            <result property="sexCode" column="sex_code" />
+            <result property="startWorkDate" column="start_work_date" />
+            <result property="workCode" column="work_code" />
+            <result property="workPlace" column="work_place" />
+            <result property="insuranceType" column="insurance_type" />
+            <result property="contactNo" column="contact_no" />
+            <result property="status" column="status" />
+            <result property="delFalg" column="del_falg" />
+            <result property="deleteor" column="deleteor" />
+            <result property="deleteDate" column="delete_date" />
+            <result property="creator" column="creator" />
+            <result property="createDate" column="create_date" />
+            <result property="updator" column="updator" />
+            <result property="updateDate" column="update_date" />
+
+	</resultMap>
+	
+	<resultMap id="resultDetailMap" type="com.jc.cz_index.model.Person">
+            <result property="id" column="id" />
+            <result property="mpiId" column="mpi_id" />
+            <result property="birthday" column="birthday" />
+            <result property="bloodTypeCode" column="blood_type_code" />
+            <result property="educationCode" column="education_code" />
+            <result property="address" column="address" />
+            <result property="insuranceCode" column="insurance_code" />
+            <result property="maritalStatusCode" column="marital_status_code" />
+            <result property="personName" column="person_name" />
+            <result property="idCard" column="id_card" />
+            <result property="cardNo" column="card_no" />
+            <result property="nationalityCode" column="nationality_code" />
+            <result property="nationCode" column="nation_code" />
+            <result property="registeredPermanent" column="registered_permanent" />
+            <result property="deceasedInd" column="deceased_ind" />
+            <result property="deceasedTime" column="deceased_time" />
+            <result property="rhBloodCode" column="rh_blood_code" />
+            <result property="sexCode" column="sex_code" />
+            <result property="startWorkDate" column="start_work_date" />
+            <result property="workCode" column="work_code" />
+            <result property="workPlace" column="work_place" />
+            <result property="insuranceType" column="insurance_type" />
+            <result property="contactNo" column="contact_no" />
+            <result property="status" column="status" />
+            <result property="delFalg" column="del_falg" />
+            <result property="deleteor" column="deleteor" />
+            <result property="deleteDate" column="delete_date" />
+            <result property="creator" column="creator" />
+            <result property="createDate" column="create_date" />
+            <result property="updator" column="updator" />
+            <result property="updateDate" column="update_date" />
+			
+			<association property="creatorUser" column="creator" select="com.jc.cz_index.dao.ISystemUserDao.getBaseObject">
+			</association>
+			<association property="updatorUser" column="updator" select="com.jc.cz_index.dao.ISystemUserDao.getBaseObject">
+			</association>
+			
+			<collection property="certificates" column="{mpiId=mpi_id}" ofType="com.jc.cz_index.model.Certificate" select="com.jc.cz_index.dao.ICertificateDao.getObjectByMpiId">
+	  		</collection>
+	  		<collection property="addresses" column="{mpiId=mpi_id}" ofType="com.jc.cz_index.model.Address" select="com.jc.cz_index.dao.IAddressDao.getObjectByMpiId">
+	  		</collection>
+	  		<collection property="contacts" column="{mpiId=mpi_id}" ofType="com.jc.cz_index.model.Contact" select="com.jc.cz_index.dao.IContactDao.getObjectByMpiId">
+	  		</collection>
+	  		<collection property="contactWays" column="{mpiId=mpi_id}" ofType="com.jc.cz_index.model.ContactWay" select="com.jc.cz_index.dao.IContactWayDao.getObjectByMpiId">
+	  		</collection> 
+	  		<collection property="cards" column="{mpiId=mpi_id}" ofType="com.jc.cz_index.model.Card" select="com.jc.cz_index.dao.ICardDao.getObjectByMpiId">
+	  		</collection>
+	
+	</resultMap>
+	
+	<resultMap id="resultDetail" type="com.jc.cz_index.model.Person">
+             <result property="id" column="id" />
+            <result property="mpiId" column="mpi_id" />
+            <result property="birthday" column="birthday" />
+            <result property="bloodTypeCode" column="blood_type_code" />
+            <result property="educationCode" column="education_code" />
+            <result property="address" column="address" />
+            <result property="insuranceCode" column="insurance_code" />
+            <result property="maritalStatusCode" column="marital_status_code" />
+            <result property="personName" column="person_name" />
+            <result property="idCard" column="id_card" />
+            <result property="cardNo" column="card_no" />
+            <result property="nationalityCode" column="nationality_code" />
+            <result property="nationCode" column="nation_code" />
+            <result property="registeredPermanent" column="registered_permanent" />
+            <result property="deceasedInd" column="deceased_ind" />
+            <result property="deceasedTime" column="deceased_time" />
+            <result property="rhBloodCode" column="rh_blood_code" />
+            <result property="sexCode" column="sex_code" />
+            <result property="startWorkDate" column="start_work_date" />
+            <result property="workCode" column="work_code" />
+            <result property="workPlace" column="work_place" />
+            <result property="insuranceType" column="insurance_type" />
+            <result property="contactNo" column="contact_no" />
+            <result property="status" column="status" />
+            <result property="delFalg" column="del_falg" />
+            <result property="deleteor" column="deleteor" />
+            <result property="deleteDate" column="delete_date" />
+            <result property="creator" column="creator" />
+            <result property="createDate" column="create_date" />
+            <result property="updator" column="updator" />
+            <result property="updateDate" column="update_date" />
+	  <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.ISystemUserDao.getBaseObject">
+	  </association>
+	  <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.ISystemUserDao.getBaseObject">
+	  </association>
+	</resultMap>
+	
+	<sql id="baseCol">
+        id,mpi_id,birthday,blood_type_code,education_code,address,insurance_code,marital_status_code,person_name,id_card,card_no,nationality_code,nation_code,registered_permanent,deceased_ind,deceased_time,rh_blood_code,sex_code,start_work_date,work_code,work_place,insurance_type,contact_no,status,del_falg,deleteor,delete_date,creator,create_date,updator,update_date
+
+	</sql>
+
+	<sql id="pageSql">
+		<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+	</sql>
+
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="mpiId != null"><![CDATA[ and  mpi_id = #{mpiId:VARCHAR}]]></if>
+            <if test="mpiId_r_min != null"><![CDATA[ and mpi_id >= #{mpiId_r_min} and mpi_id <= #{mpiId_r_max} ]]></if>
+            <if test="mpiId_enum != null">
+                <![CDATA[ and mpi_id in ]]>
+                <foreach collection="mpiId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="birthday != null"><![CDATA[ and  birthday = #{birthday:DATE}]]></if>
+            <if test="birthday_r_min != null"><![CDATA[ and birthday >= #{birthday_r_min} and birthday <= #{birthday_r_max} ]]></if>
+            <if test="birthday_enum != null">
+                <![CDATA[ and birthday in ]]>
+                <foreach collection="birthday_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="bloodTypeCode != null"><![CDATA[ and  blood_type_code = #{bloodTypeCode:VARCHAR}]]></if>
+            <if test="bloodTypeCode_r_min != null"><![CDATA[ and blood_type_code >= #{bloodTypeCode_r_min} and blood_type_code <= #{bloodTypeCode_r_max} ]]></if>
+            <if test="bloodTypeCode_enum != null">
+                <![CDATA[ and blood_type_code in ]]>
+                <foreach collection="bloodTypeCode_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="educationCode != null"><![CDATA[ and  education_code = #{educationCode:VARCHAR}]]></if>
+            <if test="educationCode_r_min != null"><![CDATA[ and education_code >= #{educationCode_r_min} and education_code <= #{educationCode_r_max} ]]></if>
+            <if test="educationCode_enum != null">
+                <![CDATA[ and education_code in ]]>
+                <foreach collection="educationCode_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="address != null"><![CDATA[ and  address = #{address:VARCHAR}]]></if>
+            <if test="address_r_min != null"><![CDATA[ and address >= #{address_r_min} and address <= #{address_r_max} ]]></if>
+            <if test="address_enum != null">
+                <![CDATA[ and address in ]]>
+                <foreach collection="address_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="insuranceCode != null"><![CDATA[ and  insurance_code = #{insuranceCode:VARCHAR}]]></if>
+            <if test="insuranceCode_r_min != null"><![CDATA[ and insurance_code >= #{insuranceCode_r_min} and insurance_code <= #{insuranceCode_r_max} ]]></if>
+            <if test="insuranceCode_enum != null">
+                <![CDATA[ and insurance_code in ]]>
+                <foreach collection="insuranceCode_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="maritalStatusCode != null"><![CDATA[ and  marital_status_code = #{maritalStatusCode:VARCHAR}]]></if>
+            <if test="maritalStatusCode_r_min != null"><![CDATA[ and marital_status_code >= #{maritalStatusCode_r_min} and marital_status_code <= #{maritalStatusCode_r_max} ]]></if>
+            <if test="maritalStatusCode_enum != null">
+                <![CDATA[ and marital_status_code in ]]>
+                <foreach collection="maritalStatusCode_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="personName != null"><![CDATA[ and  person_name = #{personName:VARCHAR}]]></if>
+            <if test="personName_r_min != null"><![CDATA[ and person_name >= #{personName_r_min} and person_name <= #{personName_r_max} ]]></if>
+            <if test="personName_enum != null">
+                <![CDATA[ and person_name in ]]>
+                <foreach collection="personName_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="idCard != null"><![CDATA[ and  id_card = #{idCard:VARCHAR}]]></if>
+            <if test="idCard_r_min != null"><![CDATA[ and id_card >= #{idCard_r_min} and id_card <= #{idCard_r_max} ]]></if>
+            <if test="idCard_enum != null">
+                <![CDATA[ and id_card in ]]>
+                <foreach collection="idCard_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="cardNo != null"><![CDATA[ and  card_no = #{cardNo:VARCHAR}]]></if>
+            <if test="cardNo_r_min != null"><![CDATA[ and card_no >= #{cardNo_r_min} and card_no <= #{cardNo_r_max} ]]></if>
+            <if test="cardNo_enum != null">
+                <![CDATA[ and card_no in ]]>
+                <foreach collection="cardNo_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="nationalityCode != null"><![CDATA[ and  nationality_code = #{nationalityCode:VARCHAR}]]></if>
+            <if test="nationalityCode_r_min != null"><![CDATA[ and nationality_code >= #{nationalityCode_r_min} and nationality_code <= #{nationalityCode_r_max} ]]></if>
+            <if test="nationalityCode_enum != null">
+                <![CDATA[ and nationality_code in ]]>
+                <foreach collection="nationalityCode_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="nationCode != null"><![CDATA[ and  nation_code = #{nationCode:VARCHAR}]]></if>
+            <if test="nationCode_r_min != null"><![CDATA[ and nation_code >= #{nationCode_r_min} and nation_code <= #{nationCode_r_max} ]]></if>
+            <if test="nationCode_enum != null">
+                <![CDATA[ and nation_code in ]]>
+                <foreach collection="nationCode_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="registeredPermanent != null"><![CDATA[ and  registered_permanent = #{registeredPermanent:VARCHAR}]]></if>
+            <if test="registeredPermanent_r_min != null"><![CDATA[ and registered_permanent >= #{registeredPermanent_r_min} and registered_permanent <= #{registeredPermanent_r_max} ]]></if>
+            <if test="registeredPermanent_enum != null">
+                <![CDATA[ and registered_permanent in ]]>
+                <foreach collection="registeredPermanent_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="deceasedInd != null"><![CDATA[ and  deceased_ind = #{deceasedInd:NUMERIC}]]></if>
+            <if test="deceasedInd_r_min != null"><![CDATA[ and deceased_ind >= #{deceasedInd_r_min} and deceased_ind <= #{deceasedInd_r_max} ]]></if>
+            <if test="deceasedInd_enum != null">
+                <![CDATA[ and deceased_ind in ]]>
+                <foreach collection="deceasedInd_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="deceasedTime != null"><![CDATA[ and  deceased_time = #{deceasedTime:DATE}]]></if>
+            <if test="deceasedTime_r_min != null"><![CDATA[ and deceased_time >= #{deceasedTime_r_min} and deceased_time <= #{deceasedTime_r_max} ]]></if>
+            <if test="deceasedTime_enum != null">
+                <![CDATA[ and deceased_time in ]]>
+                <foreach collection="deceasedTime_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="rhBloodCode != null"><![CDATA[ and  rh_blood_code = #{rhBloodCode:VARCHAR}]]></if>
+            <if test="rhBloodCode_r_min != null"><![CDATA[ and rh_blood_code >= #{rhBloodCode_r_min} and rh_blood_code <= #{rhBloodCode_r_max} ]]></if>
+            <if test="rhBloodCode_enum != null">
+                <![CDATA[ and rh_blood_code in ]]>
+                <foreach collection="rhBloodCode_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="sexCode != null"><![CDATA[ and  sex_code = #{sexCode:VARCHAR}]]></if>
+            <if test="sexCode_r_min != null"><![CDATA[ and sex_code >= #{sexCode_r_min} and sex_code <= #{sexCode_r_max} ]]></if>
+            <if test="sexCode_enum != null">
+                <![CDATA[ and sex_code in ]]>
+                <foreach collection="sexCode_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="startWorkDate != null"><![CDATA[ and  start_work_date = #{startWorkDate:DATE}]]></if>
+            <if test="startWorkDate_r_min != null"><![CDATA[ and start_work_date >= #{startWorkDate_r_min} and start_work_date <= #{startWorkDate_r_max} ]]></if>
+            <if test="startWorkDate_enum != null">
+                <![CDATA[ and start_work_date in ]]>
+                <foreach collection="startWorkDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="workCode != null"><![CDATA[ and  work_code = #{workCode:VARCHAR}]]></if>
+            <if test="workCode_r_min != null"><![CDATA[ and work_code >= #{workCode_r_min} and work_code <= #{workCode_r_max} ]]></if>
+            <if test="workCode_enum != null">
+                <![CDATA[ and work_code in ]]>
+                <foreach collection="workCode_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="workPlace != null"><![CDATA[ and  work_place = #{workPlace:VARCHAR}]]></if>
+            <if test="workPlace_r_min != null"><![CDATA[ and work_place >= #{workPlace_r_min} and work_place <= #{workPlace_r_max} ]]></if>
+            <if test="workPlace_enum != null">
+                <![CDATA[ and work_place in ]]>
+                <foreach collection="workPlace_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="insuranceType != null"><![CDATA[ and  insurance_type = #{insuranceType:VARCHAR}]]></if>
+            <if test="insuranceType_r_min != null"><![CDATA[ and insurance_type >= #{insuranceType_r_min} and insurance_type <= #{insuranceType_r_max} ]]></if>
+            <if test="insuranceType_enum != null">
+                <![CDATA[ and insurance_type in ]]>
+                <foreach collection="insuranceType_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="contactNo != null"><![CDATA[ and  contact_no = #{contactNo:VARCHAR}]]></if>
+            <if test="contactNo_r_min != null"><![CDATA[ and contact_no >= #{contactNo_r_min} and contact_no <= #{contactNo_r_max} ]]></if>
+            <if test="contactNo_enum != null">
+                <![CDATA[ and contact_no in ]]>
+                <foreach collection="contactNo_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="status != null"><![CDATA[ and  status = #{status:VARCHAR}]]></if>
+            <if test="status_r_min != null"><![CDATA[ and status >= #{status_r_min} and status <= #{status_r_max} ]]></if>
+            <if test="status_enum != null">
+                <![CDATA[ and status in ]]>
+                <foreach collection="status_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="delFalg != null"><![CDATA[ and  del_falg = #{delFalg:NUMERIC}]]></if>
+            <if test="delFalg_r_min != null"><![CDATA[ and del_falg >= #{delFalg_r_min} and del_falg <= #{delFalg_r_max} ]]></if>
+            <if test="delFalg_enum != null">
+                <![CDATA[ and del_falg in ]]>
+                <foreach collection="delFalg_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="deleteor != null"><![CDATA[ and  deleteor = #{deleteor:NUMERIC}]]></if>
+            <if test="deleteor_r_min != null"><![CDATA[ and deleteor >= #{deleteor_r_min} and deleteor <= #{deleteor_r_max} ]]></if>
+            <if test="deleteor_enum != null">
+                <![CDATA[ and deleteor in ]]>
+                <foreach collection="deleteor_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="deleteDate != null"><![CDATA[ and  delete_date = #{deleteDate:DATE}]]></if>
+            <if test="deleteDate_r_min != null"><![CDATA[ and delete_date >= #{deleteDate_r_min} and delete_date <= #{deleteDate_r_max} ]]></if>
+            <if test="deleteDate_enum != null">
+                <![CDATA[ and delete_date in ]]>
+                <foreach collection="deleteDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="creator != null"><![CDATA[ and  creator = #{creator:NUMERIC}]]></if>
+            <if test="creator_r_min != null"><![CDATA[ and creator >= #{creator_r_min} and creator <= #{creator_r_max} ]]></if>
+            <if test="creator_enum != null">
+                <![CDATA[ and creator in ]]>
+                <foreach collection="creator_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="createDate != null"><![CDATA[ and  create_date = #{createDate:DATE}]]></if>
+            <if test="createDate_r_min != null"><![CDATA[ and create_date >= #{createDate_r_min} and create_date <= #{createDate_r_max} ]]></if>
+            <if test="createDate_enum != null">
+                <![CDATA[ and create_date in ]]>
+                <foreach collection="createDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="updator != null"><![CDATA[ and  updator = #{updator:NUMERIC}]]></if>
+            <if test="updator_r_min != null"><![CDATA[ and updator >= #{updator_r_min} and updator <= #{updator_r_max} ]]></if>
+            <if test="updator_enum != null">
+                <![CDATA[ and updator in ]]>
+                <foreach collection="updator_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+              <if test="maxUpateDate_r_leq !=' 23:59:59' and maxUpateDate_r_leq!= null" ><![CDATA[ and update_date <= #{maxUpateDate_r_leq} ]]></if>
+            <if test="minUpateDate_r_geq !=' 00:00:00' and  minUpateDate_r_geq!= null "><![CDATA[ and update_date >= #{minUpateDate_r_geq} ]]></if>
+            <if test="updateDate != null"><![CDATA[ and  update_date = #{updateDate:DATE}]]></if>
+            <if test="updateDate_r_min != null"><![CDATA[ and update_date >= #{updateDate_r_min} and update_date <= #{updateDate_r_max} ]]></if>
+            <if test="updateDate_enum != null">
+                <![CDATA[ and update_date in ]]>
+                <foreach collection="updateDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+
+		</trim>
+	</sql>
+
+	<sql id="orderSql">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'mpiId_desc'" ><![CDATA[ mpi_id desc, ]]></if>
+            <if test="_orderBy == 'mpiId_asc'" ><![CDATA[ mpi_id, ]]></if>
+            <if test="_orderBy == 'birthday_desc'" ><![CDATA[ birthday desc, ]]></if>
+            <if test="_orderBy == 'birthday_asc'" ><![CDATA[ birthday, ]]></if>
+            <if test="_orderBy == 'bloodTypeCode_desc'" ><![CDATA[ blood_type_code desc, ]]></if>
+            <if test="_orderBy == 'bloodTypeCode_asc'" ><![CDATA[ blood_type_code, ]]></if>
+            <if test="_orderBy == 'educationCode_desc'" ><![CDATA[ education_code desc, ]]></if>
+            <if test="_orderBy == 'educationCode_asc'" ><![CDATA[ education_code, ]]></if>
+            <if test="_orderBy == 'address_desc'" ><![CDATA[ address desc, ]]></if>
+            <if test="_orderBy == 'address_asc'" ><![CDATA[ address, ]]></if>
+            <if test="_orderBy == 'insuranceCode_desc'" ><![CDATA[ insurance_code desc, ]]></if>
+            <if test="_orderBy == 'insuranceCode_asc'" ><![CDATA[ insurance_code, ]]></if>
+            <if test="_orderBy == 'maritalStatusCode_desc'" ><![CDATA[ marital_status_code desc, ]]></if>
+            <if test="_orderBy == 'maritalStatusCode_asc'" ><![CDATA[ marital_status_code, ]]></if>
+            <if test="_orderBy == 'personName_desc'" ><![CDATA[ person_name desc, ]]></if>
+            <if test="_orderBy == 'personName_asc'" ><![CDATA[ person_name, ]]></if>
+            <if test="_orderBy == 'idCard_desc'" ><![CDATA[ id_card desc, ]]></if>
+            <if test="_orderBy == 'idCard_asc'" ><![CDATA[ id_card, ]]></if>
+            <if test="_orderBy == 'cardNo_desc'" ><![CDATA[ card_no desc, ]]></if>
+            <if test="_orderBy == 'cardNo_asc'" ><![CDATA[ card_no, ]]></if>
+            <if test="_orderBy == 'nationalityCode_desc'" ><![CDATA[ nationality_code desc, ]]></if>
+            <if test="_orderBy == 'nationalityCode_asc'" ><![CDATA[ nationality_code, ]]></if>
+            <if test="_orderBy == 'nationCode_desc'" ><![CDATA[ nation_code desc, ]]></if>
+            <if test="_orderBy == 'nationCode_asc'" ><![CDATA[ nation_code, ]]></if>
+            <if test="_orderBy == 'registeredPermanent_desc'" ><![CDATA[ registered_permanent desc, ]]></if>
+            <if test="_orderBy == 'registeredPermanent_asc'" ><![CDATA[ registered_permanent, ]]></if>
+            <if test="_orderBy == 'deceasedInd_desc'" ><![CDATA[ deceased_ind desc, ]]></if>
+            <if test="_orderBy == 'deceasedInd_asc'" ><![CDATA[ deceased_ind, ]]></if>
+            <if test="_orderBy == 'deceasedTime_desc'" ><![CDATA[ deceased_time desc, ]]></if>
+            <if test="_orderBy == 'deceasedTime_asc'" ><![CDATA[ deceased_time, ]]></if>
+            <if test="_orderBy == 'rhBloodCode_desc'" ><![CDATA[ rh_blood_code desc, ]]></if>
+            <if test="_orderBy == 'rhBloodCode_asc'" ><![CDATA[ rh_blood_code, ]]></if>
+            <if test="_orderBy == 'sexCode_desc'" ><![CDATA[ sex_code desc, ]]></if>
+            <if test="_orderBy == 'sexCode_asc'" ><![CDATA[ sex_code, ]]></if>
+            <if test="_orderBy == 'startWorkDate_desc'" ><![CDATA[ start_work_date desc, ]]></if>
+            <if test="_orderBy == 'startWorkDate_asc'" ><![CDATA[ start_work_date, ]]></if>
+            <if test="_orderBy == 'workCode_desc'" ><![CDATA[ work_code desc, ]]></if>
+            <if test="_orderBy == 'workCode_asc'" ><![CDATA[ work_code, ]]></if>
+            <if test="_orderBy == 'workPlace_desc'" ><![CDATA[ work_place desc, ]]></if>
+            <if test="_orderBy == 'workPlace_asc'" ><![CDATA[ work_place, ]]></if>
+            <if test="_orderBy == 'insuranceType_desc'" ><![CDATA[ insurance_type desc, ]]></if>
+            <if test="_orderBy == 'insuranceType_asc'" ><![CDATA[ insurance_type, ]]></if>
+            <if test="_orderBy == 'contactNo_desc'" ><![CDATA[ contact_no desc, ]]></if>
+            <if test="_orderBy == 'contactNo_asc'" ><![CDATA[ contact_no, ]]></if>
+            <if test="_orderBy == 'status_desc'" ><![CDATA[ status desc, ]]></if>
+            <if test="_orderBy == 'status_asc'" ><![CDATA[ status, ]]></if>
+            <if test="_orderBy == 'delFalg_desc'" ><![CDATA[ del_falg desc, ]]></if>
+            <if test="_orderBy == 'delFalg_asc'" ><![CDATA[ del_falg, ]]></if>
+            <if test="_orderBy == 'deleteor_desc'" ><![CDATA[ deleteor desc, ]]></if>
+            <if test="_orderBy == 'deleteor_asc'" ><![CDATA[ deleteor, ]]></if>
+            <if test="_orderBy == 'deleteDate_desc'" ><![CDATA[ delete_date desc, ]]></if>
+            <if test="_orderBy == 'deleteDate_asc'" ><![CDATA[ delete_date, ]]></if>
+            <if test="_orderBy == 'creator_desc'" ><![CDATA[ creator desc, ]]></if>
+            <if test="_orderBy == 'creator_asc'" ><![CDATA[ creator, ]]></if>
+            <if test="_orderBy == 'createDate_desc'" ><![CDATA[ create_date desc, ]]></if>
+            <if test="_orderBy == 'createDate_asc'" ><![CDATA[ create_date, ]]></if>
+            <if test="_orderBy == 'updator_desc'" ><![CDATA[ updator desc, ]]></if>
+            <if test="_orderBy == 'updator_asc'" ><![CDATA[ updator, ]]></if>
+            <if test="_orderBy == 'updateDate_desc'" ><![CDATA[ update_date desc, ]]></if>
+            <if test="_orderBy == 'updateDate_asc'" ><![CDATA[ update_date, ]]></if>
+            <if test="_orderBy_enum != null">
+                <foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+                    <if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+                    <if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+                    <if test="orderItem == 'mpiId_desc'" ><![CDATA[ mpi_id desc ]]></if>
+                    <if test="orderItem == 'mpiId_asc'" ><![CDATA[ mpi_id ]]></if>
+                    <if test="orderItem == 'birthday_desc'" ><![CDATA[ birthday desc ]]></if>
+                    <if test="orderItem == 'birthday_asc'" ><![CDATA[ birthday ]]></if>
+                    <if test="orderItem == 'bloodTypeCode_desc'" ><![CDATA[ blood_type_code desc ]]></if>
+                    <if test="orderItem == 'bloodTypeCode_asc'" ><![CDATA[ blood_type_code ]]></if>
+                    <if test="orderItem == 'educationCode_desc'" ><![CDATA[ education_code desc ]]></if>
+                    <if test="orderItem == 'educationCode_asc'" ><![CDATA[ education_code ]]></if>
+                    <if test="orderItem == 'address_desc'" ><![CDATA[ address desc ]]></if>
+                    <if test="orderItem == 'address_asc'" ><![CDATA[ address ]]></if>
+                    <if test="orderItem == 'insuranceCode_desc'" ><![CDATA[ insurance_code desc ]]></if>
+                    <if test="orderItem == 'insuranceCode_asc'" ><![CDATA[ insurance_code ]]></if>
+                    <if test="orderItem == 'maritalStatusCode_desc'" ><![CDATA[ marital_status_code desc ]]></if>
+                    <if test="orderItem == 'maritalStatusCode_asc'" ><![CDATA[ marital_status_code ]]></if>
+                    <if test="orderItem == 'personName_desc'" ><![CDATA[ person_name desc ]]></if>
+                    <if test="orderItem == 'personName_asc'" ><![CDATA[ person_name ]]></if>
+                    <if test="orderItem == 'idCard_desc'" ><![CDATA[ id_card desc ]]></if>
+                    <if test="orderItem == 'idCard_asc'" ><![CDATA[ id_card ]]></if>
+                    <if test="orderItem == 'cardNo_desc'" ><![CDATA[ card_no desc ]]></if>
+                    <if test="orderItem == 'cardNo_asc'" ><![CDATA[ card_no ]]></if>
+                    <if test="orderItem == 'nationalityCode_desc'" ><![CDATA[ nationality_code desc ]]></if>
+                    <if test="orderItem == 'nationalityCode_asc'" ><![CDATA[ nationality_code ]]></if>
+                    <if test="orderItem == 'nationCode_desc'" ><![CDATA[ nation_code desc ]]></if>
+                    <if test="orderItem == 'nationCode_asc'" ><![CDATA[ nation_code ]]></if>
+                    <if test="orderItem == 'registeredPermanent_desc'" ><![CDATA[ registered_permanent desc ]]></if>
+                    <if test="orderItem == 'registeredPermanent_asc'" ><![CDATA[ registered_permanent ]]></if>
+                    <if test="orderItem == 'deceasedInd_desc'" ><![CDATA[ deceased_ind desc ]]></if>
+                    <if test="orderItem == 'deceasedInd_asc'" ><![CDATA[ deceased_ind ]]></if>
+                    <if test="orderItem == 'deceasedTime_desc'" ><![CDATA[ deceased_time desc ]]></if>
+                    <if test="orderItem == 'deceasedTime_asc'" ><![CDATA[ deceased_time ]]></if>
+                    <if test="orderItem == 'rhBloodCode_desc'" ><![CDATA[ rh_blood_code desc ]]></if>
+                    <if test="orderItem == 'rhBloodCode_asc'" ><![CDATA[ rh_blood_code ]]></if>
+                    <if test="orderItem == 'sexCode_desc'" ><![CDATA[ sex_code desc ]]></if>
+                    <if test="orderItem == 'sexCode_asc'" ><![CDATA[ sex_code ]]></if>
+                    <if test="orderItem == 'startWorkDate_desc'" ><![CDATA[ start_work_date desc ]]></if>
+                    <if test="orderItem == 'startWorkDate_asc'" ><![CDATA[ start_work_date ]]></if>
+                    <if test="orderItem == 'workCode_desc'" ><![CDATA[ work_code desc ]]></if>
+                    <if test="orderItem == 'workCode_asc'" ><![CDATA[ work_code ]]></if>
+                    <if test="orderItem == 'workPlace_desc'" ><![CDATA[ work_place desc ]]></if>
+                    <if test="orderItem == 'workPlace_asc'" ><![CDATA[ work_place ]]></if>
+                    <if test="orderItem == 'insuranceType_desc'" ><![CDATA[ insurance_type desc ]]></if>
+                    <if test="orderItem == 'insuranceType_asc'" ><![CDATA[ insurance_type ]]></if>
+                    <if test="orderItem == 'contactNo_desc'" ><![CDATA[ contact_no desc ]]></if>
+                    <if test="orderItem == 'contactNo_asc'" ><![CDATA[ contact_no ]]></if>
+                    <if test="orderItem == 'status_desc'" ><![CDATA[ status desc ]]></if>
+                    <if test="orderItem == 'status_asc'" ><![CDATA[ status ]]></if>
+                    <if test="orderItem == 'delFalg_desc'" ><![CDATA[ del_falg desc ]]></if>
+                    <if test="orderItem == 'delFalg_asc'" ><![CDATA[ del_falg ]]></if>
+                    <if test="orderItem == 'deleteor_desc'" ><![CDATA[ deleteor desc ]]></if>
+                    <if test="orderItem == 'deleteor_asc'" ><![CDATA[ deleteor ]]></if>
+                    <if test="orderItem == 'deleteDate_desc'" ><![CDATA[ delete_date desc ]]></if>
+                    <if test="orderItem == 'deleteDate_asc'" ><![CDATA[ delete_date ]]></if>
+                    <if test="orderItem == 'creator_desc'" ><![CDATA[ creator desc ]]></if>
+                    <if test="orderItem == 'creator_asc'" ><![CDATA[ creator ]]></if>
+                    <if test="orderItem == 'createDate_desc'" ><![CDATA[ create_date desc ]]></if>
+                    <if test="orderItem == 'createDate_asc'" ><![CDATA[ create_date ]]></if>
+                    <if test="orderItem == 'updator_desc'" ><![CDATA[ updator desc ]]></if>
+                    <if test="orderItem == 'updator_asc'" ><![CDATA[ updator ]]></if>
+                    <if test="orderItem == 'updateDate_desc'" ><![CDATA[ update_date desc ]]></if>
+                    <if test="orderItem == 'updateDate_asc'" ><![CDATA[ update_date ]]></if>
+                </foreach>
+            </if>
+
+		</trim>
+	</sql>
+
+	<sql id="updateSetSql">
+		<trim prefix="set" prefixOverrides=",">
+            <if test="mpiId != null" ><![CDATA[ ,  mpi_id = #{mpiId}]]></if>
+            <if test="birthday != null" ><![CDATA[ ,  birthday = #{birthday}]]></if>
+            <if test="bloodTypeCode != null" ><![CDATA[ ,  blood_type_code = #{bloodTypeCode}]]></if>
+            <if test="educationCode != null" ><![CDATA[ ,  education_code = #{educationCode}]]></if>
+            <if test="address != null" ><![CDATA[ ,  address = #{address}]]></if>
+            <if test="insuranceCode != null" ><![CDATA[ ,  insurance_code = #{insuranceCode}]]></if>
+            <if test="maritalStatusCode != null" ><![CDATA[ ,  marital_status_code = #{maritalStatusCode}]]></if>
+            <if test="personName != null" ><![CDATA[ ,  person_name = #{personName}]]></if>
+            <if test="idCard != null" ><![CDATA[ ,  id_card = #{idCard}]]></if>
+            <if test="cardNo != null" ><![CDATA[ ,  card_no = #{cardNo}]]></if>
+            <if test="nationalityCode != null" ><![CDATA[ ,  nationality_code = #{nationalityCode}]]></if>
+            <if test="nationCode != null" ><![CDATA[ ,  nation_code = #{nationCode}]]></if>
+            <if test="registeredPermanent != null" ><![CDATA[ ,  registered_permanent = #{registeredPermanent}]]></if>
+            <if test="deceasedInd != null" ><![CDATA[ ,  deceased_ind = #{deceasedInd}]]></if>
+            <if test="deceasedTime != null" ><![CDATA[ ,  deceased_time = #{deceasedTime}]]></if>
+            <if test="rhBloodCode != null" ><![CDATA[ ,  rh_blood_code = #{rhBloodCode}]]></if>
+            <if test="sexCode != null" ><![CDATA[ ,  sex_code = #{sexCode}]]></if>
+            <if test="startWorkDate != null" ><![CDATA[ ,  start_work_date = #{startWorkDate}]]></if>
+            <if test="workCode != null" ><![CDATA[ ,  work_code = #{workCode}]]></if>
+            <if test="workPlace != null" ><![CDATA[ ,  work_place = #{workPlace}]]></if>
+            <if test="insuranceType != null" ><![CDATA[ ,  insurance_type = #{insuranceType}]]></if>
+            <if test="contactNo != null" ><![CDATA[ ,  contact_no = #{contactNo}]]></if>
+            <if test="status != null" ><![CDATA[ ,  status = #{status}]]></if>
+            <if test="delFalg != null" ><![CDATA[ ,  del_falg = #{delFalg}]]></if>
+            <if test="deleteor != null" ><![CDATA[ ,  deleteor = #{deleteor}]]></if>
+            <if test="deleteDate != null" ><![CDATA[ ,  delete_date = #{deleteDate}]]></if>
+            <if test="creator != null" ><![CDATA[ ,  creator = #{creator}]]></if>
+            <if test="createDate != null" ><![CDATA[ ,  create_date = #{createDate}]]></if>
+            <if test="updator != null" ><![CDATA[ ,  updator = #{updator}]]></if>
+            <if test="updateDate != null" ><![CDATA[ ,  update_date = #{updateDate}]]></if>
+
+		</trim>
+	</sql>	
+
+	<insert id="insertObject" parameterType="com.jc.cz_index.model.Person">
+		<selectKey resultType="Long" keyProperty="id" order="AFTER">
+		 SELECT	LAST_INSERT_ID()
+	 	</selectKey>
+	 	insert into PERSON( id,mpi_id,birthday,blood_type_code,education_code,address,insurance_code,marital_status_code,person_name,id_card,card_no,nationality_code,nation_code,registered_permanent,deceased_ind,deceased_time,rh_blood_code,sex_code,start_work_date,work_code,work_place,insurance_type,contact_no,status,del_falg,deleteor,delete_date,creator,create_date,updator,update_date ) values (#{id},#{mpiId},#{birthday},#{bloodTypeCode},#{educationCode},#{address},#{insuranceCode},#{maritalStatusCode},#{personName},#{idCard},#{cardNo},#{nationalityCode},#{nationCode},#{registeredPermanent},#{deceasedInd},#{deceasedTime},#{rhBloodCode},#{sexCode},#{startWorkDate},#{workCode},#{workPlace},#{insuranceType},#{contactNo},#{status},#{delFalg},#{deleteor},#{deleteDate},#{creator},#{createDate},#{updator},#{updateDate} )
+	</insert>
+
+	<update id="updateObject" parameterType="com.jc.cz_index.model.Person">
+		update PERSON set mpi_id=#{mpiId},birthday=#{birthday},blood_type_code=#{bloodTypeCode},education_code=#{educationCode},address=#{address},insurance_code=#{insuranceCode},marital_status_code=#{maritalStatusCode},person_name=#{personName},id_card=#{idCard},card_no=#{cardNo},nationality_code=#{nationalityCode},nation_code=#{nationCode},registered_permanent=#{registeredPermanent},deceased_ind=#{deceasedInd},deceased_time=#{deceasedTime},rh_blood_code=#{rhBloodCode},sex_code=#{sexCode},start_work_date=#{startWorkDate},work_code=#{workCode},work_place=#{workPlace},insurance_type=#{insuranceType},contact_no=#{contactNo},status=#{status},del_falg=#{delFalg},deleteor=#{deleteor},delete_date=#{deleteDate},creator=#{creator},create_date=#{createDate},updator=#{updator},update_date=#{updateDate} where id=#{id}
+	</update>
+	
+	<update id="updateObjectByFields" parameterType="com.jc.cz_index.dao.QueryParams">
+		UPDATE PERSON 
+		<include refid="updateSetSql" />
+		where id=#{id};
+  	</update> 
+	
+	<delete id="deleteObject" parameterType="long">
+		DELETE FROM PERSON WHERE id = #{id}
+  	</delete>
+
+	<delete id="deleteObjectByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+		DELETE FROM PERSON
+		<include refid="whereSql" />
+	</delete>
+
+	<select id="getBaseObject" parameterType="long" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from PERSON where id=#{id};
+	</select>
+
+	<select id="getDetailObject" parameterType="long" resultMap="resultDetail">
+		select * from PERSON where id=#{id};
+	</select>
+	
+	<select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams" resultType="int">
+		select count(*) from PERSON
+		  <include refid="whereSql" />
+	</select>
+	
+	<select id="queryBaseList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from PERSON
+			<include refid="whereSql" />
+		  <include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+
+	<select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultDetailMap">
+		select * from PERSON
+			<include refid="whereSql" />
+		  <include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+	
+	<insert id="insertList" parameterType="java.util.List">
+		insert into
+        PERSON (mpi_id,birthday,blood_type_code,education_code,address,insurance_code,marital_status_code,person_name,id_card,card_no,nationality_code,nation_code,registered_permanent,deceased_ind,deceased_time,rh_blood_code,sex_code,start_work_date,work_code,work_place,insurance_type,contact_no,status,del_falg,deleteor,delete_date,creator,create_date,updator,update_date)
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.mpiId},#{item.birthday},#{item.bloodTypeCode},#{item.educationCode},#{item.address},#{item.insuranceCode},#{item.maritalStatusCode},#{item.personName},#{item.idCard},#{item.cardNo},#{item.nationalityCode},#{item.nationCode},#{item.registeredPermanent},#{item.deceasedInd},#{item.deceasedTime},#{item.rhBloodCode},#{item.sexCode},#{item.startWorkDate},#{item.workCode},#{item.workPlace},#{item.insuranceType},#{item.contactNo},#{item.status},#{item.delFalg},#{item.deleteor},#{item.deleteDate},#{item.creator},#{item.createDate},#{item.updator},#{item.updateDate})
+		</foreach>
+	</insert>
+	
+	<delete id="deleteList" parameterType="java.util.List">
+		delete from PERSON WHERE id in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+  	</delete>
+  	
+  	<delete id="deleteListByPKs" parameterType="String">
+		delete from PERSON WHERE FIND_IN_SET(id,#{PKs})
+  	</delete>
+	
+	<select id="getObjectList" parameterType="java.util.List" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from PERSON WHERE id in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="getObjectListByPKs" parameterType="String" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from PERSON WHERE FIND_IN_SET(id,#{PKs})
+	</select>
+	
+	<select id="getObjectByMpiId" parameterType="String" resultMap="resultMap">
+		select * from PERSON where mpi_id = #{mpiId}
+	</select>
+	
+	<select id="getEnableObjectByMpiId" parameterType="String" resultMap="resultMap">
+		select * from PERSON where mpi_id = #{mpiId} and del_falg = 0
+	</select>
+	
+	<select id="getUnSyncObjectList" parameterType="long" resultMap="resultMap">
+		SELECT
+			per.*
+		FROM
+			person_sync_log psl
+		LEFT JOIN person per ON per.id = psl.person_id
+		WHERE
+			psl.sync_status = '0'
+		AND psl.front_id = #{id}
+	</select>
+	
+	<insert id="saveOrUpdate2">
+	  <selectKey keyProperty="count" resultType="com.jc.cz_index.model.Person" order="BEFORE">
+	    select count(*) from person where id = #{id}
+	  </selectKey>
+	  <if test="count > 0">
+	    update PERSON set mpi_id=#{mpiId},birthday=#{birthday},blood_type_code=#{bloodTypeCode},education_code=#{educationCode},address=#{address},insurance_code=#{insuranceCode},marital_status_code=#{maritalStatusCode},person_name=#{personName},id_card=#{idCard},card_no=#{cardNo},nationality_code=#{nationalityCode},nation_code=#{nationCode},registered_permanent=#{registeredPermanent},deceased_ind=#{deceasedInd},deceased_time=#{deceasedTime},rh_blood_code=#{rhBloodCode},sex_code=#{sexCode},start_work_date=#{startWorkDate},work_code=#{workCode},work_place=#{workPlace},insurance_type=#{insuranceType},contact_no=#{contactNo},status=#{status},del_falg=#{delFalg},deleteor=#{deleteor},delete_date=#{deleteDate},creator=#{creator},create_date=#{createDate},updator=#{updator},update_date=#{updateDate} where id=#{id}
+	  </if>
+	  <if test="count==0">
+	    insert into PERSON( id,mpi_id,birthday,blood_type_code,education_code,address,insurance_code,marital_status_code,person_name,id_card,card_no,nationality_code,nation_code,registered_permanent,deceased_ind,deceased_time,rh_blood_code,sex_code,start_work_date,work_code,work_place,insurance_type,contact_no,status,del_falg,deleteor,delete_date,creator,create_date,updator,update_date ) values (#{id},#{mpiId},#{birthday},#{bloodTypeCode},#{educationCode},#{address},#{insuranceCode},#{maritalStatusCode},#{personName},#{idCard},#{cardNo},#{nationalityCode},#{nationCode},#{registeredPermanent},#{deceasedInd},#{deceasedTime},#{rhBloodCode},#{sexCode},#{startWorkDate},#{workCode},#{workPlace},#{insuranceType},#{contactNo},#{status},#{delFalg},#{deleteor},#{deleteDate},#{creator},#{createDate},#{updator},#{updateDate} )
+	  </if>
+	</insert>
+	
+	<insert id="saveOrUpdate" parameterType="com.jc.cz_index.model.Person">
+		insert into PERSON( id,mpi_id,birthday,blood_type_code,education_code,address,insurance_code,marital_status_code,person_name,id_card,card_no,nationality_code,nation_code,registered_permanent,deceased_ind,deceased_time,rh_blood_code,sex_code,start_work_date,work_code,work_place,insurance_type,contact_no,status,del_falg,deleteor,delete_date,creator,create_date,updator,update_date ) values (#{id},#{mpiId},#{birthday},#{bloodTypeCode},#{educationCode},#{address},#{insuranceCode},#{maritalStatusCode},#{personName},#{idCard},#{cardNo},#{nationalityCode},#{nationCode},#{registeredPermanent},#{deceasedInd},#{deceasedTime},#{rhBloodCode},#{sexCode},#{startWorkDate},#{workCode},#{workPlace},#{insuranceType},#{contactNo},#{status},#{delFalg},#{deleteor},#{deleteDate},#{creator},#{createDate},#{updator},#{updateDate} )
+		ON DUPLICATE KEY UPDATE
+		mpi_id=values(mpi_id),
+		birthday=values(birthday),
+		blood_type_code=values(blood_type_code),
+		education_code=values(education_code),
+		address=values(address),
+		insurance_code=values(insurance_code),
+		marital_status_code=values(marital_status_code),
+		person_name=values(person_name),
+		id_card=values(id_card),
+		card_no=values(card_no),
+		nationality_code=values(nationality_code),
+		nation_code=values(nation_code),
+		registered_permanent=values(registered_permanent),
+		deceased_ind=values(deceased_ind),
+		deceased_time=values(deceased_time),
+		rh_blood_code=values(rh_blood_code),
+		sex_code=values(sex_code),
+		start_work_date=values(start_work_date),
+		work_code=values(work_code),
+		work_place=values(work_place),
+		insurance_type=values(insurance_type),
+		contact_no=values(contact_no),
+		status=values(status),
+		del_falg=values(del_falg),
+		deleteor=values(deleteor),
+		delete_date=values(delete_date),
+		creator=values(creator),
+		create_date=values(create_date),
+		updator=values(updator),
+		update_date=values(update_date)
+		</insert>
+		
+		<select id="getObjectByCertificate" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+			select p.*
+			from CERTIFICATE ctf left join person p
+			on ctf.person_id = p.id
+			where
+			p.del_falg = 0 
+            <if test="certificateTypeCode != null"><![CDATA[ and ctf.certificate_type_code = #{certificateTypeCode} ]]></if>
+            <if test="certificateNo != null"><![CDATA[ and ctf.certificate_no = #{certificateNo} ]]></if>
+		</select>
+		
+		<select id="getObjectByAddress" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+			select p.*
+			from ADDRESS adr left join person p
+			on adr.person_id = p.id
+			where
+			p.del_falg = 0 
+            <if test="addressTypeCode != null"><![CDATA[ and adr.address_type_code = #{addressTypeCode} ]]></if>
+            <if test="address != null"><![CDATA[ and adr.address = #{address} ]]></if>
+            <if test="postalCode != null"><![CDATA[ and adr.postal_code = #{postalCode} ]]></if>
+		</select>
+		
+		<select id="getObjectByContactWay" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+			select p.*
+			from CONTACT_WAY cw left join person p
+			on cw.person_id = p.id
+			where
+			p.del_falg = 0 
+            <if test="contactTypeCode != null"><![CDATA[ and cw.contact_type_code = #{contactTypeCode}]]></if>
+        	<if test="contactNo != null"><![CDATA[ and cw.contact_no = #{contactNo}]]></if>
+        </select>
+        
+        <select id="getObjectByCard" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+        	select p.*
+			from CARD ca left join person p
+			on ca.person_id = p.id
+			where
+			p.del_falg = 0
+        	<if test="cardTypeCode != null"><![CDATA[ and ca.card_type_code = #{cardTypeCode:VARCHAR}]]></if>
+            <if test="cardNo != null"><![CDATA[ and ca.card_no = #{cardNo:VARCHAR}]]></if>
+            <if test="cardCode != null"><![CDATA[ and ca.card_code = #{cardCode:VARCHAR}]]></if>
+            <if test="createUnit != null"><![CDATA[ and ca.create_unit = #{createUnit:VARCHAR}]]></if>
+            <if test="validTime != null"><![CDATA[ and ca.valid_time = #{validTime:DATETIME}]]></if>
+            <if test="status != null"><![CDATA[ and ca.status = #{status:NUMERIC}]]></if>
+		</select>
+		
+		<select id="getObjectByContact" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+        	select p.*
+			from CONTACT con left join person p
+			on con.person_id = p.id
+			where
+			p.del_falg = 0 
+        	<if test="certificateTypeCode != null"><![CDATA[ and con.certificate_type_code = #{certificateTypeCode}]]></if>
+            <if test="certificateNo != null"><![CDATA[ and con.certificate_no = #{certificateNo}]]></if>
+            <if test="contactName != null"><![CDATA[ and con.contact_name = #{contactName}]]></if>
+		</select>
+		
+</mapper>
+

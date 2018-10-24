@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jc.cz_index.dao.IResidentAcquisitionDao">
+	
+	<resultMap id="resultMap" type="com.jc.cz_index.model.ResidentAcquisition">
+            <result property="id" column="id" />
+            <result property="bidUtil" column="bid_util" />
+            <result property="name" column="name" />
+            <result property="identityNumber" column="identity_number" />
+            <result property="issuersCertificateOrgan" column="issuers_certificate_organ" />
+            <result property="certificateValidityPeriod" column="certificate_validity_period" />
+            <result property="national" column="national" />
+            <result property="educationLevel" column="education_level" />
+            <result property="houseAddress" column="house_address" />
+            <result property="nowAddress" column="now_address" />
+            <result property="postCode" column="post_code" />
+            <result property="contactPhone" column="contact_phone" />
+            <result property="newRuralNumber" column="New_rural_number" />
+            <result property="socialSecurityNum" column="social_security_num" />
+            <result property="salaryCardBank" column="salary_card_bank" />
+            <result property="healthCardBank" column="health_card_bank" />
+            <result property="professional" column="professional" />
+            <result property="industry" column="industry" />
+            <result property="delFalg" column="del_falg" />
+            <result property="deleteor" column="deleteor" />
+            <result property="deleteDate" column="delete_date" />
+            <result property="creator" column="creator" />
+            <result property="createDate" column="create_date" />
+            <result property="updator" column="updator" />
+            <result property="updateDate" column="update_date" />
+
+	</resultMap>
+	
+	<resultMap id="resultDetailMap" type="com.jc.cz_index.model.ResidentAcquisition">
+            <result property="id" column="id" />
+            <result property="bidUtil" column="bid_util" />
+            <result property="name" column="name" />
+            <result property="identityNumber" column="identity_number" />
+            <result property="issuersCertificateOrgan" column="issuers_certificate_organ" />
+            <result property="certificateValidityPeriod" column="certificate_validity_period" />
+            <result property="national" column="national" />
+            <result property="educationLevel" column="education_level" />
+            <result property="houseAddress" column="house_address" />
+            <result property="nowAddress" column="now_address" />
+            <result property="postCode" column="post_code" />
+            <result property="contactPhone" column="contact_phone" />
+            <result property="newRuralNumber" column="New_rural_number" />
+            <result property="socialSecurityNum" column="social_security_num" />
+            <result property="salaryCardBank" column="salary_card_bank" />
+            <result property="healthCardBank" column="health_card_bank" />
+            <result property="professional" column="professional" />
+            <result property="industry" column="industry" />
+            <result property="delFalg" column="del_falg" />
+            <result property="deleteor" column="deleteor" />
+            <result property="deleteDate" column="delete_date" />
+            <result property="creator" column="creator" />
+            <result property="createDate" column="create_date" />
+            <result property="updator" column="updator" />
+            <result property="updateDate" column="update_date" />
+
+	
+	  <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.ISystemUserDao.getBaseObject">
+	  </association>
+	  <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.ISystemUserDao.getBaseObject">
+	  </association>
+	
+	</resultMap>
+	
+	<sql id="baseCol">
+        id,bid_util,name,identity_number,issuers_certificate_organ,certificate_validity_period,national,education_level,house_address,now_address,post_code,contact_phone,New_rural_number,social_security_num,salary_card_bank,health_card_bank,professional,industry,del_falg,deleteor,delete_date,creator,create_date,updator,update_date
+
+	</sql>
+
+	<sql id="pageSql">
+		<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+	</sql>
+
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="bidUtil_like != null"><![CDATA[ and  bid_util like #{bidUtil_like}]]></if>
+            <if test="bidUtil != null"><![CDATA[ and  bid_util = #{bidUtil:VARCHAR}]]></if>
+            <if test="bidUtil_r_min != null"><![CDATA[ and bid_util >= #{bidUtil_r_min} and bid_util <= #{bidUtil_r_max} ]]></if>
+            <if test="bidUtil_enum != null">
+                <![CDATA[ and bid_util in ]]>
+                <foreach collection="bidUtil_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="name_like != null"><![CDATA[ and  name like #{name_like}]]></if>
+            <if test="name != null"><![CDATA[ and  name = #{name:VARCHAR}]]></if>
+            <if test="name_r_min != null"><![CDATA[ and name >= #{name_r_min} and name <= #{name_r_max} ]]></if>
+            <if test="name_enum != null">
+                <![CDATA[ and name in ]]>
+                <foreach collection="name_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="identityNumber_like != null"><![CDATA[ and  identity_number like #{identityNumber_like}]]></if>
+            <if test="identityNumber != null"><![CDATA[ and  identity_number = #{identityNumber:VARCHAR}]]></if>
+            <if test="identityNumber_r_min != null"><![CDATA[ and identity_number >= #{identityNumber_r_min} and identity_number <= #{identityNumber_r_max} ]]></if>
+            <if test="identityNumber_enum != null">
+                <![CDATA[ and identity_number in ]]>
+                <foreach collection="identityNumber_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="issuersCertificateOrgan != null"><![CDATA[ and  issuers_certificate_organ = #{issuersCertificateOrgan:VARCHAR}]]></if>
+            <if test="issuersCertificateOrgan_r_min != null"><![CDATA[ and issuers_certificate_organ >= #{issuersCertificateOrgan_r_min} and issuers_certificate_organ <= #{issuersCertificateOrgan_r_max} ]]></if>
+            <if test="issuersCertificateOrgan_enum != null">
+                <![CDATA[ and issuers_certificate_organ in ]]>
+                <foreach collection="issuersCertificateOrgan_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="certificateValidityPeriod != null"><![CDATA[ and  certificate_validity_period = #{certificateValidityPeriod:VARCHAR}]]></if>
+            <if test="certificateValidityPeriod_r_min != null"><![CDATA[ and certificate_validity_period >= #{certificateValidityPeriod_r_min} and certificate_validity_period <= #{certificateValidityPeriod_r_max} ]]></if>
+            <if test="certificateValidityPeriod_enum != null">
+                <![CDATA[ and certificate_validity_period in ]]>
+                <foreach collection="certificateValidityPeriod_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="national != null"><![CDATA[ and  national = #{national:VARCHAR}]]></if>
+            <if test="national_r_min != null"><![CDATA[ and national >= #{national_r_min} and national <= #{national_r_max} ]]></if>
+            <if test="national_enum != null">
+                <![CDATA[ and national in ]]>
+                <foreach collection="national_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="educationLevel != null"><![CDATA[ and  education_level = #{educationLevel:VARCHAR}]]></if>
+            <if test="educationLevel_r_min != null"><![CDATA[ and education_level >= #{educationLevel_r_min} and education_level <= #{educationLevel_r_max} ]]></if>
+            <if test="educationLevel_enum != null">
+                <![CDATA[ and education_level in ]]>
+                <foreach collection="educationLevel_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="houseAddress != null"><![CDATA[ and  house_address = #{houseAddress:VARCHAR}]]></if>
+            <if test="houseAddress_r_min != null"><![CDATA[ and house_address >= #{houseAddress_r_min} and house_address <= #{houseAddress_r_max} ]]></if>
+            <if test="houseAddress_enum != null">
+                <![CDATA[ and house_address in ]]>
+                <foreach collection="houseAddress_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="nowAddress != null"><![CDATA[ and  now_address = #{nowAddress:VARCHAR}]]></if>
+            <if test="nowAddress_r_min != null"><![CDATA[ and now_address >= #{nowAddress_r_min} and now_address <= #{nowAddress_r_max} ]]></if>
+            <if test="nowAddress_enum != null">
+                <![CDATA[ and now_address in ]]>
+                <foreach collection="nowAddress_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="postCode != null"><![CDATA[ and  post_code = #{postCode:VARCHAR}]]></if>
+            <if test="postCode_r_min != null"><![CDATA[ and post_code >= #{postCode_r_min} and post_code <= #{postCode_r_max} ]]></if>
+            <if test="postCode_enum != null">
+                <![CDATA[ and post_code in ]]>
+                <foreach collection="postCode_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="contactPhone != null"><![CDATA[ and  contact_phone = #{contactPhone:VARCHAR}]]></if>
+            <if test="contactPhone_r_min != null"><![CDATA[ and contact_phone >= #{contactPhone_r_min} and contact_phone <= #{contactPhone_r_max} ]]></if>
+            <if test="contactPhone_enum != null">
+                <![CDATA[ and contact_phone in ]]>
+                <foreach collection="contactPhone_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="newRuralNumber_like != null"><![CDATA[ and  New_rural_number like #{newRuralNumber_like}]]></if>
+            <if test="newRuralNumber != null"><![CDATA[ and  New_rural_number = #{newRuralNumber:VARCHAR}]]></if>
+            <if test="newRuralNumber_r_min != null"><![CDATA[ and New_rural_number >= #{newRuralNumber_r_min} and New_rural_number <= #{newRuralNumber_r_max} ]]></if>
+            <if test="newRuralNumber_enum != null">
+                <![CDATA[ and New_rural_number in ]]>
+                <foreach collection="newRuralNumber_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="socialSecurityNum_like != null"><![CDATA[ and  social_security_num like #{socialSecurityNum_like}]]></if>
+            <if test="socialSecurityNum != null"><![CDATA[ and  social_security_num = #{socialSecurityNum:VARCHAR}]]></if>
+            <if test="socialSecurityNum_r_min != null"><![CDATA[ and social_security_num >= #{socialSecurityNum_r_min} and social_security_num <= #{socialSecurityNum_r_max} ]]></if>
+            <if test="socialSecurityNum_enum != null">
+                <![CDATA[ and social_security_num in ]]>
+                <foreach collection="socialSecurityNum_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="salaryCardBank != null"><![CDATA[ and  salary_card_bank = #{salaryCardBank:VARCHAR}]]></if>
+            <if test="salaryCardBank_r_min != null"><![CDATA[ and salary_card_bank >= #{salaryCardBank_r_min} and salary_card_bank <= #{salaryCardBank_r_max} ]]></if>
+            <if test="salaryCardBank_enum != null">
+                <![CDATA[ and salary_card_bank in ]]>
+                <foreach collection="salaryCardBank_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="healthCardBank != null"><![CDATA[ and  health_card_bank = #{healthCardBank:VARCHAR}]]></if>
+            <if test="healthCardBank_r_min != null"><![CDATA[ and health_card_bank >= #{healthCardBank_r_min} and health_card_bank <= #{healthCardBank_r_max} ]]></if>
+            <if test="healthCardBank_enum != null">
+                <![CDATA[ and health_card_bank in ]]>
+                <foreach collection="healthCardBank_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="professional != null"><![CDATA[ and  professional = #{professional:VARCHAR}]]></if>
+            <if test="professional_r_min != null"><![CDATA[ and professional >= #{professional_r_min} and professional <= #{professional_r_max} ]]></if>
+            <if test="professional_enum != null">
+                <![CDATA[ and professional in ]]>
+                <foreach collection="professional_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="industry != null"><![CDATA[ and  industry = #{industry:VARCHAR}]]></if>
+            <if test="industry_r_min != null"><![CDATA[ and industry >= #{industry_r_min} and industry <= #{industry_r_max} ]]></if>
+            <if test="industry_enum != null">
+                <![CDATA[ and industry in ]]>
+                <foreach collection="industry_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="delFalg != null"><![CDATA[ and  del_falg = #{delFalg:NUMERIC}]]></if>
+            <if test="delFalg_r_min != null"><![CDATA[ and del_falg >= #{delFalg_r_min} and del_falg <= #{delFalg_r_max} ]]></if>
+            <if test="delFalg_enum != null">
+                <![CDATA[ and del_falg in ]]>
+                <foreach collection="delFalg_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="deleteor != null"><![CDATA[ and  deleteor = #{deleteor:NUMERIC}]]></if>
+            <if test="deleteor_r_min != null"><![CDATA[ and deleteor >= #{deleteor_r_min} and deleteor <= #{deleteor_r_max} ]]></if>
+            <if test="deleteor_enum != null">
+                <![CDATA[ and deleteor in ]]>
+                <foreach collection="deleteor_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="deleteDate != null"><![CDATA[ and  delete_date = #{deleteDate:DATETIME}]]></if>
+            <if test="deleteDate_r_min != null"><![CDATA[ and delete_date >= #{deleteDate_r_min} and delete_date <= #{deleteDate_r_max} ]]></if>
+            <if test="deleteDate_enum != null">
+                <![CDATA[ and delete_date in ]]>
+                <foreach collection="deleteDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="creator != null"><![CDATA[ and  creator = #{creator:NUMERIC}]]></if>
+            <if test="creator_r_min != null"><![CDATA[ and creator >= #{creator_r_min} and creator <= #{creator_r_max} ]]></if>
+            <if test="creator_enum != null">
+                <![CDATA[ and creator in ]]>
+                <foreach collection="creator_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="createDate != null"><![CDATA[ and  create_date = #{createDate:DATETIME}]]></if>
+            <if test="createDate_r_min != null"><![CDATA[ and create_date >= #{createDate_r_min} and create_date <= #{createDate_r_max} ]]></if>
+            <if test="createDate_enum != null">
+                <![CDATA[ and create_date in ]]>
+                <foreach collection="createDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="updator != null"><![CDATA[ and  updator = #{updator:NUMERIC}]]></if>
+            <if test="updator_r_min != null"><![CDATA[ and updator >= #{updator_r_min} and updator <= #{updator_r_max} ]]></if>
+            <if test="updator_enum != null">
+                <![CDATA[ and updator in ]]>
+                <foreach collection="updator_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="maxUpateDate_r_leq !=' 23:59:59' and maxUpateDate_r_leq!= null" ><![CDATA[ and update_date <= #{maxUpateDate_r_leq} ]]></if>
+            <if test="minUpateDate_r_geq !=' 00:00:00' and  minUpateDate_r_geq!= null "><![CDATA[ and update_date >= #{minUpateDate_r_geq} ]]></if>
+            <if test="updateDate != null"><![CDATA[ and  update_date = #{updateDate:DATETIME}]]></if>
+            <if test="updateDate_r_min != null"><![CDATA[ and update_date >= #{updateDate_r_min} and update_date <= #{updateDate_r_max} ]]></if>
+            <if test="updateDate_enum != null">
+                <![CDATA[ and update_date in ]]>
+                <foreach collection="updateDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+
+		</trim>
+	</sql>
+
+	<sql id="orderSql">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'bidUtil_desc'" ><![CDATA[ bid_util desc, ]]></if>
+            <if test="_orderBy == 'bidUtil_asc'" ><![CDATA[ bid_util, ]]></if>
+            <if test="_orderBy == 'name_desc'" ><![CDATA[ name desc, ]]></if>
+            <if test="_orderBy == 'name_asc'" ><![CDATA[ name, ]]></if>
+            <if test="_orderBy == 'identityNumber_desc'" ><![CDATA[ identity_number desc, ]]></if>
+            <if test="_orderBy == 'identityNumber_asc'" ><![CDATA[ identity_number, ]]></if>
+            <if test="_orderBy == 'issuersCertificateOrgan_desc'" ><![CDATA[ issuers_certificate_organ desc, ]]></if>
+            <if test="_orderBy == 'issuersCertificateOrgan_asc'" ><![CDATA[ issuers_certificate_organ, ]]></if>
+            <if test="_orderBy == 'certificateValidityPeriod_desc'" ><![CDATA[ certificate_validity_period desc, ]]></if>
+            <if test="_orderBy == 'certificateValidityPeriod_asc'" ><![CDATA[ certificate_validity_period, ]]></if>
+            <if test="_orderBy == 'national_desc'" ><![CDATA[ national desc, ]]></if>
+            <if test="_orderBy == 'national_asc'" ><![CDATA[ national, ]]></if>
+            <if test="_orderBy == 'educationLevel_desc'" ><![CDATA[ education_level desc, ]]></if>
+            <if test="_orderBy == 'educationLevel_asc'" ><![CDATA[ education_level, ]]></if>
+            <if test="_orderBy == 'houseAddress_desc'" ><![CDATA[ house_address desc, ]]></if>
+            <if test="_orderBy == 'houseAddress_asc'" ><![CDATA[ house_address, ]]></if>
+            <if test="_orderBy == 'nowAddress_desc'" ><![CDATA[ now_address desc, ]]></if>
+            <if test="_orderBy == 'nowAddress_asc'" ><![CDATA[ now_address, ]]></if>
+            <if test="_orderBy == 'postCode_desc'" ><![CDATA[ post_code desc, ]]></if>
+            <if test="_orderBy == 'postCode_asc'" ><![CDATA[ post_code, ]]></if>
+            <if test="_orderBy == 'contactPhone_desc'" ><![CDATA[ contact_phone desc, ]]></if>
+            <if test="_orderBy == 'contactPhone_asc'" ><![CDATA[ contact_phone, ]]></if>
+            <if test="_orderBy == 'newRuralNumber_desc'" ><![CDATA[ New_rural_number desc, ]]></if>
+            <if test="_orderBy == 'newRuralNumber_asc'" ><![CDATA[ New_rural_number, ]]></if>
+            <if test="_orderBy == 'socialSecurityNum_desc'" ><![CDATA[ social_security_num desc, ]]></if>
+            <if test="_orderBy == 'socialSecurityNum_asc'" ><![CDATA[ social_security_num, ]]></if>
+            <if test="_orderBy == 'salaryCardBank_desc'" ><![CDATA[ salary_card_bank desc, ]]></if>
+            <if test="_orderBy == 'salaryCardBank_asc'" ><![CDATA[ salary_card_bank, ]]></if>
+            <if test="_orderBy == 'healthCardBank_desc'" ><![CDATA[ health_card_bank desc, ]]></if>
+            <if test="_orderBy == 'healthCardBank_asc'" ><![CDATA[ health_card_bank, ]]></if>
+            <if test="_orderBy == 'professional_desc'" ><![CDATA[ professional desc, ]]></if>
+            <if test="_orderBy == 'professional_asc'" ><![CDATA[ professional, ]]></if>
+            <if test="_orderBy == 'industry_desc'" ><![CDATA[ industry desc, ]]></if>
+            <if test="_orderBy == 'industry_asc'" ><![CDATA[ industry, ]]></if>
+            <if test="_orderBy == 'delFalg_desc'" ><![CDATA[ del_falg desc, ]]></if>
+            <if test="_orderBy == 'delFalg_asc'" ><![CDATA[ del_falg, ]]></if>
+            <if test="_orderBy == 'deleteor_desc'" ><![CDATA[ deleteor desc, ]]></if>
+            <if test="_orderBy == 'deleteor_asc'" ><![CDATA[ deleteor, ]]></if>
+            <if test="_orderBy == 'deleteDate_desc'" ><![CDATA[ delete_date desc, ]]></if>
+            <if test="_orderBy == 'deleteDate_asc'" ><![CDATA[ delete_date, ]]></if>
+            <if test="_orderBy == 'creator_desc'" ><![CDATA[ creator desc, ]]></if>
+            <if test="_orderBy == 'creator_asc'" ><![CDATA[ creator, ]]></if>
+            <if test="_orderBy == 'createDate_desc'" ><![CDATA[ create_date desc, ]]></if>
+            <if test="_orderBy == 'createDate_asc'" ><![CDATA[ create_date, ]]></if>
+            <if test="_orderBy == 'updator_desc'" ><![CDATA[ updator desc, ]]></if>
+            <if test="_orderBy == 'updator_asc'" ><![CDATA[ updator, ]]></if>
+            <if test="_orderBy == 'updateDate_desc'" ><![CDATA[ update_date desc, ]]></if>
+            <if test="_orderBy == 'updateDate_asc'" ><![CDATA[ update_date, ]]></if>
+            <if test="_orderBy_enum != null">
+                <foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+                    <if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+                    <if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+                    <if test="orderItem == 'bidUtil_desc'" ><![CDATA[ bid_util desc ]]></if>
+                    <if test="orderItem == 'bidUtil_asc'" ><![CDATA[ bid_util ]]></if>
+                    <if test="orderItem == 'name_desc'" ><![CDATA[ name desc ]]></if>
+                    <if test="orderItem == 'name_asc'" ><![CDATA[ name ]]></if>
+                    <if test="orderItem == 'identityNumber_desc'" ><![CDATA[ identity_number desc ]]></if>
+                    <if test="orderItem == 'identityNumber_asc'" ><![CDATA[ identity_number ]]></if>
+                    <if test="orderItem == 'issuersCertificateOrgan_desc'" ><![CDATA[ issuers_certificate_organ desc ]]></if>
+                    <if test="orderItem == 'issuersCertificateOrgan_asc'" ><![CDATA[ issuers_certificate_organ ]]></if>
+                    <if test="orderItem == 'certificateValidityPeriod_desc'" ><![CDATA[ certificate_validity_period desc ]]></if>
+                    <if test="orderItem == 'certificateValidityPeriod_asc'" ><![CDATA[ certificate_validity_period ]]></if>
+                    <if test="orderItem == 'national_desc'" ><![CDATA[ national desc ]]></if>
+                    <if test="orderItem == 'national_asc'" ><![CDATA[ national ]]></if>
+                    <if test="orderItem == 'educationLevel_desc'" ><![CDATA[ education_level desc ]]></if>
+                    <if test="orderItem == 'educationLevel_asc'" ><![CDATA[ education_level ]]></if>
+                    <if test="orderItem == 'houseAddress_desc'" ><![CDATA[ house_address desc ]]></if>
+                    <if test="orderItem == 'houseAddress_asc'" ><![CDATA[ house_address ]]></if>
+                    <if test="orderItem == 'nowAddress_desc'" ><![CDATA[ now_address desc ]]></if>
+                    <if test="orderItem == 'nowAddress_asc'" ><![CDATA[ now_address ]]></if>
+                    <if test="orderItem == 'postCode_desc'" ><![CDATA[ post_code desc ]]></if>
+                    <if test="orderItem == 'postCode_asc'" ><![CDATA[ post_code ]]></if>
+                    <if test="orderItem == 'contactPhone_desc'" ><![CDATA[ contact_phone desc ]]></if>
+                    <if test="orderItem == 'contactPhone_asc'" ><![CDATA[ contact_phone ]]></if>
+                    <if test="orderItem == 'newRuralNumber_desc'" ><![CDATA[ New_rural_number desc ]]></if>
+                    <if test="orderItem == 'newRuralNumber_asc'" ><![CDATA[ New_rural_number ]]></if>
+                    <if test="orderItem == 'socialSecurityNum_desc'" ><![CDATA[ social_security_num desc ]]></if>
+                    <if test="orderItem == 'socialSecurityNum_asc'" ><![CDATA[ social_security_num ]]></if>
+                    <if test="orderItem == 'salaryCardBank_desc'" ><![CDATA[ salary_card_bank desc ]]></if>
+                    <if test="orderItem == 'salaryCardBank_asc'" ><![CDATA[ salary_card_bank ]]></if>
+                    <if test="orderItem == 'healthCardBank_desc'" ><![CDATA[ health_card_bank desc ]]></if>
+                    <if test="orderItem == 'healthCardBank_asc'" ><![CDATA[ health_card_bank ]]></if>
+                    <if test="orderItem == 'professional_desc'" ><![CDATA[ professional desc ]]></if>
+                    <if test="orderItem == 'professional_asc'" ><![CDATA[ professional ]]></if>
+                    <if test="orderItem == 'industry_desc'" ><![CDATA[ industry desc ]]></if>
+                    <if test="orderItem == 'industry_asc'" ><![CDATA[ industry ]]></if>
+                    <if test="orderItem == 'delFalg_desc'" ><![CDATA[ del_falg desc ]]></if>
+                    <if test="orderItem == 'delFalg_asc'" ><![CDATA[ del_falg ]]></if>
+                    <if test="orderItem == 'deleteor_desc'" ><![CDATA[ deleteor desc ]]></if>
+                    <if test="orderItem == 'deleteor_asc'" ><![CDATA[ deleteor ]]></if>
+                    <if test="orderItem == 'deleteDate_desc'" ><![CDATA[ delete_date desc ]]></if>
+                    <if test="orderItem == 'deleteDate_asc'" ><![CDATA[ delete_date ]]></if>
+                    <if test="orderItem == 'creator_desc'" ><![CDATA[ creator desc ]]></if>
+                    <if test="orderItem == 'creator_asc'" ><![CDATA[ creator ]]></if>
+                    <if test="orderItem == 'createDate_desc'" ><![CDATA[ create_date desc ]]></if>
+                    <if test="orderItem == 'createDate_asc'" ><![CDATA[ create_date ]]></if>
+                    <if test="orderItem == 'updator_desc'" ><![CDATA[ updator desc ]]></if>
+                    <if test="orderItem == 'updator_asc'" ><![CDATA[ updator ]]></if>
+                    <if test="orderItem == 'updateDate_desc'" ><![CDATA[ update_date desc ]]></if>
+                    <if test="orderItem == 'updateDate_asc'" ><![CDATA[ update_date ]]></if>
+                </foreach>
+            </if>
+
+		</trim>
+	</sql>
+
+	<sql id="updateSetSql">
+		<trim prefix="set" prefixOverrides=",">
+            <if test="bidUtil != null" ><![CDATA[ ,  bid_util = #{bidUtil}]]></if>
+            <if test="name != null" ><![CDATA[ ,  name = #{name}]]></if>
+            <if test="identityNumber != null" ><![CDATA[ ,  identity_number = #{identityNumber}]]></if>
+            <if test="issuersCertificateOrgan != null" ><![CDATA[ ,  issuers_certificate_organ = #{issuersCertificateOrgan}]]></if>
+            <if test="certificateValidityPeriod != null" ><![CDATA[ ,  certificate_validity_period = #{certificateValidityPeriod}]]></if>
+            <if test="national != null" ><![CDATA[ ,  national = #{national}]]></if>
+            <if test="educationLevel != null" ><![CDATA[ ,  education_level = #{educationLevel}]]></if>
+            <if test="houseAddress != null" ><![CDATA[ ,  house_address = #{houseAddress}]]></if>
+            <if test="nowAddress != null" ><![CDATA[ ,  now_address = #{nowAddress}]]></if>
+            <if test="postCode != null" ><![CDATA[ ,  post_code = #{postCode}]]></if>
+            <if test="contactPhone != null" ><![CDATA[ ,  contact_phone = #{contactPhone}]]></if>
+            <if test="newRuralNumber != null" ><![CDATA[ ,  New_rural_number = #{newRuralNumber}]]></if>
+            <if test="socialSecurityNum != null" ><![CDATA[ ,  social_security_num = #{socialSecurityNum}]]></if>
+            <if test="salaryCardBank != null" ><![CDATA[ ,  salary_card_bank = #{salaryCardBank}]]></if>
+            <if test="healthCardBank != null" ><![CDATA[ ,  health_card_bank = #{healthCardBank}]]></if>
+            <if test="professional != null" ><![CDATA[ ,  professional = #{professional}]]></if>
+            <if test="industry != null" ><![CDATA[ ,  industry = #{industry}]]></if>
+            <if test="delFalg != null" ><![CDATA[ ,  del_falg = #{delFalg}]]></if>
+            <if test="deleteor != null" ><![CDATA[ ,  deleteor = #{deleteor}]]></if>
+            <if test="deleteDate != null" ><![CDATA[ ,  delete_date = #{deleteDate}]]></if>
+            <if test="creator != null" ><![CDATA[ ,  creator = #{creator}]]></if>
+            <if test="createDate != null" ><![CDATA[ ,  create_date = #{createDate}]]></if>
+            <if test="updator != null" ><![CDATA[ ,  updator = #{updator}]]></if>
+            <if test="updateDate != null" ><![CDATA[ ,  update_date = #{updateDate}]]></if>
+
+		</trim>
+	</sql>	
+
+	<insert id="insertObject" parameterType="com.jc.cz_index.model.ResidentAcquisition">
+		<selectKey resultType="Long" keyProperty="id" order="AFTER">
+		 SELECT	LAST_INSERT_ID()
+	 	</selectKey>
+	 	insert into RESIDENT_ACQUISITION( id,bid_util,name,identity_number,issuers_certificate_organ,certificate_validity_period,national,education_level,house_address,now_address,post_code,contact_phone,New_rural_number,social_security_num,salary_card_bank,health_card_bank,professional,industry,del_falg,deleteor,delete_date,creator,create_date,updator,update_date ) values (#{id},#{bidUtil},#{name},#{identityNumber},#{issuersCertificateOrgan},#{certificateValidityPeriod},#{national},#{educationLevel},#{houseAddress},#{nowAddress},#{postCode},#{contactPhone},#{newRuralNumber},#{socialSecurityNum},#{salaryCardBank},#{healthCardBank},#{professional},#{industry},#{delFalg},#{deleteor},#{deleteDate},#{creator},#{createDate},#{updator},#{updateDate} )
+	</insert>
+
+	<update id="updateObject" parameterType="com.jc.cz_index.model.ResidentAcquisition">
+		update RESIDENT_ACQUISITION set bid_util=#{bidUtil},name=#{name},identity_number=#{identityNumber},issuers_certificate_organ=#{issuersCertificateOrgan},certificate_validity_period=#{certificateValidityPeriod},national=#{national},education_level=#{educationLevel},house_address=#{houseAddress},now_address=#{nowAddress},post_code=#{postCode},contact_phone=#{contactPhone},New_rural_number=#{newRuralNumber},social_security_num=#{socialSecurityNum},salary_card_bank=#{salaryCardBank},health_card_bank=#{healthCardBank},professional=#{professional},industry=#{industry},del_falg=#{delFalg},deleteor=#{deleteor},delete_date=#{deleteDate},creator=#{creator},create_date=#{createDate},updator=#{updator},update_date=#{updateDate} where id=#{id}
+	</update>
+	
+	<update id="updateObjectByFields" parameterType="com.jc.cz_index.dao.QueryParams">
+		UPDATE RESIDENT_ACQUISITION 
+		<include refid="updateSetSql" />
+		where id=#{id};
+  	</update> 
+	
+	<delete id="deleteObject" parameterType="long">
+		DELETE FROM RESIDENT_ACQUISITION WHERE id = #{id}
+  	</delete>
+
+	<delete id="deleteObjectByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+		DELETE FROM RESIDENT_ACQUISITION
+		<include refid="whereSql" />
+	</delete>
+
+	<select id="getBaseObject" parameterType="long" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from RESIDENT_ACQUISITION where id=#{id};
+	</select>
+
+	<select id="getDetailObject" parameterType="long" resultMap="resultDetailMap">
+		select * from RESIDENT_ACQUISITION where id=#{id};
+	</select>
+	
+	<select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams" resultType="int">
+		select count(*) from RESIDENT_ACQUISITION
+		  <include refid="whereSql" />
+	</select>
+	
+	<select id="queryBaseList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from RESIDENT_ACQUISITION
+			<include refid="whereSql" />
+		  <include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+
+	<select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultDetailMap">
+		select * from RESIDENT_ACQUISITION
+			<include refid="whereSql" />
+		  <include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+	<insert id="insertList" parameterType="java.util.List">
+        insert into RESIDENT_ACQUISITION( id,bid_util,name,identity_number,issuers_certificate_organ,certificate_validity_period,national,education_level,house_address,now_address,post_code,contact_phone,New_rural_number,social_security_num,salary_card_bank,health_card_bank,professional,industry,del_falg,deleteor,delete_date,creator,create_date,updator,update_date ) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id},#{item.bidUtil},#{item.name},#{item.identityNumber},#{item.issuersCertificateOrgan},#{item.certificateValidityPeriod},#{item.national},#{item.educationLevel},#{item.houseAddress},#{item.nowAddress},#{item.postCode},#{item.contactPhone},#{item.newRuralNumber},#{item.socialSecurityNum},#{item.salaryCardBank},#{item.healthCardBank},#{item.professional},#{item.industry},#{item.delFalg},#{item.deleteor},#{item.deleteDate},#{item.creator},#{item.createDate},#{item.updator},#{item.updateDate} )
+        </foreach>
+    </insert>
+</mapper>
+

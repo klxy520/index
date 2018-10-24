@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2016/11/1 14:49:15 Jack Liu created. -->
+
+<mapper namespace="com.jc.cz_index.dao.IOperationLogDao">
+
+    <resultMap type="com.jc.cz_index.model.OperationLog" id="resultMap">
+        <id property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="userType" column="user_type" />
+        <result property="userName" column="user_name" />
+        <result property="loginName" column="login_name" />
+        <result property="formName" column="form_name" />
+        <result property="recordId" column="record_id" />
+        <result property="type" column="type" />
+        <result property="detail" column="detail" />
+        <result property="operationDate" column="operation_date" />
+        <result property="remark" column="remark" />
+    </resultMap>
+    <resultMap type="com.jc.cz_index.model.OperationLog" id="resultDetailMap">
+        <id property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="userType" column="user_type" />
+        <result property="userName" column="user_name" />
+        <result property="loginName" column="login_name" />
+        <result property="formName" column="form_name" />
+        <result property="recordId" column="record_id" />
+        <result property="type" column="type" />
+        <result property="detail" column="detail" />
+        <result property="operationDate" column="operation_date" />
+        <result property="remark" column="remark" />
+    
+	<!-- 
+	  <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	  <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	 -->
+    </resultMap>
+
+
+    <sql id="baseCol">
+        id, user_id, user_type, user_name, login_name, form_name, record_id, type, detail, operation_date, remark
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="userId != null"><![CDATA[ and user_id = #{userId} ]]></if>
+            <if test="userId_r_min != null"><![CDATA[ and user_id >= #{userId_r_min} and user_id <= #{userId_r_max} ]]></if>
+            <if test="userId_enum != null">
+                <![CDATA[ and user_id in ]]>
+                <foreach collection="userId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="userType != null"><![CDATA[ and user_type = #{userType} ]]></if>
+            <if test="userType_r_min != null"><![CDATA[ and user_type >= #{userType_r_min} and user_type <= #{userType_r_max} ]]></if>
+            <if test="userType_enum != null">
+                <![CDATA[ and user_type in ]]>
+                <foreach collection="userType_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="userName != null"><![CDATA[ and user_name = #{userName} ]]></if>
+            <if test="userName_like != null"><![CDATA[ and user_name like #{userName_like} ]]></if>
+            <if test="userName_enum != null">
+                <![CDATA[ and user_name in ]]>
+                <foreach collection="userName_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="loginName != null"><![CDATA[ and login_name = #{loginName} ]]></if>
+            <if test="loginName_enum != null">
+                <![CDATA[ and login_name in ]]>
+                <foreach collection="loginName_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="formName != null"><![CDATA[ and form_name = #{formName} ]]></if>
+            <if test="formName_like != null"><![CDATA[ and form_name like #{formName_like} ]]></if>
+            <if test="formName_enum != null">
+                <![CDATA[ and form_name in ]]>
+                <foreach collection="formName_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="recordId != null"><![CDATA[ and record_id = #{recordId} ]]></if>
+            <if test="recordId_r_min != null"><![CDATA[ and record_id >= #{recordId_r_min} and record_id <= #{recordId_r_max} ]]></if>
+            <if test="recordId_enum != null">
+                <![CDATA[ and record_id in ]]>
+                <foreach collection="recordId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="type != null"><![CDATA[ and type = #{type} ]]></if>
+            <if test="type_like != null"><![CDATA[ and type like #{type_like} ]]></if>
+            <if test="type_enum != null">
+                <![CDATA[ and type in ]]>
+                <foreach collection="type_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="detail != null"><![CDATA[ and detail = #{detail} ]]></if>
+            <if test="detail_enum != null">
+                <![CDATA[ and detail in ]]>
+                <foreach collection="detail_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="operationDate != null"><![CDATA[ and operation_date = #{operationDate} ]]></if>
+            <if test="operationDate_r_min != null"><![CDATA[ and operation_date >= #{operationDate_r_min} and operation_date < #{operationDate_r_max} ]]></if>
+            <if test="operationDate_r_geq != null"><![CDATA[ and operation_date >= #{operationDate_r_geq} ]]></if>
+            <if test="operationDate_r_leq != null"><![CDATA[ and operation_date <= #{operationDate_r_leq} ]]></if>
+            <if test="remark != null"><![CDATA[ and remark = #{remark} ]]></if>
+            <if test="remark_enum != null">
+                <![CDATA[ and remark in ]]>
+                <foreach collection="remark_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+                <foreach collection="_default_mulattr" item="item" open="(" separator=" or " close=")">
+                    <if test="item.name == 'userName'"><![CDATA[ user_name = #{item.value} ]]></if>
+                    <if test="item.name == 'loginName'"><![CDATA[ login_name = #{item.value} ]]></if>
+                    <if test="item.name == 'formName'"><![CDATA[ form_name = #{item.value} ]]></if>
+                    <if test="item.name == 'type'"><![CDATA[ type = #{item.value} ]]></if>
+                    <if test="item.name == 'detail'"><![CDATA[ detail = #{item.value} ]]></if>
+                    <if test="item.name == 'remark'"><![CDATA[ remark = #{item.value} ]]></if>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'userId_desc'"><![CDATA[ user_id desc, ]]></if>
+            <if test="_orderBy == 'userId_asc'"><![CDATA[ user_id, ]]></if>
+            <if test="_orderBy == 'userType_desc'"><![CDATA[ user_type desc, ]]></if>
+            <if test="_orderBy == 'userType_asc'"><![CDATA[ user_type, ]]></if>
+            <if test="_orderBy == 'userName_desc'"><![CDATA[ user_name desc, ]]></if>
+            <if test="_orderBy == 'userName_asc'"><![CDATA[ user_name, ]]></if>
+            <if test="_orderBy == 'loginName_desc'"><![CDATA[ login_name desc, ]]></if>
+            <if test="_orderBy == 'loginName_asc'"><![CDATA[ login_name, ]]></if>
+            <if test="_orderBy == 'formName_desc'"><![CDATA[ form_name desc, ]]></if>
+            <if test="_orderBy == 'formName_asc'"><![CDATA[ form_name, ]]></if>
+            <if test="_orderBy == 'recordId_desc'"><![CDATA[ record_id desc, ]]></if>
+            <if test="_orderBy == 'recordId_asc'"><![CDATA[ record_id, ]]></if>
+            <if test="_orderBy == 'type_desc'"><![CDATA[ type desc, ]]></if>
+            <if test="_orderBy == 'type_asc'"><![CDATA[ type, ]]></if>
+            <if test="_orderBy == 'detail_desc'"><![CDATA[ detail desc, ]]></if>
+            <if test="_orderBy == 'detail_asc'"><![CDATA[ detail, ]]></if>
+            <if test="_orderBy == 'operationDate_desc'"><![CDATA[ operation_date desc, ]]></if>
+            <if test="_orderBy == 'operationDate_asc'"><![CDATA[ operation_date, ]]></if>
+            <if test="_orderBy == 'remark_desc'"><![CDATA[ remark desc, ]]></if>
+            <if test="_orderBy == 'remark_asc'"><![CDATA[ remark, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'userId_desc'"><![CDATA[ user_id desc ]]></if>
+					<if test="orderItem == 'userId_asc'"><![CDATA[ user_id ]]></if>
+					<if test="orderItem == 'userType_desc'"><![CDATA[ user_type desc ]]></if>
+					<if test="orderItem == 'userType_asc'"><![CDATA[ user_type ]]></if>
+					<if test="orderItem == 'userName_desc'"><![CDATA[ user_name desc ]]></if>
+					<if test="orderItem == 'userName_asc'"><![CDATA[ user_name ]]></if>
+					<if test="orderItem == 'loginName_desc'"><![CDATA[ login_name desc ]]></if>
+					<if test="orderItem == 'loginName_asc'"><![CDATA[ login_name ]]></if>
+					<if test="orderItem == 'formName_desc'"><![CDATA[ form_name desc ]]></if>
+					<if test="orderItem == 'formName_asc'"><![CDATA[ form_name ]]></if>
+					<if test="orderItem == 'recordId_desc'"><![CDATA[ record_id desc ]]></if>
+					<if test="orderItem == 'recordId_asc'"><![CDATA[ record_id ]]></if>
+					<if test="orderItem == 'type_desc'"><![CDATA[ type desc ]]></if>
+					<if test="orderItem == 'type_asc'"><![CDATA[ type ]]></if>
+					<if test="orderItem == 'detail_desc'"><![CDATA[ detail desc ]]></if>
+					<if test="orderItem == 'detail_asc'"><![CDATA[ detail ]]></if>
+					<if test="orderItem == 'operationDate_desc'"><![CDATA[ operation_date desc ]]></if>
+					<if test="orderItem == 'operationDate_asc'"><![CDATA[ operation_date ]]></if>
+					<if test="orderItem == 'remark_desc'"><![CDATA[ remark desc ]]></if>
+					<if test="orderItem == 'remark_asc'"><![CDATA[ remark ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="userId != null"><![CDATA[ and user_id = #{userId} ]]></if>
+            <if test="userType != null"><![CDATA[ and user_type = #{userType} ]]></if>
+            <if test="userName != null"><![CDATA[ and user_name = #{userName} ]]></if>
+            <if test="loginName != null"><![CDATA[ and login_name = #{loginName} ]]></if>
+            <if test="formName != null"><![CDATA[ and form_name = #{formName} ]]></if>
+            <if test="recordId != null"><![CDATA[ and record_id = #{recordId} ]]></if>
+            <if test="type != null"><![CDATA[ and type = #{type} ]]></if>
+            <if test="detail != null"><![CDATA[ and detail = #{detail} ]]></if>
+            <if test="operationDate != null"><![CDATA[ and operation_date = #{operationDate} ]]></if>
+            <if test="remark != null"><![CDATA[ and remark = #{remark} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="com.jc.cz_index.model.OperationLog">
+	<selectKey resultType="Long" keyProperty="id" order="AFTER">
+	   SELECT
+	   LAST_INSERT_ID()
+	</selectKey>
+        insert into
+        operation_log(user_id,user_type,user_name,login_name,form_name,record_id,type,detail,operation_date,remark)
+        values(#{userId},#{userType},#{userName},#{loginName},#{formName},#{recordId},#{type},#{detail},#{operationDate},#{remark});
+    </insert>
+
+    <update id="updateObject" parameterType="com.jc.cz_index.model.OperationLog">
+        update operation_log
+        set user_id=#{userId},user_type=#{userType},user_name=#{userName},login_name=#{loginName},form_name=#{formName},record_id=#{recordId},type=#{type},detail=#{detail},operation_date=#{operationDate},remark=#{remark}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="com.jc.cz_index.dao.QueryParams">
+        update operation_log
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="long">
+        delete from operation_log where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+        delete from operation_log
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="long" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from operation_log where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="long" resultMap="resultDetailMap">
+        select * from operation_log where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams" resultType="int">
+        select count(*) from operation_log
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from operation_log
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultDetailMap">
+        select * from operation_log
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+</mapper>  
+
+

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jc.cz_index.dao.IUserLoginFailDao">
+	
+	<resultMap id="resultMap" type="com.jc.cz_index.model.UserLoginFail">
+            <result property="id" column="id" />
+            <result property="loginName" column="login_name" />
+            <result property="failTimes" column="fail_times" />
+            <result property="lastFailTime" column="last_fail_time" />
+            <result property="reverse" column="reverse" />
+
+	</resultMap>
+	
+	<resultMap id="resultDetailMap" type="com.jc.cz_index.model.UserLoginFail">
+            <result property="id" column="id" />
+            <result property="loginName" column="login_name" />
+            <result property="failTimes" column="fail_times" />
+            <result property="lastFailTime" column="last_fail_time" />
+            <result property="reverse" column="reverse" />
+
+	<!-- 
+	  <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	  <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	 -->
+	</resultMap>
+	
+	<sql id="baseCol">
+        id,login_name,fail_times,last_fail_time,reverse
+
+	</sql>
+
+	<sql id="pageSql">
+		<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+	</sql>
+
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="loginName != null"><![CDATA[ and  login_name = #{loginName:VARCHAR}]]></if>
+            <if test="loginName_r_min != null"><![CDATA[ and login_name >= #{loginName_r_min} and login_name <= #{loginName_r_max} ]]></if>
+            <if test="loginName_enum != null">
+                <![CDATA[ and login_name in ]]>
+                <foreach collection="loginName_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="failTimes != null"><![CDATA[ and  fail_times = #{failTimes:NUMERIC}]]></if>
+            <if test="failTimes_r_min != null"><![CDATA[ and fail_times >= #{failTimes_r_min} and fail_times <= #{failTimes_r_max} ]]></if>
+            <if test="failTimes_enum != null">
+                <![CDATA[ and fail_times in ]]>
+                <foreach collection="failTimes_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="lastFailTime != null"><![CDATA[ and  last_fail_time = #{lastFailTime:NUMERIC}]]></if>
+            <if test="lastFailTime_r_min != null"><![CDATA[ and last_fail_time >= #{lastFailTime_r_min} and last_fail_time <= #{lastFailTime_r_max} ]]></if>
+            <if test="lastFailTime_enum != null">
+                <![CDATA[ and last_fail_time in ]]>
+                <foreach collection="lastFailTime_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="reverse != null"><![CDATA[ and  reverse = #{reverse:VARCHAR}]]></if>
+            <if test="reverse_r_min != null"><![CDATA[ and reverse >= #{reverse_r_min} and reverse <= #{reverse_r_max} ]]></if>
+            <if test="reverse_enum != null">
+                <![CDATA[ and reverse in ]]>
+                <foreach collection="reverse_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+
+		</trim>
+	</sql>
+
+	<sql id="orderSql">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'loginName_desc'" ><![CDATA[ login_name desc, ]]></if>
+            <if test="_orderBy == 'loginName_asc'" ><![CDATA[ login_name, ]]></if>
+            <if test="_orderBy == 'failTimes_desc'" ><![CDATA[ fail_times desc, ]]></if>
+            <if test="_orderBy == 'failTimes_asc'" ><![CDATA[ fail_times, ]]></if>
+            <if test="_orderBy == 'lastFailTime_desc'" ><![CDATA[ last_fail_time desc, ]]></if>
+            <if test="_orderBy == 'lastFailTime_asc'" ><![CDATA[ last_fail_time, ]]></if>
+            <if test="_orderBy == 'reverse_desc'" ><![CDATA[ reverse desc, ]]></if>
+            <if test="_orderBy == 'reverse_asc'" ><![CDATA[ reverse, ]]></if>
+            <if test="_orderBy_enum != null">
+                <foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+                    <if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+                    <if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+                    <if test="orderItem == 'loginName_desc'" ><![CDATA[ login_name desc ]]></if>
+                    <if test="orderItem == 'loginName_asc'" ><![CDATA[ login_name ]]></if>
+                    <if test="orderItem == 'failTimes_desc'" ><![CDATA[ fail_times desc ]]></if>
+                    <if test="orderItem == 'failTimes_asc'" ><![CDATA[ fail_times ]]></if>
+                    <if test="orderItem == 'lastFailTime_desc'" ><![CDATA[ last_fail_time desc ]]></if>
+                    <if test="orderItem == 'lastFailTime_asc'" ><![CDATA[ last_fail_time ]]></if>
+                    <if test="orderItem == 'reverse_desc'" ><![CDATA[ reverse desc ]]></if>
+                    <if test="orderItem == 'reverse_asc'" ><![CDATA[ reverse ]]></if>
+                </foreach>
+            </if>
+
+		</trim>
+	</sql>
+
+	<sql id="updateSetSql">
+		<trim prefix="set" prefixOverrides="and">
+            <if test="loginName != null" ><![CDATA[ and  login_name = #{loginName}]]></if>
+            <if test="failTimes != null" ><![CDATA[ and  fail_times = #{failTimes}]]></if>
+            <if test="lastFailTime != null" ><![CDATA[ and  last_fail_time = #{lastFailTime}]]></if>
+            <if test="reverse != null" ><![CDATA[ and  reverse = #{reverse}]]></if>
+
+		</trim>
+	</sql>	
+
+	<insert id="insertObject" parameterType="com.jc.cz_index.model.UserLoginFail">
+		<selectKey resultType="Long" keyProperty="id" order="AFTER">
+		 SELECT	LAST_INSERT_ID()
+	 	</selectKey>
+	 	insert into USER_LOGIN_FAIL( id,login_name,fail_times,last_fail_time,reverse ) values (#{id},#{loginName},#{failTimes},#{lastFailTime},#{reverse} )
+	</insert>
+
+	<update id="updateObject" parameterType="com.jc.cz_index.model.UserLoginFail">
+		update USER_LOGIN_FAIL set login_name=#{loginName},fail_times=#{failTimes},last_fail_time=#{lastFailTime},reverse=#{reverse} where id=#{id}
+	</update>
+	
+	<update id="updateObjectByFields" parameterType="com.jc.cz_index.dao.QueryParams">
+		UPDATE USER_LOGIN_FAIL 
+		<include refid="updateSetSql" />
+		where id=#{id};
+  	</update> 
+	
+	<delete id="deleteObject" parameterType="long">
+		DELETE FROM USER_LOGIN_FAIL WHERE id = #{id}
+  	</delete>
+
+	<delete id="deleteObjectByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+		DELETE FROM USER_LOGIN_FAIL
+		<include refid="whereSql" />
+	</delete>
+
+	<select id="getBaseObject" parameterType="long" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from USER_LOGIN_FAIL where id=#{id};
+	</select>
+
+	<select id="getDetailObject" parameterType="long" resultMap="resultDetailMap">
+		select * from USER_LOGIN_FAIL where id=#{id};
+	</select>
+	
+	<select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams" resultType="int">
+		select count(*) from USER_LOGIN_FAIL
+		  <include refid="whereSql" />
+	</select>
+	
+	<select id="queryBaseList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from USER_LOGIN_FAIL
+			<include refid="whereSql" />
+		  <include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+
+	<select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultDetailMap">
+		select * from USER_LOGIN_FAIL
+			<include refid="whereSql" />
+		  <include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+</mapper>
+

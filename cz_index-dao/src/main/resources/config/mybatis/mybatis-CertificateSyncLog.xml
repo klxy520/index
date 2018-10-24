@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jc.cz_index.dao.ICertificateSyncLogDao">
+	
+	<resultMap id="resultMap" type="com.jc.cz_index.model.CertificateSyncLog">
+            <result property="id" column="id" />
+            <result property="certificateId" column="certificate_id" />
+            <result property="frontId" column="front_id" />
+            <result property="syncStatus" column="sync_status" />
+            <result property="creator" column="creator" />
+            <result property="updator" column="updator" />
+            <result property="createDate" column="create_date" />
+            <result property="updateDate" column="update_date" />
+            <result property="remark" column="remark" />
+            <association property="fem" column="front_Id" select="com.jc.cz_index.dao.IFrontEndMachineDao.getBaseObject"></association> 	 
+	 		<association property="certificate" column="certificate_id" select="com.jc.cz_index.dao.ICertificateDao.getBaseObject"></association> 
+
+	</resultMap>
+	
+	<resultMap id="resultDetailMap" type="com.jc.cz_index.model.CertificateSyncLog">
+            <result property="id" column="id" />
+            <result property="certificateId" column="certificate_id" />
+            <result property="frontId" column="front_id" />
+            <result property="syncStatus" column="sync_status" />
+            <result property="creator" column="creator" />
+            <result property="updator" column="updator" />
+            <result property="createDate" column="create_date" />
+            <result property="updateDate" column="update_date" />
+            <result property="remark" column="remark" />
+
+	<!-- 
+	  <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	  <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	 -->
+	</resultMap>
+	
+	<sql id="baseCol">
+        id,certificate_id,front_id,sync_status,creator,updator,create_date,update_date,remark
+
+	</sql>
+
+	<sql id="pageSql">
+		<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+	</sql>
+
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="certificateId != null"><![CDATA[ and  certificate_id = #{certificateId:NUMERIC}]]></if>
+            <if test="certificateId_r_min != null"><![CDATA[ and certificate_id >= #{certificateId_r_min} and certificate_id <= #{certificateId_r_max} ]]></if>
+            <if test="certificateId_enum != null">
+                <![CDATA[ and certificate_id in ]]>
+                <foreach collection="certificateId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="frontId != null"><![CDATA[ and  front_id = #{frontId:NUMERIC}]]></if>
+            <if test="frontId_r_min != null"><![CDATA[ and front_id >= #{frontId_r_min} and front_id <= #{frontId_r_max} ]]></if>
+            <if test="frontId_enum != null">
+                <![CDATA[ and front_id in ]]>
+                <foreach collection="frontId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="syncStatus != null"><![CDATA[ and  sync_status = #{syncStatus:VARCHAR}]]></if>
+            <if test="syncStatus_r_min != null"><![CDATA[ and sync_status >= #{syncStatus_r_min} and sync_status <= #{syncStatus_r_max} ]]></if>
+            <if test="syncStatus_enum != null">
+                <![CDATA[ and sync_status in ]]>
+                <foreach collection="syncStatus_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="creator != null"><![CDATA[ and  creator = #{creator:NUMERIC}]]></if>
+            <if test="creator_r_min != null"><![CDATA[ and creator >= #{creator_r_min} and creator <= #{creator_r_max} ]]></if>
+            <if test="creator_enum != null">
+                <![CDATA[ and creator in ]]>
+                <foreach collection="creator_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="updator != null"><![CDATA[ and  updator = #{updator:NUMERIC}]]></if>
+            <if test="updator_r_min != null"><![CDATA[ and updator >= #{updator_r_min} and updator <= #{updator_r_max} ]]></if>
+            <if test="updator_enum != null">
+                <![CDATA[ and updator in ]]>
+                <foreach collection="updator_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="createDate != null"><![CDATA[ and  create_date = #{createDate:DATETIME}]]></if>
+            <if test="createDate_r_min != null"><![CDATA[ and create_date >= #{createDate_r_min} and create_date <= #{createDate_r_max} ]]></if>
+            <if test="createDate_enum != null">
+                <![CDATA[ and create_date in ]]>
+                <foreach collection="createDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="updateDate != null"><![CDATA[ and  update_date = #{updateDate:DATETIME}]]></if>
+            <if test="updateDate_r_min != null"><![CDATA[ and update_date >= #{updateDate_r_min} and update_date <= #{updateDate_r_max} ]]></if>
+            <if test="updateDate_enum != null">
+                <![CDATA[ and update_date in ]]>
+                <foreach collection="updateDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="remark != null"><![CDATA[ and  remark = #{remark:VARCHAR}]]></if>
+            <if test="remark_r_min != null"><![CDATA[ and remark >= #{remark_r_min} and remark <= #{remark_r_max} ]]></if>
+            <if test="remark_enum != null">
+                <![CDATA[ and remark in ]]>
+                <foreach collection="remark_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+
+		</trim>
+	</sql>
+
+	<sql id="orderSql">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'certificateId_desc'" ><![CDATA[ certificate_id desc, ]]></if>
+            <if test="_orderBy == 'certificateId_asc'" ><![CDATA[ certificate_id, ]]></if>
+            <if test="_orderBy == 'frontId_desc'" ><![CDATA[ front_id desc, ]]></if>
+            <if test="_orderBy == 'frontId_asc'" ><![CDATA[ front_id, ]]></if>
+            <if test="_orderBy == 'syncStatus_desc'" ><![CDATA[ sync_status desc, ]]></if>
+            <if test="_orderBy == 'syncStatus_asc'" ><![CDATA[ sync_status, ]]></if>
+            <if test="_orderBy == 'creator_desc'" ><![CDATA[ creator desc, ]]></if>
+            <if test="_orderBy == 'creator_asc'" ><![CDATA[ creator, ]]></if>
+            <if test="_orderBy == 'updator_desc'" ><![CDATA[ updator desc, ]]></if>
+            <if test="_orderBy == 'updator_asc'" ><![CDATA[ updator, ]]></if>
+            <if test="_orderBy == 'createDate_desc'" ><![CDATA[ create_date desc, ]]></if>
+            <if test="_orderBy == 'createDate_asc'" ><![CDATA[ create_date, ]]></if>
+            <if test="_orderBy == 'updateDate_desc'" ><![CDATA[ update_date desc, ]]></if>
+            <if test="_orderBy == 'updateDate_asc'" ><![CDATA[ update_date, ]]></if>
+            <if test="_orderBy == 'remark_desc'" ><![CDATA[ remark desc, ]]></if>
+            <if test="_orderBy == 'remark_asc'" ><![CDATA[ remark, ]]></if>
+            <if test="_orderBy_enum != null">
+                <foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+                    <if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+                    <if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+                    <if test="orderItem == 'certificateId_desc'" ><![CDATA[ certificate_id desc ]]></if>
+                    <if test="orderItem == 'certificateId_asc'" ><![CDATA[ certificate_id ]]></if>
+                    <if test="orderItem == 'frontId_desc'" ><![CDATA[ front_id desc ]]></if>
+                    <if test="orderItem == 'frontId_asc'" ><![CDATA[ front_id ]]></if>
+                    <if test="orderItem == 'syncStatus_desc'" ><![CDATA[ sync_status desc ]]></if>
+                    <if test="orderItem == 'syncStatus_asc'" ><![CDATA[ sync_status ]]></if>
+                    <if test="orderItem == 'creator_desc'" ><![CDATA[ creator desc ]]></if>
+                    <if test="orderItem == 'creator_asc'" ><![CDATA[ creator ]]></if>
+                    <if test="orderItem == 'updator_desc'" ><![CDATA[ updator desc ]]></if>
+                    <if test="orderItem == 'updator_asc'" ><![CDATA[ updator ]]></if>
+                    <if test="orderItem == 'createDate_desc'" ><![CDATA[ create_date desc ]]></if>
+                    <if test="orderItem == 'createDate_asc'" ><![CDATA[ create_date ]]></if>
+                    <if test="orderItem == 'updateDate_desc'" ><![CDATA[ update_date desc ]]></if>
+                    <if test="orderItem == 'updateDate_asc'" ><![CDATA[ update_date ]]></if>
+                    <if test="orderItem == 'remark_desc'" ><![CDATA[ remark desc ]]></if>
+                    <if test="orderItem == 'remark_asc'" ><![CDATA[ remark ]]></if>
+                </foreach>
+            </if>
+
+		</trim>
+	</sql>
+
+	<sql id="updateSetSql">
+		<trim prefix="set" prefixOverrides=",">
+            <if test="certificateId != null" ><![CDATA[ and  certificate_id = #{certificateId}]]></if>
+            <if test="frontId != null" ><![CDATA[ and  front_id = #{frontId}]]></if>
+            <if test="syncStatus != null" ><![CDATA[ and  sync_status = #{syncStatus}]]></if>
+            <if test="creator != null" ><![CDATA[ and  creator = #{creator}]]></if>
+            <if test="updator != null" ><![CDATA[ and  updator = #{updator}]]></if>
+            <if test="createDate != null" ><![CDATA[ and  create_date = #{createDate}]]></if>
+            <if test="updateDate != null" ><![CDATA[ and  update_date = #{updateDate}]]></if>
+            <if test="remark != null" ><![CDATA[ and  remark = #{remark}]]></if>
+
+		</trim>
+	</sql>	
+
+	<insert id="insertObject" parameterType="com.jc.cz_index.model.CertificateSyncLog">
+		<selectKey resultType="Long" keyProperty="id" order="AFTER">
+		 SELECT	LAST_INSERT_ID()
+	 	</selectKey>
+	 	insert into CERTIFICATE_SYNC_LOG( id,certificate_id,front_id,sync_status,creator,updator,create_date,update_date,remark ) values (#{id},#{certificateId},#{frontId},#{syncStatus},#{creator},#{updator},#{createDate},#{updateDate},#{remark} )
+	</insert>
+
+	<update id="updateObject" parameterType="com.jc.cz_index.model.CertificateSyncLog">
+		update CERTIFICATE_SYNC_LOG set certificate_id=#{certificateId},front_id=#{frontId},sync_status=#{syncStatus},creator=#{creator},updator=#{updator},create_date=#{createDate},update_date=#{updateDate},remark=#{remark} where id=#{id}
+	</update>
+	
+	<update id="updateObjectByFields" parameterType="com.jc.cz_index.dao.QueryParams">
+		UPDATE CERTIFICATE_SYNC_LOG 
+		<include refid="updateSetSql" />
+		where id=#{id};
+  	</update> 
+	
+	<delete id="deleteObject" parameterType="long">
+		DELETE FROM CERTIFICATE_SYNC_LOG WHERE id = #{id}
+  	</delete>
+
+	<delete id="deleteObjectByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+		DELETE FROM CERTIFICATE_SYNC_LOG
+		<include refid="whereSql" />
+	</delete>
+
+	<select id="getBaseObject" parameterType="long" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from CERTIFICATE_SYNC_LOG where id=#{id};
+	</select>
+
+	<select id="getDetailObject" parameterType="long" resultMap="resultDetailMap">
+		select * from CERTIFICATE_SYNC_LOG where id=#{id};
+	</select>
+	
+	<select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams" resultType="int">
+		select count(*) from CERTIFICATE_SYNC_LOG
+		  <include refid="whereSql" />
+	</select>
+	
+	<select id="queryBaseList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from CERTIFICATE_SYNC_LOG
+			<include refid="whereSql" />
+		  <include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+
+	<select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultDetailMap">
+		select * from CERTIFICATE_SYNC_LOG
+			<include refid="whereSql" />
+		  <include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+	
+	<insert id="insertList" parameterType="java.util.List">
+		insert into
+        CERTIFICATE_SYNC_LOG (certificate_id,front_id,sync_status,creator,updator,create_date,update_date,remark)
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.certificateId},#{item.frontId},#{item.syncStatus},#{item.creator},#{item.updator},#{item.createDate},#{item.updateDate},#{item.remark})
+		</foreach>
+	</insert>
+	
+	<delete id="deleteList" parameterType="java.util.List">
+		delete from CERTIFICATE_SYNC_LOG WHERE id in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+  	</delete>
+  	
+  	<delete id="deleteListByPKs" parameterType="String">
+		delete from CERTIFICATE_SYNC_LOG WHERE FIND_IN_SET(id,#{PKs})
+  	</delete>
+	
+	<select id="getObjectList" parameterType="java.util.List" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from CERTIFICATE_SYNC_LOG WHERE id in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="getObjectListByPKs" parameterType="String" resultMap="resultMap">
+		select 
+		<include refid="baseCol" />
+		from CERTIFICATE_SYNC_LOG WHERE FIND_IN_SET(id,#{PKs})
+	</select>
+	
+	<insert id="saveOrUpdateList" parameterType="java.util.List">
+		insert into
+        CERTIFICATE_SYNC_LOG (certificate_id,front_id,sync_status,creator,updator,create_date,update_date,remark)
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.certificateId},#{item.frontId},#{item.syncStatus},#{item.creator},#{item.updator},#{item.createDate},#{item.updateDate},#{item.remark})
+		</foreach>
+		ON DUPLICATE KEY UPDATE
+		sync_status = values(sync_status),
+		updator = values(updator),
+		update_date = values(update_date)
+	</insert>
+	<!-- ********************************SANBAXIAN********************************** -->
+	<!-- ******************************上面代码脚手架生成的******************************** -->
+	<!-- ********************************下面自己改造的********************************** -->
+	<!-- ********************************SANBAXIAN********************************** -->											
+		<resultMap id="syncDtoMap" type="com.jc.cz_index.dto.syncLog.CertificateSyncLogDto">
+            <result property="id" column="id" />
+            <result property="certificateId" column="certificate_id" />
+            <result property="frontId" column="front_id" />
+            <result property="syncStatus" column="sync_status" />
+            <result property="creator" column="creator" />
+            <result property="updator" column="updator" />
+            <result property="createDate" column="create_date" />
+            <result property="updateDate" column="update_date" />
+            <result property="remark" column="remark" />
+			<result property="personName" column="person_name" />
+			<result property="personId" column="person_id" />
+            <result property="remark" column="remark" />
+			<association property="fem" column="front_Id" select="com.jc.cz_index.dao.IFrontEndMachineDao.getBaseObject"></association> 	 
+	 		<association property="certificate" column="certificate_id" select="com.jc.cz_index.dao.ICertificateDao.getBaseObject"></association> 
+	</resultMap>
+		<sql id="joinorderSql">
+		<trim prefix="ORDER BY" suffixOverrides=",">       
+            <if test="_orderBy == 'femCode_desc'" ><![CDATA[ fem.front_end_machineCode desc, ]]></if>
+            <if test="_orderBy == 'femCode_asc'" ><![CDATA[ fem.front_end_machineCode, ]]></if>
+            <if test="_orderBy == 'syncStatus_desc'" ><![CDATA[ log.sync_status desc, ]]></if>
+            <if test="_orderBy == 'syncStatus_asc'" ><![CDATA[ log.sync_status, ]]></if>
+            <if test="_orderBy == 'createDate_desc'" ><![CDATA[ log.create_date desc, ]]></if>
+            <if test="_orderBy == 'createDate_asc'" ><![CDATA[ log.create_date, ]]></if>
+            <if test="_orderBy == 'updateDate_desc'" ><![CDATA[ log.update_date desc, ]]></if>
+            <if test="_orderBy == 'updateDate_asc'" ><![CDATA[ log.update_date, ]]></if>
+		</trim>
+	</sql>
+	<sql id="joinwhereSql">
+		<trim prefix="WHERE" prefixOverrides="and |or ">
+			 <if test="personName != null"><![CDATA[ and  p.person_name = #{personName}]]></if>
+            <if test="frontId != null"><![CDATA[ and  log.front_id = #{frontId:NUMERIC}]]></if>
+          	 <if test="certificateNo != null"><![CDATA[ and  c.certificate_No = #{certificateNo}]]></if>
+            <if test="syncStatus != null"><![CDATA[ and  log.sync_status = #{syncStatus:VARCHAR}]]></if>
+            <if test="createDate != null"><![CDATA[ and  log.create_date = #{createDate:DATETIME}]]></if>
+            <if test="createDate_r_min != null"><![CDATA[ and log.create_date >= #{createDate_r_min} and create_date <= #{createDate_r_max} ]]></if>
+           <if test="maxUpateDate != null"><![CDATA[ and  log.update_date <= #{maxUpateDate}]]></if>
+			<if test="minUpateDate != null"><![CDATA[ and log.update_date >= #{minUpateDate}]]></if>
+			<if test="type != null"><![CDATA[ and  c.certificate_type_code = #{type}]]></if>
+		</trim>
+	</sql>
+	
+	<select id="queryCertificateSyncLogList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="syncDtoMap">
+		select p.person_name,p.id person_id,log.* from front_end_machine fem  	
+		 join  CERTIFICATE_SYNC_LOG log  on  fem.id=log.front_id
+		 join  certificate c on c.id=log.certificate_id
+		 join  person p on p.id=c.person_id
+			<include refid="joinwhereSql" />
+		  <include refid="joinorderSql" />
+		<include refid="pageSql" />
+	</select>
+	<select id="querySyncLogCount" parameterType="com.jc.cz_index.dao.QueryParams"
+		resultType="int">
+		select count(*) from front_end_machine fem
+		 join  CERTIFICATE_SYNC_LOG log  on  fem.id=log.front_id
+		 join  certificate c on c.id=log.certificate_id
+		  join  person p on p.id=c.person_id
+		<include refid="joinwhereSql" />
+	</select>
+	
+
+	<!-- ********************************SANBAXIAN********************************** -->
+	<!-- ********************************SANBAXIAN********************************** -->
+</mapper>
+

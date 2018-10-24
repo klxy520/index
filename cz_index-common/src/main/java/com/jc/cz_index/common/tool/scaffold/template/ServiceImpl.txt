@@ -1,0 +1,24 @@
+package ${pkgPath};
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import ${iDataProvider};
+import ${managerPath};
+import ${daoPath};
+import ${modelPath};
+
+/**
+ * ${pkgName} Service 实现 Created by 
+ */
+@Service
+public class ${clzName}Service extends BaseService<${clzName}> implements I${clzName}Service {
+	@Autowired
+	private I${clzName}Dao ${pkgName}Dao;
+
+	@Override
+	public IDataProvider<${clzName}, Long> getModelDao() {
+		return this.${pkgName}Dao;
+	}
+}
+

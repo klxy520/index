@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2016/9/29 11:28:38 Jack Liu created. -->
+
+<mapper namespace="com.jc.cz_index.dao.IRoleMenuDao">
+
+    <resultMap type="com.jc.cz_index.model.RoleMenu" id="resultMap">
+        <id property="id" column="id" />
+        <result property="roleId" column="role_id" />
+        <result property="systemMenuId" column="system_menu_id" />
+    </resultMap>
+    <resultMap type="com.jc.cz_index.model.RoleMenu" id="resultDetailMap">
+        <id property="id" column="id" />
+        <result property="roleId" column="role_id" />
+        <result property="systemMenuId" column="system_menu_id" />
+    
+	<!-- 
+	  <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	  <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.IUserDao.getBaseObject">
+	  </association>
+	 -->
+    </resultMap>
+
+
+    <sql id="baseCol">
+        id, role_id, system_menu_id
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="roleId != null"><![CDATA[ and role_id = #{roleId} ]]></if>
+            <if test="roleId_r_min != null"><![CDATA[ and role_id >= #{roleId_r_min} and role_id <= #{roleId_r_max} ]]></if>
+            <if test="roleId_enum != null">
+                <![CDATA[ and role_id in ]]>
+                <foreach collection="roleId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="systemMenuId != null"><![CDATA[ and system_menu_id = #{systemMenuId} ]]></if>
+            <if test="systemMenuId_r_min != null"><![CDATA[ and system_menu_id >= #{systemMenuId_r_min} and system_menu_id <= #{systemMenuId_r_max} ]]></if>
+            <if test="systemMenuId_enum != null">
+                <![CDATA[ and system_menu_id in ]]>
+                <foreach collection="systemMenuId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'roleId_desc'"><![CDATA[ role_id desc, ]]></if>
+            <if test="_orderBy == 'roleId_asc'"><![CDATA[ role_id, ]]></if>
+            <if test="_orderBy == 'systemMenuId_desc'"><![CDATA[ system_menu_id desc, ]]></if>
+            <if test="_orderBy == 'systemMenuId_asc'"><![CDATA[ system_menu_id, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'roleId_desc'"><![CDATA[ role_id desc ]]></if>
+					<if test="orderItem == 'roleId_asc'"><![CDATA[ role_id ]]></if>
+					<if test="orderItem == 'systemMenuId_desc'"><![CDATA[ system_menu_id desc ]]></if>
+					<if test="orderItem == 'systemMenuId_asc'"><![CDATA[ system_menu_id ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="roleId != null"><![CDATA[ and role_id = #{roleId} ]]></if>
+            <if test="systemMenuId != null"><![CDATA[ and system_menu_id = #{systemMenuId} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="com.jc.cz_index.model.RoleMenu">
+	<selectKey resultType="Long" keyProperty="id" order="AFTER">
+	   SELECT
+	   LAST_INSERT_ID()
+	</selectKey>
+        insert into
+        role_menu(role_id,system_menu_id)
+        values(#{roleId},#{systemMenuId});
+    </insert>
+
+    <update id="updateObject" parameterType="com.jc.cz_index.model.RoleMenu">
+        update role_menu
+        set role_id=#{roleId},system_menu_id=#{systemMenuId}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="com.jc.cz_index.dao.QueryParams">
+        update role_menu
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="long">
+        delete from role_menu where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+        delete from role_menu
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="long" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from role_menu where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="long" resultMap="resultDetailMap">
+        select * from role_menu where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams" resultType="int">
+        select count(*) from role_menu
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from role_menu
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams" resultMap="resultDetailMap">
+        select * from role_menu
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+    
+    <insert id="insertList" parameterType="java.util.List">
+		insert into
+        role_menu(role_id,system_menu_id)
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.roleId},#{item.systemMenuId})
+		</foreach>
+	</insert>
+</mapper> 
+
+

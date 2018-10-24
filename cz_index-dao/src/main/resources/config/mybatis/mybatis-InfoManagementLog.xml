@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- 2017/08/29 13:31:01 yangjunhui created. -->
+
+<mapper namespace="com.jc.cz_index.dao.IInfoManagementLogDao">
+	<resultMap type="com.jc.cz_index.model.InfoManagementLog" id="resultMap">
+		<id property="id" column="id" />
+		<result property="creatorName" column="creator_name" />
+		<result property="creator" column="creator" />
+		<result property="createDate" column="create_date" />
+		<result property="type" column="type" />
+		<result property="formName" column="form_name" />
+		<result property="recordId" column="record_id " />
+		<result property="details" column="details" />
+		<result property="remark" column="remark" />
+
+		<!-- <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.IUserDao.getBaseObject"> 
+			</association> <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.IUserDao.getBaseObject"> 
+			</association> -->
+	</resultMap>
+
+
+	<sql id="baseCol">
+		id,creator_name,creator,create_date,type,form_name,record_id,details,remark
+	</sql>
+
+	<sql id="pageSql">
+		<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+	</sql>
+
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="and |or ">
+			<!-- 通过ID查询用于查询某条日志详情 -->
+			<if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+			<if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+				<foreach collection="id_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<!-- 通过表达类型查找 -->
+			<if test="formName != null"><![CDATA[ and form_name = #{formName} ]]></if>
+			<if test="formName_like != null"><![CDATA[ and form_name like #{formName_like} ]]></if>
+			<if test="formName_enum != null">
+                <![CDATA[ and form_name in ]]>
+				<foreach collection="formName_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="details_like != null"><![CDATA[ and details like  #{details_like} ]]></if>
+			
+			<!-- 通过操作人名称查找 -->
+			<if test="creatorName != null"><![CDATA[ and creator_Name = #{creatorName} ]]></if>
+			<if test="creatorName_like != null"><![CDATA[ and creator_Name like #{creatorName_like} ]]></if>
+			<if test="creatorName_enum != null">
+                <![CDATA[ and creator_Name in ]]>
+				<foreach collection="creatorName_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<!-- 通过操作类型查找：增加删除修改 -->
+			<if test="type != null"><![CDATA[ and type = #{type} ]]></if>
+			<if test="type_like != null"><![CDATA[ and type like #{type_like} ]]></if>
+			<if test="type_enum != null">
+                <![CDATA[ and type in ]]>
+				<foreach collection="type_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<!-- 通过操作时间查找： -->
+			<if test="createDate_r_min != null"><![CDATA[ and create_date >= #{createDate_r_min} and create_date < #{createDate_r_max} ]]></if>
+			<if test="createDate_r_geq != null"><![CDATA[ and create_date >= #{createDate_r_geq} ]]></if>
+            <if test="createDate_r_leq != null"><![CDATA[ and create_date <= #{createDate_r_leq} ]]></if>
+		</trim>
+	</sql>
+
+	<sql id="orderSql">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+			<if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+			<if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+			<if test="_orderBy == 'creatorName_desc'"><![CDATA[ creator_name desc,]]></if>
+			<if test="_orderBy == 'creatorName_asc'"><![CDATA[creator_name, ]]></if>
+			<if test="_orderBy == 'createDate_desc'"><![CDATA[ create_date desc,]]></if>
+			<if test="_orderBy == 'createDate_asc'"><![CDATA[ create_date, ]]></if>
+			<if test="_orderBy == 'type_desc'"><![CDATA[ type desc,]]></if>
+			<if test="_orderBy == 'type_asc'"><![CDATA[ type, ]]></if>
+			<if test="_orderBy == 'formName_desc'"><![CDATA[ form_name desc,]]></if>
+			<if test="_orderBy == 'formName_asc'"><![CDATA[ form_name, ]]></if>
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open=""
+					separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc, ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id, ]]></if>
+					<if test="orderItem == 'creator_desc'"><![CDATA[ creator desc,]]></if>
+					<if test="orderItem == 'creator_asc'"><![CDATA[ creator, ]]></if>
+					<if test="orderItem == 'createDate_desc'"><![CDATA[ create_date desc,]]></if>
+					<if test="orderItem == 'createDate_asc'"><![CDATA[ create_date, ]]></if>
+				</foreach>
+			</if>
+		</trim>
+	</sql>
+
+
+	<!-- 添加日志 -->
+	<insert id="insertObject" parameterType="com.jc.cz_index.model.InfoManagementLog">
+		<selectKey resultType="Long" keyProperty="id" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into
+		info_management_log
+		(id,creator_name,creator,create_date,type,form_name,record_id,details,remark)
+		values
+		(#{id},#{creatorName},#{creator},#{createDate},#{type},#{formName},#{recordId},#{details},#{remark});
+	</insert>
+
+
+	<select id="getBaseObject" parameterType="long" resultMap="resultMap">
+		select
+		<include refid="baseCol" />
+		from info_management_log where id=#{id};
+	</select>
+
+	<select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams"
+		resultType="int">
+		select count(*) from info_management_log
+		<include refid="whereSql" />
+	</select>
+
+	<select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams"
+		resultMap="resultMap">
+		select
+		<include refid="baseCol" />
+		from info_management_log
+		<include refid="whereSql" />
+		<include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+
+
+</mapper>  
+
+

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"       
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"       
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee   
+    http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"       
+    version="2.0">     
+    <!-- 定义函数版本 -->  
+    <tlib-version>1.0</tlib-version>  
+    <!-- 定义函数名称 -->  
+    <short-name>el</short-name>  
+    <!-- 定义第一个函数 -->  
+    <function>  
+        <!-- 定义第一个函数：reverse -->  
+        <name>formatDefaultDate</name>  
+        <!-- 定义函数处理类 -->  
+        <function-class>com.jc.cz_index.core.component.EL_Extends</function-class>  
+        <!-- 定义函数的对应方法 -->  
+        <function-signature>  
+            java.lang.String formatDefaultDate(long)  
+        </function-signature>  
+    </function>  
+      
+    <function>  
+        <name>formatDate</name>  
+        <function-class>com.jc.cz_index.core.component.EL_Extends</function-class>  
+        <function-signature>  
+            java.lang.String formatDate(long,java.lang.String)
+        </function-signature>  
+    </function>  
+      
+	<function>  
+        <name>test</name>  
+        <function-class>com.jc.cz_index.core.component.EL_Extends</function-class>  
+        <function-signature>  
+            java.util.Map test()
+        </function-signature>  
+    </function>  
+         
+    <function>  
+        <name>test1</name>  
+        <function-class>com.jc.cz_index.core.component.EL_Extends</function-class>  
+        <function-signature>  
+            java.util.List test1()
+        </function-signature>  
+    </function>
+    
+    <function>  
+        <name>dict</name>  
+        <function-class>com.jc.cz_index.core.component.EL_Extends</function-class>  
+        <function-signature>  
+            com.jc.cz_index.model.Dictionary dict(java.lang.String)
+        </function-signature>  
+    </function>
+    
+    <function>  
+        <name>dictList</name>  
+        <function-class>com.jc.cz_index.core.component.EL_Extends</function-class>  
+        <function-signature>  
+            java.util.List dictList(java.lang.String)
+        </function-signature>  
+    </function>
+    
+    
+    <function>  
+        <name>checkMenuBySn</name>  
+        <function-class>com.jc.cz_index.core.component.EL_Extends</function-class>  
+        <function-signature>  
+            java.util.List checkMenuBySn(java.lang.String)
+        </function-signature>  
+    </function>
+    <function>  
+        <name>administrativeDivisionList</name>  
+        <function-class>com.jc.cz_index.core.component.EL_Extends</function-class>  
+        <function-signature>  
+            java.util.List administrativeDivisionList()
+        </function-signature>  
+    </function>
+    <function>  
+        <name>administrativeDivisionListByParentId</name>  
+        <function-class>com.jc.cz_index.core.component.EL_Extends</function-class>  
+        <function-signature>  
+            java.util.List administrativeDivisionListByParentId()
+        </function-signature>  
+    </function>
+    <function>  
+        <name>getHospital</name>  
+        <function-class>com.jc.cz_index.core.component.EL_Extends</function-class>  
+        <function-signature>  
+            java.util.List getHospital()
+        </function-signature>  
+    </function>
+    <function>  
+        <name>getFrontEndMachine</name>  
+        <function-class>com.jc.cz_index.core.component.EL_Extends</function-class>  
+        <function-signature>  
+            java.util.List getFrontEndMachine()
+        </function-signature>  
+    </function>
+</taglib>  

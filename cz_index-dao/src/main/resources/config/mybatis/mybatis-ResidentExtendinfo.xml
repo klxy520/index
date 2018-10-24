@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jc.cz_index.dao.IResidentExtendinfoDao">
+
+	<resultMap id="resultMap" type="com.jc.cz_index.model.ResidentExtendinfo">
+		<result property="id" column="id" />
+		<result property="baseId" column="base_id" />
+		<result property="healthNumber" column="health_number" />
+		<result property="insuranceType" column="insurance_type" />
+		<result property="illnessType" column="illness_type" />
+		<result property="disabilityType" column="disability_type" />
+		<result property="unionFeature" column="union_feature" />
+		<result property="retiredCadres" column="retired_cadres" />
+		<result property="helpHouse" column="help_house" />
+		<result property="lowType" column="low_type" />
+		<result property="isCivilAffairs" column="is_civil_affairs" />
+		<result property="isDisableFederation" column="is_disable_federation" />
+		<result property="delFalg" column="del_falg" />
+		<result property="creator" column="creator" />
+		<result property="createDate" column="create_date" />
+		<result property="updator" column="updator" />
+		<result property="updateDate" column="update_date" />
+		<result property="deleteor" column="deleteor" />
+		<result property="deleteDate" column="delete_date" />
+		
+	</resultMap>
+
+	<resultMap id="resultDetailMap" type="com.jc.cz_index.model.ResidentExtendinfo">
+		<result property="id" column="id" />
+		<result property="baseId" column="base_id" />
+		<result property="healthNumber" column="health_number" />
+		<result property="insuranceType" column="insurance_type" />
+		<result property="illnessType" column="illness_type" />
+		<result property="disabilityType" column="disability_type" />
+		<result property="unionFeature" column="union_feature" />
+		<result property="retiredCadres" column="retired_cadres" />
+		<result property="helpHouse" column="help_house" />
+		<result property="lowType" column="low_type" />
+		<result property="isCivilAffairs" column="is_civil_affairs" />
+		<result property="isDisableFederation" column="is_disable_federation" />
+		<result property="delFalg" column="del_falg" />
+		<result property="creator" column="creator" />
+		<result property="createDate" column="create_date" />
+		<result property="updator" column="updator" />
+		<result property="updateDate" column="update_date" />
+		<result property="deleteor" column="deleteor" />
+		<result property="deleteDate" column="delete_date" />
+		<!-- <association property="creatorUser" column="creator" select="com.jc.cz_index.dao.IUserDao.getBaseObject"> 
+			</association> <association property="updatorUser" column="updator" select="com.jc.cz_index.dao.IUserDao.getBaseObject"> 
+			</association> -->
+	</resultMap>
+
+	
+			
+
+	<sql id="baseCol">
+		id,base_id,health_number,insurance_type,illness_type,disability_type,union_feature,retired_cadres,help_house,low_type,is_civil_affairs,is_disable_federation,del_falg,creator,create_date,updator,update_date,deleteor,delete_date
+	</sql>
+
+	<sql id="pageSql">
+		<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+	</sql>
+
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="and |or ">
+			<if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+			<if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+			<if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+				<foreach collection="id_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="baseId != null"><![CDATA[ and  base_id = #{baseId:NUMERIC}]]></if>
+			<if test="baseId_r_min != null"><![CDATA[ and base_id >= #{baseId_r_min} and base_id <= #{baseId_r_max} ]]></if>
+			<if test="baseId_enum != null">
+                <![CDATA[ and base_id in ]]>
+				<foreach collection="baseId_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="healthNumber != null"><![CDATA[ and  health_number = #{healthNumber:VARCHAR}]]></if>
+			<if test="healthNumber_r_min != null"><![CDATA[ and health_number >= #{healthNumber_r_min} and health_number <= #{healthNumber_r_max} ]]></if>
+			<if test="healthNumber_enum != null">
+                <![CDATA[ and health_number in ]]>
+				<foreach collection="healthNumber_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="insuranceType != null"><![CDATA[ and  insurance_type = #{insuranceType:VARCHAR}]]></if>
+			<if test="insuranceType_r_min != null"><![CDATA[ and insurance_type >= #{insuranceType_r_min} and insurance_type <= #{insuranceType_r_max} ]]></if>
+			<if test="insuranceType_enum != null">
+                <![CDATA[ and insurance_type in ]]>
+				<foreach collection="insuranceType_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="illnessType != null"><![CDATA[ and  illness_type = #{illnessType:VARCHAR}]]></if>
+			<if test="illnessType_r_min != null"><![CDATA[ and illness_type >= #{illnessType_r_min} and illness_type <= #{illnessType_r_max} ]]></if>
+			<if test="illnessType_enum != null">
+                <![CDATA[ and illness_type in ]]>
+				<foreach collection="illnessType_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="disabilityType != null"><![CDATA[ and  disability_type = #{disabilityType:VARCHAR}]]></if>
+			<if test="disabilityType_r_min != null"><![CDATA[ and disability_type >= #{disabilityType_r_min} and disability_type <= #{disabilityType_r_max} ]]></if>
+			<if test="disabilityType_enum != null">
+                <![CDATA[ and disability_type in ]]>
+				<foreach collection="disabilityType_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="unionFeature != null"><![CDATA[ and  union_feature = #{unionFeature:VARCHAR}]]></if>
+			<if test="unionFeature_r_min != null"><![CDATA[ and union_feature >= #{unionFeature_r_min} and union_feature <= #{unionFeature_r_max} ]]></if>
+			<if test="unionFeature_enum != null">
+                <![CDATA[ and union_feature in ]]>
+				<foreach collection="unionFeature_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="retiredCadres != null"><![CDATA[ and  retired_cadres = #{retiredCadres:VARCHAR}]]></if>
+			<if test="retiredCadres_r_min != null"><![CDATA[ and retired_cadres >= #{retiredCadres_r_min} and retired_cadres <= #{retiredCadres_r_max} ]]></if>
+			<if test="retiredCadres_enum != null">
+                <![CDATA[ and retired_cadres in ]]>
+				<foreach collection="retiredCadres_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="helpHouse != null"><![CDATA[ and  help_house = #{helpHouse:VARCHAR}]]></if>
+			<if test="helpHouse_r_min != null"><![CDATA[ and help_house >= #{helpHouse_r_min} and help_house <= #{helpHouse_r_max} ]]></if>
+			<if test="helpHouse_enum != null">
+                <![CDATA[ and help_house in ]]>
+				<foreach collection="helpHouse_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="lowType != null"><![CDATA[ and  low_type = #{lowType:VARCHAR}]]></if>
+			<if test="lowType_r_min != null"><![CDATA[ and low_type >= #{lowType_r_min} and low_type <= #{lowType_r_max} ]]></if>
+			<if test="lowType_enum != null">
+                <![CDATA[ and low_type in ]]>
+				<foreach collection="lowType_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="delFalg != null"><![CDATA[ and  del_falg = #{delFalg:NUMERIC}]]></if>
+			<if test="delFalg_r_min != null"><![CDATA[ and del_falg >= #{delFalg_r_min} and del_falg <= #{delFalg_r_max} ]]></if>
+			<if test="delFalg_enum != null">
+                <![CDATA[ and del_falg in ]]>
+				<foreach collection="delFalg_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="creator != null"><![CDATA[ and  creator = #{creator:NUMERIC}]]></if>
+			<if test="creator_r_min != null"><![CDATA[ and creator >= #{creator_r_min} and creator <= #{creator_r_max} ]]></if>
+			<if test="creator_enum != null">
+                <![CDATA[ and creator in ]]>
+				<foreach collection="creator_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="createDate != null"><![CDATA[ and  create_date = #{createDate:DATETIME}]]></if>
+			<if test="createDate_r_min != null"><![CDATA[ and create_date >= #{createDate_r_min} and create_date <= #{createDate_r_max} ]]></if>
+			<if test="createDate_enum != null">
+                <![CDATA[ and create_date in ]]>
+				<foreach collection="createDate_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="updator != null"><![CDATA[ and  updator = #{updator:NUMERIC}]]></if>
+			<if test="updator_r_min != null"><![CDATA[ and updator >= #{updator_r_min} and updator <= #{updator_r_max} ]]></if>
+			<if test="updator_enum != null">
+                <![CDATA[ and updator in ]]>
+				<foreach collection="updator_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="updateDate != null"><![CDATA[ and  update_date = #{updateDate:DATETIME}]]></if>
+			<if test="updateDate_r_min != null"><![CDATA[ and update_date >= #{updateDate_r_min} and update_date <= #{updateDate_r_max} ]]></if>
+			<if test="updateDate_enum != null">
+                <![CDATA[ and update_date in ]]>
+				<foreach collection="updateDate_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="deleteor != null"><![CDATA[ and  deleteor = #{deleteor:NUMERIC}]]></if>
+			<if test="deleteor_r_min != null"><![CDATA[ and deleteor >= #{deleteor_r_min} and deleteor <= #{deleteor_r_max} ]]></if>
+			<if test="deleteor_enum != null">
+                <![CDATA[ and deleteor in ]]>
+				<foreach collection="deleteor_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="isCivilAffairs != null"><![CDATA[ and  is_civil_affairs = #{isCivilAffairs:VARCHAR}]]></if>
+			<if test="isDisableFederation != null"><![CDATA[ and  is_disable_federation = #{isDisableFederation:VARCHAR}]]></if>
+			<if test="deleteDate != null"><![CDATA[ and  delete_date = #{deleteDate:DATETIME}]]></if>
+			<if test="deleteDate_r_min != null"><![CDATA[ and delete_date >= #{deleteDate_r_min} and delete_date <= #{deleteDate_r_max} ]]></if>
+			<if test="deleteDate_enum != null">
+                <![CDATA[ and delete_date in ]]>
+				<foreach collection="deleteDate_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="orderSql">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+			<if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+			<if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+			<if test="_orderBy == 'baseId_desc'"><![CDATA[ base_id desc, ]]></if>
+			<if test="_orderBy == 'baseId_asc'"><![CDATA[ base_id, ]]></if>
+			<if test="_orderBy == 'healthNumber_desc'"><![CDATA[ health_number desc, ]]></if>
+			<if test="_orderBy == 'healthNumber_asc'"><![CDATA[ health_number, ]]></if>
+			<if test="_orderBy == 'insuranceType_desc'"><![CDATA[ insurance_type desc, ]]></if>
+			<if test="_orderBy == 'insuranceType_asc'"><![CDATA[ insurance_type, ]]></if>
+			<if test="_orderBy == 'illnessType_desc'"><![CDATA[ illness_type desc, ]]></if>
+			<if test="_orderBy == 'illnessType_asc'"><![CDATA[ illness_type, ]]></if>
+			<if test="_orderBy == 'disabilityType_desc'"><![CDATA[ disability_type desc, ]]></if>
+			<if test="_orderBy == 'disabilityType_asc'"><![CDATA[ disability_type, ]]></if>
+			<if test="_orderBy == 'unionFeature_desc'"><![CDATA[ union_feature desc, ]]></if>
+			<if test="_orderBy == 'unionFeature_asc'"><![CDATA[ union_feature, ]]></if>
+			<if test="_orderBy == 'retiredCadres_desc'"><![CDATA[ retired_cadres desc, ]]></if>
+			<if test="_orderBy == 'retiredCadres_asc'"><![CDATA[ retired_cadres, ]]></if>
+			<if test="_orderBy == 'helpHouse_desc'"><![CDATA[ help_house desc, ]]></if>
+			<if test="_orderBy == 'helpHouse_asc'"><![CDATA[ help_house, ]]></if>
+			<if test="_orderBy == 'lowType_desc'"><![CDATA[ low_type desc, ]]></if>
+			<if test="_orderBy == 'lowType_asc'"><![CDATA[ low_type, ]]></if>
+			<if test="_orderBy == 'delFalg_desc'"><![CDATA[ del_falg desc, ]]></if>
+			<if test="_orderBy == 'delFalg_asc'"><![CDATA[ del_falg, ]]></if>
+			<if test="_orderBy == 'creator_desc'"><![CDATA[ creator desc, ]]></if>
+			<if test="_orderBy == 'creator_asc'"><![CDATA[ creator, ]]></if>
+			<if test="_orderBy == 'createDate_desc'"><![CDATA[ create_date desc, ]]></if>
+			<if test="_orderBy == 'createDate_asc'"><![CDATA[ create_date, ]]></if>
+			<if test="_orderBy == 'updator_desc'"><![CDATA[ updator desc, ]]></if>
+			<if test="_orderBy == 'updator_asc'"><![CDATA[ updator, ]]></if>
+			<if test="_orderBy == 'updateDate_desc'"><![CDATA[ update_date desc, ]]></if>
+			<if test="_orderBy == 'updateDate_asc'"><![CDATA[ update_date, ]]></if>
+			<if test="_orderBy == 'deleteor_desc'"><![CDATA[ deleteor desc, ]]></if>
+			<if test="_orderBy == 'deleteor_asc'"><![CDATA[ deleteor, ]]></if>
+			<if test="_orderBy == 'deleteDate_desc'"><![CDATA[ delete_date desc, ]]></if>
+			<if test="_orderBy == 'deleteDate_asc'"><![CDATA[ delete_date, ]]></if>
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open=""
+					separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'baseId_desc'"><![CDATA[ base_id desc ]]></if>
+					<if test="orderItem == 'baseId_asc'"><![CDATA[ base_id ]]></if>
+					<if test="orderItem == 'healthNumber_desc'"><![CDATA[ health_number desc ]]></if>
+					<if test="orderItem == 'healthNumber_asc'"><![CDATA[ health_number ]]></if>
+					<if test="orderItem == 'insuranceType_desc'"><![CDATA[ insurance_type desc ]]></if>
+					<if test="orderItem == 'insuranceType_asc'"><![CDATA[ insurance_type ]]></if>
+					<if test="orderItem == 'illnessType_desc'"><![CDATA[ illness_type desc ]]></if>
+					<if test="orderItem == 'illnessType_asc'"><![CDATA[ illness_type ]]></if>
+					<if test="orderItem == 'disabilityType_desc'"><![CDATA[ disability_type desc ]]></if>
+					<if test="orderItem == 'disabilityType_asc'"><![CDATA[ disability_type ]]></if>
+					<if test="orderItem == 'unionFeature_desc'"><![CDATA[ union_feature desc ]]></if>
+					<if test="orderItem == 'unionFeature_asc'"><![CDATA[ union_feature ]]></if>
+					<if test="orderItem == 'retiredCadres_desc'"><![CDATA[ retired_cadres desc ]]></if>
+					<if test="orderItem == 'retiredCadres_asc'"><![CDATA[ retired_cadres ]]></if>
+					<if test="orderItem == 'helpHouse_desc'"><![CDATA[ help_house desc ]]></if>
+					<if test="orderItem == 'helpHouse_asc'"><![CDATA[ help_house ]]></if>
+					<if test="orderItem == 'lowType_desc'"><![CDATA[ low_type desc ]]></if>
+					<if test="orderItem == 'lowType_asc'"><![CDATA[ low_type ]]></if>
+					<if test="orderItem == 'delFalg_desc'"><![CDATA[ del_falg desc ]]></if>
+					<if test="orderItem == 'delFalg_asc'"><![CDATA[ del_falg ]]></if>
+					<if test="orderItem == 'creator_desc'"><![CDATA[ creator desc ]]></if>
+					<if test="orderItem == 'creator_asc'"><![CDATA[ creator ]]></if>
+					<if test="orderItem == 'createDate_desc'"><![CDATA[ create_date desc ]]></if>
+					<if test="orderItem == 'createDate_asc'"><![CDATA[ create_date ]]></if>
+					<if test="orderItem == 'updator_desc'"><![CDATA[ updator desc ]]></if>
+					<if test="orderItem == 'updator_asc'"><![CDATA[ updator ]]></if>
+					<if test="orderItem == 'updateDate_desc'"><![CDATA[ update_date desc ]]></if>
+					<if test="orderItem == 'updateDate_asc'"><![CDATA[ update_date ]]></if>
+					<if test="orderItem == 'deleteor_desc'"><![CDATA[ deleteor desc ]]></if>
+					<if test="orderItem == 'deleteor_asc'"><![CDATA[ deleteor ]]></if>
+					<if test="orderItem == 'deleteDate_desc'"><![CDATA[ delete_date desc ]]></if>
+					<if test="orderItem == 'deleteDate_asc'"><![CDATA[ delete_date ]]></if>
+				</foreach>
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="updateSetSql">
+		<trim prefix="set" prefixOverrides=",">
+			<if test="baseId != null"><![CDATA[ ,  base_id = #{baseId}]]></if>
+			<if test="healthNumber != null"><![CDATA[ ,  health_number = #{healthNumber}]]></if>
+			<if test="insuranceType != null"><![CDATA[ ,  insurance_type = #{insuranceType}]]></if>
+			<if test="illnessType != null"><![CDATA[ ,  illness_type = #{illnessType}]]></if>
+			<if test="disabilityType != null"><![CDATA[ ,  disability_type = #{disabilityType}]]></if>
+			<if test="unionFeature != null"><![CDATA[ ,  union_feature = #{unionFeature}]]></if>
+			<if test="retiredCadres != null"><![CDATA[ ,  retired_cadres = #{retiredCadres}]]></if>
+			<if test="helpHouse != null"><![CDATA[ ,  help_house = #{helpHouse}]]></if>
+			<if test="lowType != null"><![CDATA[ ,  low_type = #{lowType}]]></if>
+			<if test="delFalg != null"><![CDATA[ ,  del_falg = #{delFalg}]]></if>
+			<if test="isCivilAffairs != null"><![CDATA[  , is_civil_affairs = #{isCivilAffairs}]]></if>
+			<if test="isDisableFederation != null"><![CDATA[,  is_disable_federation = #{isDisableFederation}]]></if>
+			<if test="creator != null"><![CDATA[ ,  creator = #{creator}]]></if>
+			<if test="createDate != null"><![CDATA[ ,  create_date = #{createDate}]]></if>
+			<if test="updator != null"><![CDATA[ ,  updator = #{updator}]]></if>
+			<if test="updateDate != null"><![CDATA[ ,  update_date = #{updateDate}]]></if>
+			<if test="deleteor != null"><![CDATA[ ,  deleteor = #{deleteor}]]></if>
+			<if test="deleteDate != null"><![CDATA[ ,  delete_date = #{deleteDate}]]></if>
+		</trim>
+	</sql>
+
+	<insert id="insertObject" parameterType="com.jc.cz_index.model.ResidentExtendinfo">
+		<selectKey resultType="Long" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>  
+		insert into RESIDENT_EXTENDINFO(   
+		id,base_id,health_number,insurance_type,illness_type,disability_type,union_feature,retired_cadres,help_house,low_type,is_civil_affairs,is_disable_federation,del_falg,creator,create_date,updator,update_date,deleteor,delete_date
+		) values
+		(#{id},#{baseId},#{healthNumber},#{insuranceType},#{illnessType},#{disabilityType},#{unionFeature},#{retiredCadres},#{helpHouse},#{lowType}, #{isCivilAffairs},#{isDisableFederation},#{delFalg},#{creator},#{createDate},#{updator},#{updateDate},#{deleteor},#{deleteDate}
+		)
+	</insert>
+
+	<update id="updateObject" parameterType="com.jc.cz_index.model.ResidentExtendinfo">
+		update
+		RESIDENT_EXTENDINFO set
+		base_id=#{baseId},health_number=#{healthNumber},insurance_type=#{insuranceType},illness_type=#{illnessType},disability_type=#{disabilityType},union_feature=#{unionFeature},retired_cadres=#{retiredCadres},help_house=#{helpHouse},low_type=#{lowType},is_civil_affairs = #{isCivilAffairs},is_disable_federation = #{isDisableFederation},del_falg=#{delFalg},creator=#{creator},create_date=#{createDate},updator=#{updator},update_date=#{updateDate},deleteor=#{deleteor},delete_date=#{deleteDate}
+		where id=#{id}
+	</update>
+
+	<update id="updateObjectByFields" parameterType="com.jc.cz_index.dao.QueryParams">
+		UPDATE RESIDENT_EXTENDINFO
+		<include refid="updateSetSql" />
+		where id=#{id};
+	</update>
+
+	<delete id="deleteObject" parameterType="long">
+		DELETE FROM
+		RESIDENT_EXTENDINFO WHERE id = #{id}
+	</delete>
+
+	<delete id="deleteObjectByWhere" parameterType="com.jc.cz_index.dao.QueryParams">
+		DELETE FROM RESIDENT_EXTENDINFO
+		<include refid="whereSql" />
+	</delete>
+
+	<select id="getBaseObject" parameterType="long" resultMap="resultMap">
+		select
+		<include refid="baseCol" />
+		from RESIDENT_EXTENDINFO where id=#{id};
+	</select>
+
+	<select id="getDetailObject" parameterType="long" resultMap="resultDetailMap">
+		select * from RESIDENT_EXTENDINFO where id=#{id};
+	</select>
+
+	<select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams"
+		resultType="int">
+		select count(*) from RESIDENT_EXTENDINFO
+		<include refid="whereSql" />
+	</select>
+
+	<select id="queryBaseList" parameterType="com.jc.cz_index.dao.QueryParams"
+		resultMap="resultMap">
+		select
+		<include refid="baseCol" />
+		from RESIDENT_EXTENDINFO
+		<include refid="whereSql" />
+		<include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+
+	<select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams"
+		resultMap="resultDetailMap">
+		select * from RESIDENT_EXTENDINFO
+		<include refid="whereSql" />
+		<include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+	<!-- ***************************************添加内容************************************************** -->
+	
+	<resultMap id="detailMap" type="com.jc.cz_index.model.ResidentExtendinfo">
+		<result property="id" column="id" />
+		<result property="baseId" column="base_id" />
+		<result property="realName" column="name" />
+		<result property="idNumber" column="identity_number" />
+		<result property="healthNumber" column="bank_card_number" />
+		<result property="insuranceType" column="insurance_type" />
+		<result property="illnessType" column="illness_type" />
+		<result property="disabilityType" column="disability_type" />
+		<result property="unionFeature" column="union_feature" />
+		<result property="retiredCadres" column="retired_cadres" />
+		<result property="helpHouse" column="help_house" />
+		<result property="lowType" column="low_type" />
+		<result property="delFalg" column="del_falg" />
+		<result property="isCivilAffairs" column="is_civil_affairs" />
+		<result property="isDisableFederation" column="is_disable_federation" />
+		<result property="creator" column="creator" />
+		<result property="createDate" column="create_date" />
+		<result property="updator" column="updator" />
+		<result property="updateDate" column="update_date" />
+		<result property="deleteor" column="deleteor" />
+		<result property="deleteDate" column="delete_date" />
+	</resultMap>
+	
+	<sql id="joinOrderSql">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+			<if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+			<if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+			<if test="_orderBy == 'baseId_desc'"><![CDATA[ base_id desc, ]]></if>
+			<if test="_orderBy == 'baseId_asc'"><![CDATA[ base_id, ]]></if>
+			<if test="_orderBy == 'healthNumber_desc'"><![CDATA[ health_number desc, ]]></if>
+			<if test="_orderBy == 'healthNumber_asc'"><![CDATA[ health_number, ]]></if>
+			<if test="_orderBy == 'insuranceType_desc'"><![CDATA[ insurance_type desc, ]]></if>
+			<if test="_orderBy == 'insuranceType_asc'"><![CDATA[ insurance_type, ]]></if>
+			<if test="_orderBy == 'illnessType_desc'"><![CDATA[ illness_type desc, ]]></if>
+			<if test="_orderBy == 'illnessType_asc'"><![CDATA[ illness_type, ]]></if>
+			<if test="_orderBy == 'disabilityType_desc'"><![CDATA[ disability_type desc, ]]></if>
+			<if test="_orderBy == 'disabilityType_asc'"><![CDATA[ disability_type, ]]></if>
+			<if test="_orderBy == 'unionFeature_desc'"><![CDATA[ union_feature desc, ]]></if>
+			<if test="_orderBy == 'unionFeature_asc'"><![CDATA[ union_feature, ]]></if>
+			<if test="_orderBy == 'retiredCadres_desc'"><![CDATA[ retired_cadres desc, ]]></if>
+			<if test="_orderBy == 'retiredCadres_asc'"><![CDATA[ retired_cadres, ]]></if>
+			<if test="_orderBy == 'helpHouse_desc'"><![CDATA[ help_house desc, ]]></if>
+			<if test="_orderBy == 'helpHouse_asc'"><![CDATA[ help_house, ]]></if>
+			<if test="_orderBy == 'lowType_desc'"><![CDATA[ low_type desc, ]]></if>
+			<if test="_orderBy == 'lowType_asc'"><![CDATA[ low_type, ]]></if>
+			<if test="_orderBy == 'delFalg_desc'"><![CDATA[ del_falg desc, ]]></if>
+			<if test="_orderBy == 'delFalg_asc'"><![CDATA[ del_falg, ]]></if>
+			<if test="_orderBy == 'creator_desc'"><![CDATA[ creator desc, ]]></if>
+			<if test="_orderBy == 'creator_asc'"><![CDATA[ creator, ]]></if>		
+			<if test="_orderBy == 'realName_desc'"><![CDATA[ rb.name desc, ]]></if>
+			<if test="_orderBy == 'realName_asc'"><![CDATA[ rb.name, ]]></if>		
+			<if test="_orderBy == 'createDate_desc'"><![CDATA[ rb.create_date desc, ]]></if>
+			<if test="_orderBy == 'createDate_asc'"><![CDATA[ rb.create_date, ]]></if>			
+			<if test="_orderBy == 'idNumber_desc'"><![CDATA[ rb.identity_number desc, ]]></if>
+			<if test="_orderBy == 'idNumber_asc'"><![CDATA[ rb.identity_number, ]]></if>		
+			<if test="_orderBy == 'isDisableFederation_desc'"><![CDATA[ is_disable_federation desc, ]]></if>
+			<if test="_orderBy == 'isDisableFederation_asc'"><![CDATA[ is_disable_federation, ]]></if>			
+			<if test="_orderBy == 'isCivilAffairs_desc'"><![CDATA[ is_civil_affairs desc, ]]></if>
+			<if test="_orderBy == 'isCivilAffairs_asc'"><![CDATA[ is_civil_affairs, ]]></if>				
+			<if test="_orderBy == 'updator_desc'"><![CDATA[ updator desc, ]]></if>
+			<if test="_orderBy == 'updator_asc'"><![CDATA[ updator, ]]></if>
+			<if test="_orderBy == 'updateDate_desc'"><![CDATA[ update_date desc, ]]></if>
+			<if test="_orderBy == 'updateDate_asc'"><![CDATA[ update_date, ]]></if>
+			<if test="_orderBy == 'deleteor_desc'"><![CDATA[ deleteor desc, ]]></if>
+			<if test="_orderBy == 'deleteor_asc'"><![CDATA[ deleteor, ]]></if>
+			<if test="_orderBy == 'deleteDate_desc'"><![CDATA[ delete_date desc, ]]></if>
+			<if test="_orderBy == 'deleteDate_asc'"><![CDATA[ delete_date, ]]></if>
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open=""
+					separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'baseId_desc'"><![CDATA[ base_id desc ]]></if>
+					<if test="orderItem == 'baseId_asc'"><![CDATA[ base_id ]]></if>
+					<if test="orderItem == 'healthNumber_desc'"><![CDATA[ health_number desc ]]></if>
+					<if test="orderItem == 'healthNumber_asc'"><![CDATA[ health_number ]]></if>
+					<if test="orderItem == 'insuranceType_desc'"><![CDATA[ insurance_type desc ]]></if>
+					<if test="orderItem == 'insuranceType_asc'"><![CDATA[ insurance_type ]]></if>
+					<if test="orderItem == 'illnessType_desc'"><![CDATA[ illness_type desc ]]></if>
+					<if test="orderItem == 'illnessType_asc'"><![CDATA[ illness_type ]]></if>
+					<if test="orderItem == 'disabilityType_desc'"><![CDATA[ disability_type desc ]]></if>
+					<if test="orderItem == 'disabilityType_asc'"><![CDATA[ disability_type ]]></if>
+					<if test="orderItem == 'unionFeature_desc'"><![CDATA[ union_feature desc ]]></if>
+					<if test="orderItem == 'unionFeature_asc'"><![CDATA[ union_feature ]]></if>
+					<if test="orderItem == 'retiredCadres_desc'"><![CDATA[ retired_cadres desc ]]></if>
+					<if test="orderItem == 'retiredCadres_asc'"><![CDATA[ retired_cadres ]]></if>
+					<if test="orderItem == 'helpHouse_desc'"><![CDATA[ help_house desc ]]></if>
+					<if test="orderItem == 'helpHouse_asc'"><![CDATA[ help_house ]]></if>
+					<if test="orderItem == 'lowType_desc'"><![CDATA[ low_type desc ]]></if>
+					<if test="orderItem == 'lowType_asc'"><![CDATA[ low_type ]]></if>
+					<if test="orderItem == 'delFalg_desc'"><![CDATA[ del_falg desc ]]></if>
+					<if test="orderItem == 'delFalg_asc'"><![CDATA[ del_falg ]]></if>
+					<if test="orderItem == 'creator_desc'"><![CDATA[ creator desc ]]></if>
+					<if test="orderItem == 'creator_asc'"><![CDATA[ creator ]]></if>
+					<if test="orderItem == 'createDate_desc'"><![CDATA[ create_date desc ]]></if>
+					<if test="orderItem == 'createDate_asc'"><![CDATA[ create_date ]]></if>
+					<if test="orderItem == 'updator_desc'"><![CDATA[ updator desc ]]></if>
+					<if test="orderItem == 'updator_asc'"><![CDATA[ updator ]]></if>
+					<if test="orderItem == 'updateDate_desc'"><![CDATA[ update_date desc ]]></if>
+					<if test="orderItem == 'updateDate_asc'"><![CDATA[ update_date ]]></if>
+					<if test="orderItem == 'deleteor_desc'"><![CDATA[ deleteor desc ]]></if>
+					<if test="orderItem == 'deleteor_asc'"><![CDATA[ deleteor ]]></if>
+					<if test="orderItem == 'deleteDate_desc'"><![CDATA[ delete_date desc ]]></if>
+					<if test="orderItem == 'deleteDate_asc'"><![CDATA[ delete_date ]]></if>
+				</foreach>
+			</if>
+		</trim>
+	</sql>
+
+
+	<sql id="JoinBasewhereSql">
+		<trim prefix="WHERE" prefixOverrides="and |or ">
+			rb.del_falg=0
+		
+			<if test="idNumber != null"><![CDATA[ and rb.identity_number = #{idNumber} ]]></if>
+			<if test="realName  != null"><![CDATA[ and rb.name = #{realName} ]]></if>
+			<if test="healthNumber != null"><![CDATA[ and  rb.bank_card_number = #{healthNumber:VARCHAR}]]></if>
+			<if test="idNumber != null"><![CDATA[ and  rb.identity_number = #{idNumber:VARCHAR}]]></if>
+			<if test="id != null"><![CDATA[ and re.id = #{id} ]]></if>
+			<if test="id_r_min != null"><![CDATA[ and id >= #{id_r_min} and id <= #{id_r_max} ]]></if>
+			<if test="isCivilAffairs != null"><![CDATA[ and  is_civil_affairs = #{isCivilAffairs:VARCHAR}]]></if>
+			<if test="isDisableFederation != null"><![CDATA[ and  is_disable_federation = #{isDisableFederation:VARCHAR}]]></if>
+			<if test="baseId != null"><![CDATA[ and  base_id = #{baseId:NUMERIC}]]></if>
+			<if test="baseId_r_min != null"><![CDATA[ and base_id >= #{baseId_r_min} and base_id <= #{baseId_r_max} ]]></if>
+			<if test="healthNumber != null"><![CDATA[ and  bank_card_number = #{healthNumber:VARCHAR}]]></if>
+			<if test="healthNumber_r_min != null"><![CDATA[ and bank_card_number >= #{healthNumber_r_min} and bank_card_number <= #{healthNumber_r_max} ]]></if>
+			
+			<if test="area!=0 ">
+				and rb.id in ( SELECT ull.resident_id FROM
+				update_resident_log ull WHERE ull.user_id in (
+				SELECT su.id FROM
+				system_user su WHERE su.area_id in ( 
+					SELECT ad.id FROM administrative_division ad where ad.id = #{area}
+				union all 
+					SELECT ad.id FROM administrative_division ad where ad.parentid = #{area})))
+			</if> 
+			<if test="insuranceType != null"><![CDATA[ and  insurance_type = #{insuranceType:VARCHAR}]]></if>
+			<if test="insuranceType_r_min != null"><![CDATA[ and insurance_type >= #{insuranceType_r_min} and insurance_type <= #{insuranceType_r_max} ]]></if>
+			<if test="insuranceType_enum != null">
+                <![CDATA[ and insurance_type in ]]>
+				<foreach collection="insuranceType_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="illnessType != null"><![CDATA[ and  illness_type = #{illnessType:VARCHAR}]]></if>
+			<if test="illnessType_r_min != null"><![CDATA[ and illness_type >= #{illnessType_r_min} and illness_type <= #{illnessType_r_max} ]]></if>
+			<if test="illnessType_enum != null">
+                <![CDATA[ and illness_type in ]]>
+				<foreach collection="illnessType_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="disabilityType != null"><![CDATA[ and  disability_type = #{disabilityType:VARCHAR}]]></if>
+			<if test="disabilityType_r_min != null"><![CDATA[ and disability_type >= #{disabilityType_r_min} and disability_type <= #{disabilityType_r_max} ]]></if>
+			<if test="disabilityType_enum != null">
+                <![CDATA[ and disability_type in ]]>
+				<foreach collection="disabilityType_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="unionFeature != null"><![CDATA[ and  union_feature = #{unionFeature:VARCHAR}]]></if>
+			<if test="unionFeature_r_min != null"><![CDATA[ and union_feature >= #{unionFeature_r_min} and union_feature <= #{unionFeature_r_max} ]]></if>
+			<if test="unionFeature_enum != null">
+                <![CDATA[ and union_feature in ]]>
+				<foreach collection="unionFeature_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="retiredCadres != null"><![CDATA[ and  retired_cadres = #{retiredCadres:VARCHAR}]]></if>
+			<if test="retiredCadres_r_min != null"><![CDATA[ and retired_cadres >= #{retiredCadres_r_min} and retired_cadres <= #{retiredCadres_r_max} ]]></if>
+			<if test="retiredCadres_enum != null">
+                <![CDATA[ and retired_cadres in ]]>
+				<foreach collection="retiredCadres_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="helpHouse != null"><![CDATA[ and  help_house = #{helpHouse:VARCHAR}]]></if>
+			<if test="helpHouse_r_min != null"><![CDATA[ and help_house >= #{helpHouse_r_min} and help_house <= #{helpHouse_r_max} ]]></if>
+			<if test="helpHouse_enum != null">
+                <![CDATA[ and help_house in ]]>
+				<foreach collection="helpHouse_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="lowType != null"><![CDATA[ and  low_type = #{lowType:VARCHAR}]]></if>
+			<if test="lowType_r_min != null"><![CDATA[ and low_type >= #{lowType_r_min} and low_type <= #{lowType_r_max} ]]></if>
+			<if test="lowType_enum != null">
+                <![CDATA[ and low_type in ]]>
+				<foreach collection="lowType_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="delFalg != null"><![CDATA[ and  del_falg = #{delFalg:NUMERIC}]]></if>
+			<if test="delFalg_r_min != null"><![CDATA[ and del_falg >= #{delFalg_r_min} and del_falg <= #{delFalg_r_max} ]]></if>
+			<if test="delFalg_enum != null">
+                <![CDATA[ and del_falg in ]]>
+				<foreach collection="delFalg_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="creator != null"><![CDATA[ and  creator = #{creator:NUMERIC}]]></if>
+			<if test="creator_r_min != null"><![CDATA[ and creator >= #{creator_r_min} and creator <= #{creator_r_max} ]]></if>
+			<if test="creator_enum != null">
+                <![CDATA[ and creator in ]]>
+				<foreach collection="creator_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="createDate != null"><![CDATA[ and  create_date = #{createDate:DATETIME}]]></if>
+			<if test="createDate_r_min != null"><![CDATA[ and create_date >= #{createDate_r_min} and create_date <= #{createDate_r_max} ]]></if>
+			<if test="createDate_enum != null">
+                <![CDATA[ and create_date in ]]>
+				<foreach collection="createDate_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+
+			<if test="updator != null"><![CDATA[ and  updator = #{updator:NUMERIC}]]></if>
+			<if test="updator_r_min != null"><![CDATA[ and updator >= #{updator_r_min} and updator <= #{updator_r_max} ]]></if>
+			<if test="updator_enum != null">
+                <![CDATA[ and updator in ]]>
+				<foreach collection="updator_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="maxDate != null"><![CDATA[ and  re.update_date <= #{maxDate}]]></if>
+			<if test="minDate != null"><![CDATA[ and  re.update_date >= #{minDate}]]></if>
+			<if test="deleteor != null"><![CDATA[ and  deleteor = #{deleteor:NUMERIC}]]></if>
+			<if test="deleteor_r_min != null"><![CDATA[ and deleteor >= #{deleteor_r_min} and deleteor <= #{deleteor_r_max} ]]></if>
+			<if test="deleteor_enum != null">
+                <![CDATA[ and deleteor in ]]>
+				<foreach collection="deleteor_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="deleteDate != null"><![CDATA[ and  delete_date = #{deleteDate:DATETIME}]]></if>
+			<if test="deleteDate_r_min != null"><![CDATA[ and delete_date >= #{deleteDate_r_min} and delete_date <= #{deleteDate_r_max} ]]></if>
+			<if test="deleteDate_enum != null">
+                <![CDATA[ and delete_date in ]]>
+				<foreach collection="deleteDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+		</trim>
+	</sql>
+
+	<select id="getQueryCount" parameterType="com.jc.cz_index.dao.QueryParams"
+		resultType="int">
+		select
+			count(rb.id)
+		from
+			RESIDENTS_INFO rb
+		left join
+			 RESIDENT_EXTENDINFO  re
+		on
+			rb.id=re.base_id
+		<include refid="JoinBasewhereSql" />
+	</select>
+
+
+	<select id="queryPagedListForTable" parameterType="com.jc.cz_index.dao.QueryParams"
+		resultMap="detailMap">
+		select
+			rb.id,rb.name,rb.identity_number, re.create_date, re.update_date,re.is_civil_affairs,re.is_disable_federation
+		from
+			RESIDENTS_INFO rb
+		left join 
+			RESIDENT_EXTENDINFO re
+		on
+			rb.id=re.base_id
+		<include refid="JoinBasewhereSql" />
+		<include refid="joinOrderSql" />
+		<include refid="pageSql" />
+	</select>
+	<select id="queryResidentExtendinfoDetailsById" parameterType="com.jc.cz_index.dao.QueryParams"
+		resultMap="detailMap">
+		select
+			  rb.id,re.base_id,rb.name,rb.identity_number,rb.create_date,re.creator, re.create_date, re.updator, re.update_date,re.is_civil_affairs,re.is_disable_federation
+		from
+		 	 RESIDENTS_INFO rb
+		left join
+			RESIDENT_EXTENDINFO re
+		on
+			rb.id=re.base_id
+		where
+			rb.id=#{id}
+		limit 1
+	</select>
+
+	<update id="updateExtendByBaseId" parameterType="com.jc.cz_index.model.ResidentExtendinfo">
+		update RESIDENT_EXTENDINFO
+		<include refid="updateSetSql" />
+		where base_id=#{baseId}
+	</update>
+
+</mapper>
+

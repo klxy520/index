@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jc.cz_index.dao.INoticeDao">
+
+	<resultMap id="resultMap" type="com.jc.cz_index.model.Notice">
+		<result property="id" column="id" />
+		<result property="title" column="parentid" />
+		<result property="content" column="content" />
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
+		<result property="status" column="status" />
+		<result property="creator" column="creator" />
+		<result property="creatorName" column="creatorName" />
+		<result property="updator" column="updator" />
+		<result property="updatorId" column="updator_id" />
+		<result property="createDate" column="create_date" />
+		<result property="updateDate" column="update_date" />
+		<association property="creatorUser" column="creator"
+			select="com.jc.cz_index.dao.ISystemUserDao.getBaseObject">
+		</association>
+		<association property="updatorUser" column="updator"
+			select="com.jc.cz_index.dao.ISystemUserDao.getBaseObject">
+		</association>
+	</resultMap>
+
+	<resultMap id="linkMap" type="com.jc.cz_index.model.Nodes">
+		<id property="id" column="id" />
+	</resultMap>
+
+
+
+
+	<resultMap type="com.jc.cz_index.model.Nodes" id="areaTreeNodeMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="childId" column="child_id" />
+		<collection property="childNode" column="child_Id"
+			select="getAreaNodesWithUseByParentId" />
+	</resultMap>
+	
+		<resultMap type="com.jc.cz_index.model.Nodes" id="orgTreeNodeMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="childId" column="child_id" />
+		<collection property="childNode" column="child_Id"
+			select="getOrgNodesWithUseByParentId" />
+	</resultMap>
+
+
+	<sql id="baseCol">
+		id,title,content,start_time,end_time,status,creator,creatorId,createrName,updator,updatorId,createDate,update_date
+	</sql>
+
+
+	<sql id="orderSql">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+			<if test="_orderBy == 'id_desc'"><![CDATA[ n.id desc, ]]></if>
+			<if test="_orderBy == 'id_asc'"><![CDATA[ n.id, ]]></if>
+			<if test="_orderBy == 'startTime_desc'"><![CDATA[ n.start_time desc, ]]></if>
+			<if test="_orderBy == 'startTime_asc'"><![CDATA[n.start_time asc, ]]></if>
+			<if test="_orderBy == 'createDate_desc'"><![CDATA[ n.create_date desc, ]]></if>
+			<if test="_orderBy == 'createDate_asc'"><![CDATA[ n.create_date asc, ]]></if>
+		</trim>
+	</sql>
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="and |or ">
+			<if test="id != null"><![CDATA[ and n.id = #{id} ]]></if>
+			<if test="status != null"><![CDATA[and n.status  = #{status} ]]></if>
+			<if test="createDate2_r_leq != null"><![CDATA[and  n.create_date<= #{createDate2_r_leq} ]]></if>
+			<if test="createDate1_r_geq != null"><![CDATA[ and n.create_date>= #{createDate1_r_geq} ]]></if>
+			<if test="useTime1_r_geq != null"><![CDATA[and n.start_time>= #{useTime1_r_geq}]]></if>
+			<if test="useTime2_r_leq != null "><![CDATA[ and n.end_time<= #{useTime2_r_leq}]]></if>
+			<if test="title_like != null"><![CDATA[ and n.title like #{title_like} ]]></if>
+			<if test="updatorName_like != null"><![CDATA[ and n.updator in (select id  from system_user where name like #{updatorName_like})]]></if>
+			<if test="creatorName_like != null"><![CDATA[ and n.creator in (select id  from system_user  where name like #{creatorName_like}) ]]></if>
+			<if test="isRead != null"><![CDATA[and nlr.is_read  = #{isRead} ]]></if>
+		</trim>
+	</sql>
+	<sql id="updateSetSql">
+		<trim prefix="set" prefixOverrides=",">
+			<if test="title != null"><![CDATA[ , title = #{title} ]]></if>
+			<if test="content != null"><![CDATA[ , content = #{content} ]]></if>
+			<if test="startTime != null"><![CDATA[,  start_time = #{startTime} ]]></if>
+			<if test="endTime != null"><![CDATA[, end_time = #{endTime} ]]></if>
+			<if test="status != null"><![CDATA[ , status = #{status} ]]></if>
+			<if test="updator != null"><![CDATA[ , updator = #{updator} ]]></if>
+			<if test="updateDate != null"><![CDATA[,  update_date = #{updateDate}]]></if>
+		</trim>
+	</sql>
+
+
+	<sql id="pageSql">
+		<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+	</sql>
+
+	<insert id="insertObject" parameterType="com.jc.cz_index.model.Notice">
+		<selectKey resultType="Long" keyProperty="id" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into
+		notice(id,title,content,start_time,end_time,status,creator,updator,create_date,update_date)
+		values
+		(#{id},#{title},#{content},#{startTime},#{endTime},#{status},#{creator},#{updator},
+		#{createDate}, #{updateDate})
+	</insert>
+
+
+	<delete id="deleteNoticeObject" parameterType="long">
+		delete from notice
+		where id=#{id};
+	</delete>
+	<delete id="deleteNoticeLinkRoleObject" parameterType="long">
+		delete
+		from notice_link_role where id=#{id};
+	</delete>
+
+
+	<select id="queryNoticeById" parameterType="long" resultMap="resultMap">
+		select * from notice n where n.id=#{id} ;
+	</select>
+	<update id="updateNoticeLinkRole" parameterType="com.jc.cz_index.dao.QueryParams">
+		update
+		notice_link_role
+		SET is_read = 1
+		WHERE nid=#{nid} and
+		uid=#{uid};
+	</update>
+	<select id="getMyNoticeList" parameterType="com.jc.cz_index.dao.QueryParams"
+		resultMap="resultMap">
+		select
+		n.id,n.title
+		from
+		notice n ,notice_link_role nlr
+		where
+		nlr.uid=#{userId}
+		and is_read=0
+		and is_delete=0
+		and n.status=1<![CDATA[ and n.start_time<= #{now} and  n.end_time >=#{now} ]]>
+		and nlr.nid=n.id;
+	</select>
+
+	<select id="queryDetailList" parameterType="com.jc.cz_index.dao.QueryParams"
+		resultMap="resultMap">
+		select n.* from notice n  left join system_user su on n.creator=su.id
+		<include refid="whereSql" />
+		<include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+
+	<select id="queryCount" parameterType="com.jc.cz_index.dao.QueryParams"
+		resultType="int">
+		select count(n.id) from notice n  left join system_user su on n.creator=su.id
+		<include refid="whereSql" />
+	</select>
+
+
+	<update id="updateNotice" parameterType="com.jc.cz_index.model.Notice">
+		update notice
+		<include refid="updateSetSql" />
+		where id=#{id};
+	</update>
+
+
+
+	<select id="getAreaNodesWithUser" parameterType="long"
+		resultMap="areaTreeNodeMap">
+		select id, name,id as child_id from administrative_division
+		where id=#{id} and is_delete=0
+	</select>
+
+	<select id="getAreaNodesWithUseByParentId" parameterType="long"
+		resultMap="areaTreeNodeMap">
+		select id, name,id as child_id from administrative_division
+		where parentid=#{id} and is_delete=0
+		UNION all
+		select id, name,-1 as child_id from
+		system_user where area_id=#{id}
+	</select>
+	
+	<select id="getOrgNodesWithUser" parameterType="long"
+		resultMap="orgTreeNodeMap">
+		select id, administrative_name as name,id as child_id from administrative_management
+		where  is_delete=0
+	</select>
+	
+	<select id="getOrgNodesWithUseByParentId" parameterType="long"
+		resultMap="orgTreeNodeMap">
+		select id, name,-1 as child_id from
+		system_user where organization_id=#{id}
+	</select>
+	
+	<select id="getNoticeUserByNid" parameterType="long" resultType="long">
+		select uid from notice_link_role where nid=#{nid}
+	</select>
+
+
+
+	<!-- 公告授权 -->
+	<insert id="setNoticeUser" parameterType="com.jc.cz_index.model.NoticeUser">
+		<selectKey resultType="Long" keyProperty="id" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into notice_link_role(id,nid,uid) values (#{id},#{nid},#{uid} )
+	</insert>
+
+	<delete id="deleteNoticeUserbyNid" parameterType="long">
+		delete from
+		notice_link_role
+		where nid=#{nid};
+	</delete>
+</mapper>
+

@@ -1,0 +1,13 @@
+body{overflow: hidden;}
+.login_bg{height:100%;width:100%;z-index:-1;position:absolute;top:0;left:0;}
+.login_box{z-index:1;position:absolute;top:0;left:0;width:100%;}
+#loginform{width: 30%;position: relative;top: 150px;margin: 0 auto;}
+.login_tit{letter-spacing: 2px;font-size: 24px;color: #fff;padding: 15px 0px 15px 10%;background-color:rgba(25,169,123,0.8)}
+#mainlogin{padding: 10px 15px 20px 15px;position: relative;background-color: #19a97b;opacity:0.9;border-radius: 3px;}
+.login_btn{text-align: center;}
+input{display: block;margin: 0px auto 15px;border-radius: 5px;width: 80%;padding: 12px 4%;border: none;color: #929999;font-size: 1rem;}
+input:focus{-webkit-transition: 0.5s ease;-moz-transition: 0.5s ease;-o-transition: 0.5s ease;-ms-transition: 0.5s ease;transition: 0.5s ease;box-shadow: 0px 0px 5px 1px #161718;}
+button{width:88%;padding:12px 0px;border: 0;background: rgba(0,0,0,0.5);border-radius: 5px;font-size: 1rem;color: #fff;cursor: pointer;text-align: center;-webkit-transition: 0.5s ease;-moz-transition: 0.5s ease;-o-transition: 0.5s ease;-ms-transition: 0.5s ease;transition: 0.5s ease;}
+button:hover{background: #178c67;}
+.error{color:#d8271c;display: none;margin-bottom: 10px;text-align: center;font-weight: bold;}
+@media (min-width: 800px){#loginform{width: 30%;}}

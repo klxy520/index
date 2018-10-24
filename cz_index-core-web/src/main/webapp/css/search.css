@@ -1,0 +1,19 @@
+.banner_xiala{
+	padding-bottom: 2px;
+	display: none;
+	border-bottom: 1px solid #ccc;
+}
+.pull{
+	width: 15%;
+	margin-left: 45%;
+}
+.pull img{
+	height: 5%;
+	cursor: pointer;
+}
+.pull span{
+	font-size: 12px;
+	color: #ccc;
+	letter-spacing: 1px;
+	cursor: pointer;
+}
